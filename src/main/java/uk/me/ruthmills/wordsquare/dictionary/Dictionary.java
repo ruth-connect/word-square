@@ -25,8 +25,7 @@ public class Dictionary {
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
 	 */
 	public List<String> getAllWords() throws IOException, URISyntaxException {
-		try (Stream<String> linesStream = Files
-				.lines(Paths.get(ClassLoader.getSystemResource(DICTIONARY_TEXT_FILE_NAME).toURI()))) {
+		try (Stream<String> linesStream = getWordsStream()) {
 			return linesStream.map(word -> word.toString()).collect(Collectors.toList());
 		}
 	}
@@ -40,10 +39,20 @@ public class Dictionary {
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
 	 */
 	public List<String> getWordsOfMatchingLength(int length) throws IOException, URISyntaxException {
-		try (Stream<String> linesStream = Files
-				.lines(Paths.get(ClassLoader.getSystemResource(DICTIONARY_TEXT_FILE_NAME).toURI()))) {
+		try (Stream<String> linesStream = getWordsStream()) {
 			return linesStream.map(word -> word.toString()).filter(word -> word.length() == length)
 					.collect(Collectors.toList());
 		}
+	}
+
+	/**
+	 * Get the contents of the dictionary text file as a stream of strings.
+	 * 
+	 * @return A stream of strings (one string for each word in the dictionary).
+	 * @throws IOException        Thrown if we cannot read from the dictionary file.
+	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
+	 */
+	private Stream<String> getWordsStream() throws IOException, URISyntaxException {
+		return Files.lines(Paths.get(ClassLoader.getSystemResource(DICTIONARY_TEXT_FILE_NAME).toURI()));
 	}
 }
