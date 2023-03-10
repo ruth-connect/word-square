@@ -28,7 +28,7 @@ public class WordLengthPredicate implements Predicate<String> {
 	 * @return true if the word has the required number of letters, or false if not.
 	 */
 	@Override
-	public boolean test(String word) {
+	public boolean test(final String word) {
 		return word.length() == length;
 	}
 }
