@@ -27,6 +27,8 @@ public class Dictionary {
 	 */
 	public List<String> getAllWords() throws IOException, URISyntaxException {
 		try (Stream<String> linesStream = getWordsStream()) {
+			// we have to do the ".map(word -> word.toString())" here, or else it complains
+			// that we are trying to cast an Object to a String.
 			return linesStream.map(word -> word.toString()).collect(Collectors.toList());
 		}
 	}
