@@ -23,8 +23,17 @@ import uk.me.ruthmills.wordsquare.predicate.WordLengthPredicate;
  */
 public class DictionaryTest {
 
+	// All the words in the dictionary.
 	private static final int EXPECTED_NUMBER_OF_ALL_WORDS = 172820;
+
+	// All the 4-letter words in the dictionary.
 	private static final int EXPECTED_NUMBER_OF_4_LETTER_WORDS = 3903;
+
+	// Available letters we are testing with: "eeeeddoonnnsssrv"
+	private static final String AVAILABLE_LETTERS = "eeeeddoonnnsssrv";
+
+	// All the words in the dictionary made up of a subset of the letters
+	// "eeeeddoonnnsssrv".
 	private static final int EXPECTED_NUMBER_OF_WORDS_CONTAINING_ONLY_SUBSET_OF_AVAILABLE_LETTERS = 124;
 
 	// The Dictionary object under test.
@@ -78,7 +87,7 @@ public class DictionaryTest {
 	public void shouldReadOnlyWordsWhichContainOnlyASubsetOfAvailableLetters() throws IOException, URISyntaxException {
 		// given
 		final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
-				"eeeeddoonnnsssrv");
+				AVAILABLE_LETTERS);
 
 		// when
 		final List<String> words = dictionary.getWordsMatchingPredicate(wordContainsAvailableLettersPredicate);
