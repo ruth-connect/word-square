@@ -13,6 +13,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.me.ruthmills.wordsquare.predicate.WordContainsAvailableLettersPredicate;
 import uk.me.ruthmills.wordsquare.predicate.WordLengthPredicate;
 
 /**
@@ -24,6 +25,7 @@ public class DictionaryTest {
 
 	private static final int EXPECTED_NUMBER_OF_ALL_WORDS = 172820;
 	private static final int EXPECTED_NUMBER_OF_4_LETTER_WORDS = 3903;
+	private static final int EXPECTED_NUMBER_OF_WORDS_CONTAINING_ONLY_SUBSET_OF_AVAILABLE_LETTERS = 124;
 
 	// The Dictionary object under test.
 	private Dictionary dictionary;
@@ -66,5 +68,25 @@ public class DictionaryTest {
 		assertThat(words.size(), lessThan(EXPECTED_NUMBER_OF_ALL_WORDS)); // will be less than all the words!
 		assertThat(words, everyItem(hasLength(4))); // every word is 4 letters long.
 		assertThat(words, hasSize(EXPECTED_NUMBER_OF_4_LETTER_WORDS)); // check the total number of 4 letter words.
+	}
+
+	/**
+	 * Test that we can read only the words which contain ONLY a subset of the
+	 * available letters. We filter out all other words.
+	 */
+	@Test
+	public void shouldReadOnlyWordsWhichContainOnlyASubsetOfAvailableLetters() throws IOException, URISyntaxException {
+		// given
+		final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
+				"eeeeddoonnnsssrv");
+
+		// when
+		final List<String> words = dictionary.getWordsMatchingPredicate(wordContainsAvailableLettersPredicate);
+
+		// then
+		assertThat(words.size(), lessThan(EXPECTED_NUMBER_OF_ALL_WORDS)); // will be less than all the words!
+		// TODO - would be nice to verify that the words only contain the expected
+		// letters here.
+		assertThat(words, hasSize(EXPECTED_NUMBER_OF_WORDS_CONTAINING_ONLY_SUBSET_OF_AVAILABLE_LETTERS));
 	}
 }
