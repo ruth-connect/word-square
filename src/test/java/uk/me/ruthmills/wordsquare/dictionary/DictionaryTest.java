@@ -13,6 +13,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.me.ruthmills.wordsquare.predicate.WordLengthPredicate;
+
 /**
  * Test suite for the Dictionary class.
  * 

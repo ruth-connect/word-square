@@ -1,4 +1,4 @@
-package uk.me.ruthmills.wordsquare.dictionary;
+package uk.me.ruthmills.wordsquare.predicate;
 
 import java.util.function.Predicate;
 

@@ -1,10 +1,12 @@
-package uk.me.ruthmills.wordsquare.dictionary;
+package uk.me.ruthmills.wordsquare.predicate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import uk.me.ruthmills.wordsquare.predicate.WordLengthPredicate;
 
 /**
  * Test suite for the Word Length Predicate class.
