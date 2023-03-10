@@ -3,28 +3,46 @@ package uk.me.ruthmills.wordsquare.predicate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import java.util.Arrays;
+
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test suite for the Word Contains Available Letters Predicate class.
+ * Test suite for the List Predicate class.
  * 
  * @author ruth
  */
-public class WordContainsAvailableLettersPredicateTest {
+public class ListPredicateTest {
 
-	// Available letters to test.
+	// Expected word length to test.
+	private static final int EXPECTED_WORD_LENGTH = 4;
+
+	// Available letters.
 	private static final String AVAILABLE_LETTERS = "eeeeddoonnnsssrv";
 
-	// The Word Contains Available Letters Predicate class under test.
+	// Word length predicate.
+	private WordLengthPredicate wordLengthPredicate;
+
+	// Available letters predicate.
 	private WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate;
+
+	// List predicate.
+	private ListPredicate listPredicate;
 
 	/**
 	 * Set up the test dependencies.
 	 */
 	@Before
 	public void setUp() {
+		wordLengthPredicate = new WordLengthPredicate(EXPECTED_WORD_LENGTH);
 		wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(AVAILABLE_LETTERS);
+
+		// The word length predicate should be less expensive in terms of processing
+		// time, so we should execute this first.
+		// Then, if the word length matches, we can go on and execute the available
+		// letters predicate.
+		listPredicate = new ListPredicate(Arrays.asList(wordLengthPredicate, wordContainsAvailableLettersPredicate));
 	}
 
 	/**
@@ -36,7 +54,7 @@ public class WordContainsAvailableLettersPredicateTest {
 		final String word = "rose";
 
 		// when
-		final boolean wordContainsAvailableLetters = wordContainsAvailableLettersPredicate.test(word);
+		final boolean wordContainsAvailableLetters = listPredicate.test(word);
 
 		// then
 		assertThat(wordContainsAvailableLetters, is(true));
@@ -51,7 +69,7 @@ public class WordContainsAvailableLettersPredicateTest {
 		final String word = "oven";
 
 		// when
-		final boolean wordContainsAvailableLetters = wordContainsAvailableLettersPredicate.test(word);
+		final boolean wordContainsAvailableLetters = listPredicate.test(word);
 
 		// then
 		assertThat(wordContainsAvailableLetters, is(true));
@@ -66,7 +84,7 @@ public class WordContainsAvailableLettersPredicateTest {
 		final String word = "send";
 
 		// when
-		final boolean wordContainsAvailableLetters = wordContainsAvailableLettersPredicate.test(word);
+		final boolean wordContainsAvailableLetters = listPredicate.test(word);
 
 		// then
 		assertThat(wordContainsAvailableLetters, is(true));
@@ -81,7 +99,7 @@ public class WordContainsAvailableLettersPredicateTest {
 		final String word = "ends";
 
 		// when
-		final boolean wordContainsAvailableLetters = wordContainsAvailableLettersPredicate.test(word);
+		final boolean wordContainsAvailableLetters = listPredicate.test(word);
 
 		// then
 		assertThat(wordContainsAvailableLetters, is(true));
@@ -97,7 +115,7 @@ public class WordContainsAvailableLettersPredicateTest {
 		final String word = "rave";
 
 		// when
-		final boolean wordContainsAvailableLetters = wordContainsAvailableLettersPredicate.test(word);
+		boolean wordContainsAvailableLetters = listPredicate.test(word);
 
 		// then
 		assertThat(wordContainsAvailableLetters, is(false));
@@ -113,24 +131,24 @@ public class WordContainsAvailableLettersPredicateTest {
 		final String word = "rere"; // nonsense word, but we don't care for the purposes of this test.
 
 		// when
-		final boolean wordContainsAvailableLetters = wordContainsAvailableLettersPredicate.test(word);
+		final boolean wordContainsAvailableLetters = listPredicate.test(word);
 
 		// then
 		assertThat(wordContainsAvailableLetters, is(false));
 	}
 
 	/**
-	 * Test that the predicate returns true if the word is "nosed".
+	 * Test that the predicate returns false if the word is "nosed".
 	 */
 	@Test
-	public void shouldReturnTrue_whenWordIsNosed() {
+	public void shouldReturnFalse_whenWordIsNosed() {
 		// given
 		final String word = "nosed"; // test a 5-letter word.
 
 		// when
-		final boolean wordContainsAvailableLetters = wordContainsAvailableLettersPredicate.test(word);
+		final boolean wordContainsAvailableLetters = listPredicate.test(word);
 
 		// then
-		assertThat(wordContainsAvailableLetters, is(true));
+		assertThat(wordContainsAvailableLetters, is(false));
 	}
 }
