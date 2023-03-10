@@ -39,7 +39,8 @@ public class Dictionary {
 	 * @throws IOException        Thrown if we cannot read from the dictionary file.
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
 	 */
-	public List<String> getWordsMatchingPredicate(Predicate<String> predicate) throws IOException, URISyntaxException {
+	public List<String> getWordsMatchingPredicate(final Predicate<String> predicate)
+			throws IOException, URISyntaxException {
 		try (Stream<String> linesStream = getWordsStream()) {
 			return linesStream.filter(predicate).collect(Collectors.toList());
 		}

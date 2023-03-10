@@ -33,10 +33,10 @@ public class WordContainsAvailableLettersPredicateTest {
 	@Test
 	public void shouldReturnTrue_whenWordIsRose() {
 		// given
-		String word = "rose";
+		final String word = "rose";
 
 		// when
-		boolean wordContainsAvailableLetters = wordContainsAvailableLettersPredicate.test(word);
+		final boolean wordContainsAvailableLetters = wordContainsAvailableLettersPredicate.test(word);
 
 		// then
 		assertThat(wordContainsAvailableLetters, is(true));
@@ -48,10 +48,10 @@ public class WordContainsAvailableLettersPredicateTest {
 	@Test
 	public void shouldReturnTrue_whenWordIsOven() {
 		// given
-		String word = "oven";
+		final String word = "oven";
 
 		// when
-		boolean wordContainsAvailableLetters = wordContainsAvailableLettersPredicate.test(word);
+		final boolean wordContainsAvailableLetters = wordContainsAvailableLettersPredicate.test(word);
 
 		// then
 		assertThat(wordContainsAvailableLetters, is(true));
@@ -63,10 +63,10 @@ public class WordContainsAvailableLettersPredicateTest {
 	@Test
 	public void shouldReturnTrue_whenWordIsSend() {
 		// given
-		String word = "send";
+		final String word = "send";
 
 		// when
-		boolean wordContainsAvailableLetters = wordContainsAvailableLettersPredicate.test(word);
+		final boolean wordContainsAvailableLetters = wordContainsAvailableLettersPredicate.test(word);
 
 		// then
 		assertThat(wordContainsAvailableLetters, is(true));

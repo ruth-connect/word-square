@@ -44,7 +44,7 @@ public class DictionaryTest {
 	@Test
 	public void shouldReadAllWordsFromDictionaryTextFile() throws IOException, URISyntaxException {
 		// when
-		List<String> words = dictionary.getAllWords();
+		final List<String> words = dictionary.getAllWords();
 
 		// then
 		assertThat(words, hasSize(EXPECTED_NUMBER_OF_ALL_WORDS)); // expected number of all the words!
@@ -57,10 +57,10 @@ public class DictionaryTest {
 	@Test
 	public void shouldReadOnly4LetterWordsFromDictionaryTextFile() throws IOException, URISyntaxException {
 		// given
-		WordLengthPredicate wordLengthPredicate = new WordLengthPredicate(4);
+		final WordLengthPredicate wordLengthPredicate = new WordLengthPredicate(4);
 
 		// when
-		List<String> words = dictionary.getWordsMatchingPredicate(wordLengthPredicate);
+		final List<String> words = dictionary.getWordsMatchingPredicate(wordLengthPredicate);
 
 		// then
 		assertThat(words.size(), lessThan(EXPECTED_NUMBER_OF_ALL_WORDS)); // will be less than all the words!

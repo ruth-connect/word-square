@@ -10,14 +10,14 @@ public class WordLengthPredicate implements Predicate<String> {
 	/**
 	 * Length of string to match.
 	 */
-	private int length;
+	private final int length;
 
 	/**
 	 * Constructor. Takes the number of letters in the string we want to match.
 	 * 
 	 * @param length The required length (in number of letters) of the string.
 	 */
-	public WordLengthPredicate(int length) {
+	public WordLengthPredicate(final int length) {
 		this.length = length;
 	}
 

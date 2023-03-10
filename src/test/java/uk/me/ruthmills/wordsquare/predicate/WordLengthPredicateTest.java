@@ -6,8 +6,6 @@ import static org.hamcrest.Matchers.is;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.me.ruthmills.wordsquare.predicate.WordLengthPredicate;
-
 /**
  * Test suite for the Word Length Predicate class.
  * 
@@ -35,10 +33,10 @@ public class WordLengthPredicateTest {
 	@Test
 	public void shouldReturnFalse_whenWordIsTooShort() {
 		// given
-		String word = "frog";
+		final String word = "frog";
 
 		// when
-		boolean isWordCorrectLength = wordLengthPredicate.test(word);
+		final boolean isWordCorrectLength = wordLengthPredicate.test(word);
 
 		// then
 		assertThat(isWordCorrectLength, is(false));
@@ -50,10 +48,10 @@ public class WordLengthPredicateTest {
 	@Test
 	public void shouldReturnTrue_whenWordIsExpectedLength() {
 		// given
-		String word = "kebab";
+		final String word = "kebab";
 
 		// when
-		boolean isWordCorrectLength = wordLengthPredicate.test(word);
+		final boolean isWordCorrectLength = wordLengthPredicate.test(word);
 
 		// then
 		assertThat(isWordCorrectLength, is(true));
@@ -65,10 +63,10 @@ public class WordLengthPredicateTest {
 	@Test
 	public void shouldReturnFalse_whenWordIsTooLong() {
 		// given
-		String word = "guitar";
+		final String word = "guitar";
 
 		// when
-		boolean isWordCorrectLength = wordLengthPredicate.test(word);
+		final boolean isWordCorrectLength = wordLengthPredicate.test(word);
 
 		// then
 		assertThat(isWordCorrectLength, is(false));

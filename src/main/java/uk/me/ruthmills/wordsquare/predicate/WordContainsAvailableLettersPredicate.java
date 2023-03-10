@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 public class WordContainsAvailableLettersPredicate implements Predicate<String> {
 
 	// Available letters to match.
-	private String letters;
+	private final String letters;
 
 	/**
 	 * Constructor. Takes the available letters (the word MUST contain only those
