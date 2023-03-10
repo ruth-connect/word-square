@@ -8,11 +8,13 @@ import static org.hamcrest.text.CharSequenceLength.hasLength;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.me.ruthmills.wordsquare.predicate.ListPredicate;
 import uk.me.ruthmills.wordsquare.predicate.WordContainsAvailableLettersPredicate;
 import uk.me.ruthmills.wordsquare.predicate.WordLengthPredicate;
 
@@ -35,6 +37,10 @@ public class DictionaryTest {
 	// All the words in the dictionary made up of a subset of the letters
 	// "eeeeddoonnnsssrv".
 	private static final int EXPECTED_NUMBER_OF_WORDS_CONTAINING_ONLY_SUBSET_OF_AVAILABLE_LETTERS = 124;
+
+	// All the 4-letter words in the dictionary made up of a subset of the letters
+	// "eeeeddoonnnsssrv".
+	private static final int EXPECTED_NUMBER_OF_4_LETTER_WORDS_CONTAINING_ONLY_SUBSET_OF_AVAILABLE_LETTERS = 41;
 
 	// The Dictionary object under test.
 	private Dictionary dictionary;
@@ -97,5 +103,31 @@ public class DictionaryTest {
 		// TODO - would be nice to verify that the words only contain the expected
 		// letters here.
 		assertThat(words, hasSize(EXPECTED_NUMBER_OF_WORDS_CONTAINING_ONLY_SUBSET_OF_AVAILABLE_LETTERS));
+	}
+
+	/**
+	 * Test that we can read only the words which are 4 letters long AND which
+	 * contain ONLY a subset of the available letters. We filter out all other
+	 * words.
+	 */
+	@Test
+	public void shouldReadOnly4LetterWordsWhichContainOnlyASubsetOfAvailableLetters()
+			throws IOException, URISyntaxException {
+		// given
+		final ListPredicate listPredicate = new ListPredicate(Arrays.asList(new WordLengthPredicate(4),
+				new WordContainsAvailableLettersPredicate(AVAILABLE_LETTERS))); // chain the 2 other predicates
+																				// together.
+		// when
+		final List<String> words = dictionary.getWordsMatchingPredicate(listPredicate);
+
+		// then
+		assertThat(words.size(), lessThan(EXPECTED_NUMBER_OF_ALL_WORDS)); // will be less than all the words!
+		assertThat(words, everyItem(hasLength(4))); // every word is 4 letters long.
+		assertThat(words.size(), lessThan(EXPECTED_NUMBER_OF_4_LETTER_WORDS)); // less than the total number of 4 letter
+																				// words.
+		// TODO - would be nice to verify that the words only contain the expected
+		// letters here.
+		assertThat(words.size(), lessThan(EXPECTED_NUMBER_OF_WORDS_CONTAINING_ONLY_SUBSET_OF_AVAILABLE_LETTERS));
+		assertThat(words, hasSize(EXPECTED_NUMBER_OF_4_LETTER_WORDS_CONTAINING_ONLY_SUBSET_OF_AVAILABLE_LETTERS));
 	}
 }
