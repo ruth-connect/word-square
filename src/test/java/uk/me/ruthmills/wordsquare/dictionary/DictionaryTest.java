@@ -55,10 +55,10 @@ public class DictionaryTest {
 	@Test
 	public void shouldReadOnly4LetterWordsFromDictionaryTextFile() throws IOException, URISyntaxException {
 		// given
-		int requiredWordLength = 4;
+		WordLengthPredicate wordLengthPredicate = new WordLengthPredicate(4);
 
 		// when
-		List<String> words = dictionary.getWordsOfMatchingLength(requiredWordLength);
+		List<String> words = dictionary.getWordsMatchingPredicate(wordLengthPredicate);
 
 		// then
 		assertThat(words.size(), lessThan(EXPECTED_NUMBER_OF_ALL_WORDS)); // will be less than all the words!

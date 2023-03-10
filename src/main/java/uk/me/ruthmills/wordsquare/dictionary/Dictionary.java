@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -31,17 +32,16 @@ public class Dictionary {
 	}
 
 	/**
-	 * Read only the words matching the required length from the dictionary file.
+	 * Read only the words matching the supplied predicate.
 	 * 
-	 * @param length The required length of the words to return.
-	 * @return A list of only those words matching the required length.
+	 * @param predicate The predicate to match the words with.
+	 * @return A list of only those words matching the predicate.
 	 * @throws IOException        Thrown if we cannot read from the dictionary file.
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
 	 */
-	public List<String> getWordsOfMatchingLength(int length) throws IOException, URISyntaxException {
+	public List<String> getWordsMatchingPredicate(Predicate<String> predicate) throws IOException, URISyntaxException {
 		try (Stream<String> linesStream = getWordsStream()) {
-			return linesStream.map(word -> word.toString()).filter(word -> word.length() == length)
-					.collect(Collectors.toList());
+			return linesStream.filter(predicate).collect(Collectors.toList());
 		}
 	}
 
