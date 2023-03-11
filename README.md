@@ -7,6 +7,8 @@ Given an n*n grid, and a set of letters, generate a valid word square.
 3. `sh mvnw install`
 
 ## Running
+**IMPORTANT:** The application must be run from the same directory that the Maven install (as in step 3 above) was run from.
+
 Usage: `java -jar target/wordsquare-0.0.1-SNAPSHOT-jar-with-dependencies.jar <length> <letters>`
 
 where:
