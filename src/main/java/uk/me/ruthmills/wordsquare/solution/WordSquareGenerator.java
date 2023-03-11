@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import uk.me.ruthmills.wordsquare.predicate.WordContainsAvailableLettersPredicate;
+
 /**
  * This class generates all possible word squares for the input parameters.
  * These will NOT all be valid. We can filter out the invalid ones later.
@@ -43,8 +45,39 @@ public class WordSquareGenerator {
 	 * @param wordShortlist The word shortlist.
 	 * @param words         The list of words so far.
 	 */
-	static List<WordSquare> getAllWordSquares(String word, int length, String letters, List<String> wordShortlist,
-			List<String> words) {
+	static List<WordSquare> getAllWordSquares(final String word, final int length, final String letters,
+			final List<String> wordShortlist, final List<String> words) {
+
+		String remainingLetters = WordSquareGenerator.getRemainingLetters(word, letters);
+		WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
+				remainingLetters);
+		List<String> remainingWords = wordShortlist.stream().filter(wordContainsAvailableLettersPredicate)
+				.collect(Collectors.toList());
 		return Collections.emptyList();
+	}
+
+	/**
+	 * Get the remaining letters after taking the letters from the current word away
+	 * from the available letters.
+	 * 
+	 * @param word    The word.
+	 * @param letters The available letters.
+	 * @return The remaining letters.
+	 */
+	static String getRemainingLetters(final String word, final String letters) {
+		// If we have run out of letters in the word, return the remaining letters left
+		// from the available letters.
+		if (word.length() == 0) {
+			return letters;
+		} else {
+			// Get the first letter of the word.
+			final String firstLetter = word.substring(0, 1);
+
+			// Remove the first letter of the word from the available letters.
+			String remainingLetters = letters.replaceFirst(firstLetter, "");
+
+			// Recursively call this function, removing the first letter from the word.
+			return getRemainingLetters(word.substring(1, word.length()), remainingLetters);
+		}
 	}
 }
