@@ -55,6 +55,7 @@ throw
 
 #### 7-letter word square
 **WARNING: This will take several minutes to run! Best to enjoy a nice coffee while this is running!**
+
 `java -jar target/wordsquare-0.0.1-SNAPSHOT-jar-with-dependencies.jar 7 aaaaaaaaabbeeeeeeedddddggmmlloooonnssssrrrruvvyyy`
 
 Expected output:
