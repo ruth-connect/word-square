@@ -2,10 +2,11 @@ package uk.me.ruthmills.wordsquare;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import uk.me.ruthmills.wordsquare.solution.WordSquare;
+import uk.me.ruthmills.wordsquare.solution.WordSquareGenerator;
 
 /**
  * Class to solve a word square.
@@ -26,6 +27,9 @@ public class WordSquareSolver {
 	 */
 	public static List<WordSquare> solveWordSquare(final int length, final String letters)
 			throws IOException, URISyntaxException {
-		return Collections.emptyList();
+		// Get all possible combinations of words, and then only keep the ones that are
+		// actually valid.
+		return WordSquareGenerator.getAllPossibleCombinations(length, letters).stream()
+				.filter(wordSquare -> wordSquare.isValid()).collect(Collectors.toList());
 	}
 }

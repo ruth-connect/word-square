@@ -36,7 +36,7 @@ public class WordShortlist {
 
 		// This predicate will first match on the required number of letters, and then
 		// ensure that each word contains ONLY a subset of the available letters.
-		final ListPredicate wordPredicate = new ListPredicate(
+		final ListPredicate<String> wordPredicate = new ListPredicate<String>(
 				Arrays.asList(new WordLengthPredicate(length), new WordContainsAvailableLettersPredicate(letters)));
 
 		// Return the shortlist of words (only those matching the predicate).
