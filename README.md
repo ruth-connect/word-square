@@ -15,4 +15,22 @@ where:
 
 `<letters>` is the letters to create the word square from
 
-e.g. `java -jar target/wordsquare-0.0.1-SNAPSHOT-jar-with-dependencies.jar 3 ddggoooox`
+### Examples
+`java -jar target/wordsquare-0.0.1-SNAPSHOT-jar-with-dependencies.jar 3 ddggoooox`
+
+Expected output:
+```
+dog
+oxo
+god
+```
+
+`java -jar target/wordsquare-0.0.1-SNAPSHOT-jar-with-dependencies.jar 4 aaccdeeeemmnnnoo`
+
+Expected output:
+```
+moan
+once
+acme
+need
+```
