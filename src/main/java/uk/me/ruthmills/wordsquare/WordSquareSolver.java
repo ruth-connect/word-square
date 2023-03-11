@@ -15,6 +15,35 @@ import uk.me.ruthmills.wordsquare.solution.WordSquareGenerator;
 public class WordSquareSolver {
 
 	/**
+	 * Main function. Executes the word square solver for the supplied arguments.
+	 * 
+	 * @param args Arguments: <length> <letters>
+	 * @throws IOException        Thrown if we cannot read from the dictionary file.
+	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
+	 *                            when attempting to locate the dictionary file.
+	 */
+	public static void main(final String[] args) throws IOException, URISyntaxException {
+		if (args.length != 2) {
+			// Output the required parameters.
+			System.out.println("Required parameters: <length> <letters>");
+		} else {
+			try {
+				// Get the length and letters from the parameters.
+				int length = Integer.parseInt(args[0]);
+				String letters = args[1];
+				final List<WordSquare> solutions = WordSquareSolver.solveWordSquare(length, letters, true);
+				if (solutions.size() > 0) {
+					System.out.println(solutions.get(0).toString());
+				} else {
+					System.out.println("No solution exists for this word square");
+				}
+			} catch (NumberFormatException ex) {
+				System.out.println("First parameter (length) must be an integer");
+			}
+		}
+	}
+
+	/**
 	 * Solve the word square.
 	 * 
 	 * @param length  Number of letters in each word.
