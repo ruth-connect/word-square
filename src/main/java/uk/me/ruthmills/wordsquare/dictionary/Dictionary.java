@@ -19,22 +19,6 @@ public class Dictionary {
 	private static final String DICTIONARY_TEXT_FILE_NAME = "dictionary.txt";
 
 	/**
-	 * Read all the words from the dictionary file.
-	 * 
-	 * @return A list of all the words from the dictionary file.
-	 * @throws IOException        Thrown if we cannot read from the dictionary file.
-	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
-	 *                            when attempting to locate the dictionary file.
-	 */
-	public static List<String> getAllWords() throws IOException, URISyntaxException {
-		try (Stream<String> linesStream = Dictionary.getWordsStream()) {
-			// we have to do the ".map(word -> word.toString())" here, or else it complains
-			// that we are trying to cast an Object to a String.
-			return linesStream.map(word -> word.toString()).collect(Collectors.toList());
-		}
-	}
-
-	/**
 	 * Read only the words matching the supplied predicate.
 	 * 
 	 * @param predicate The predicate to match the words with.

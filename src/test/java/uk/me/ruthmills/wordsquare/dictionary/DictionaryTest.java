@@ -9,6 +9,7 @@ import static org.hamcrest.text.CharSequenceLength.hasLength;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
@@ -49,7 +50,8 @@ public class DictionaryTest {
 	@Test
 	public void shouldReadAllWordsFromDictionaryTextFile() throws IOException, URISyntaxException {
 		// when
-		final List<String> words = Dictionary.getAllWords();
+		final List<String> words = Dictionary
+				.getWordsMatchingPredicate(new ListPredicate<String>(Collections.emptyList()));
 
 		// then
 		assertThat(words, hasSize(EXPECTED_NUMBER_OF_ALL_WORDS)); // expected number of all the words!
