@@ -28,11 +28,11 @@ public class WordSquareGenerator {
 	 * @throws IOException        Thrown if we cannot read from the dictionary file.
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
 	 */
-	public static List<WordSquare> getAllPossibleCombinations(final int length, final String letters)
+	public static Stream<WordSquare> getAllPossibleCombinations(final int length, final String letters)
 			throws IOException, URISyntaxException {
 		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
 		return wordShortlist.stream().flatMap(word -> getAllWordSquares(word, length, letters, wordShortlist,
-				new ArrayList<String>(), new ArrayList<WordSquare>()).stream()).collect(Collectors.toList());
+				new ArrayList<String>(), new ArrayList<WordSquare>()));
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class WordSquareGenerator {
 	 * @param wordShortlist The word shortlist.
 	 * @param words         The list of words so far.
 	 */
-	static List<WordSquare> getAllWordSquares(final String word, final int length, final String letters,
+	static Stream<WordSquare> getAllWordSquares(final String word, final int length, final String letters,
 			final List<String> wordShortlist, final List<String> words, final List<WordSquare> wordSquares) {
 		// Can the word be formed from the available letters?
 		if (isWordAbleToBeFormedFromAvailableLetters(word, letters)) {
@@ -69,22 +69,18 @@ public class WordSquareGenerator {
 			// Do we have the required number of words in the list of words?
 			if (updatedWords.size() == length) {
 				// Return a new word square at the end of the list of word squares.
-				return Stream
-						.concat(wordSquares.stream(),
-								Collections.singletonList(new WordSquare(length, updatedWords)).stream())
-						.collect(Collectors.toList());
+				return Stream.concat(wordSquares.stream(),
+						Collections.singletonList(new WordSquare(length, updatedWords)).stream());
 			} else {
 				// Recursively call this function for each remaining word.
-				return remainingWordShortlist.stream()
-						.flatMap(remainingWord -> getAllWordSquares(remainingWord, length, remainingLetters,
-								remainingWordShortlist, updatedWords, wordSquares).stream())
-						.collect(Collectors.toList());
+				return remainingWordShortlist.stream().flatMap(remainingWord -> getAllWordSquares(remainingWord, length,
+						remainingLetters, remainingWordShortlist, updatedWords, wordSquares));
 
 			}
 		} else {
 			// Word CANNOT be formed from available letters. Return the word squares we have
 			// already.
-			return wordSquares;
+			return wordSquares.stream();
 		}
 	}
 
