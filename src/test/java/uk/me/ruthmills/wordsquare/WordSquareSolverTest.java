@@ -111,16 +111,26 @@ public class WordSquareSolverTest {
 		final List<WordSquare> solutions = WordSquareSolver.solveWordSquare(length, letters);
 
 		// then
-		assertThat(solutions, hasSize(1));
+		assertThat(solutions, hasSize(2)); // this actually has 2 solutions, just as I predicted was possible with the
+											// simpler case (dog, oxo, god AND god, oxo, dog).
 		assertThat(solutions.get(0).isValid(), is(true));
+		assertThat(solutions.get(1).isValid(), is(true));
 
-		final List<String> solution = solutions.get(0).getWords();
-		assertThat(solution, hasSize(5));
-		assertThat(solution.get(0), is("feast"));
-		assertThat(solution.get(1), is("earth"));
-		assertThat(solution.get(2), is("armor"));
-		assertThat(solution.get(3), is("stone"));
-		assertThat(solution.get(4), is("threw"));
+		final List<String> solution1 = solutions.get(0).getWords();
+		assertThat(solution1, hasSize(5));
+		assertThat(solution1.get(0), is("feast"));
+		assertThat(solution1.get(1), is("earth"));
+		assertThat(solution1.get(2), is("armer"));
+		assertThat(solution1.get(3), is("steno"));
+		assertThat(solution1.get(4), is("throw"));
+
+		final List<String> solution2 = solutions.get(1).getWords();
+		assertThat(solution2, hasSize(5));
+		assertThat(solution2.get(0), is("feast"));
+		assertThat(solution2.get(1), is("earth"));
+		assertThat(solution2.get(2), is("armor"));
+		assertThat(solution2.get(3), is("stone"));
+		assertThat(solution2.get(4), is("threw"));
 	}
 
 	/**

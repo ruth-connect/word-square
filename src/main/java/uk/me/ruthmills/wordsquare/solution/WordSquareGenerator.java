@@ -71,18 +71,10 @@ public class WordSquareGenerator {
 
 			// Do we have the required number of words in the list of words?
 			if (updatedWords.size() == length) {
-				// Create a new word square.
-				WordSquare wordSquare = new WordSquare(length, updatedWords);
+				// Return a new word square at the end of the list of word squares.
+				return Stream.concat(wordSquares.stream(),
+						Collections.singletonList(new WordSquare(length, updatedWords)).stream());
 
-				// Is the word square valid?
-				if (wordSquare.isValid()) {
-					// Return a new word square at the end of the list of word squares.
-					return Stream.concat(wordSquares.stream(),
-							Collections.singletonList(new WordSquare(length, updatedWords)).stream());
-				} else {
-					// Return the existing word squares.
-					return wordSquares.stream();
-				}
 			} else {
 				// Recursively call this function for each remaining word that meets the
 				// requirements.
