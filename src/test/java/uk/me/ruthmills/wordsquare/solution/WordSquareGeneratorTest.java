@@ -104,11 +104,11 @@ public class WordSquareGeneratorTest {
 	}
 
 	/**
-	 * Test getting all valid combinations for a given starting word in a 3-letter
-	 * word square.
+	 * Test getting all valid solutions for a given starting word in a 3-letter word
+	 * square (there is only one in this case).
 	 */
 	@Test
-	public void shouldGetAllWordSquareCombinationsForStartingWord() throws IOException, URISyntaxException {
+	public void shouldGetAllValidSolutionsForStartingWord() throws IOException, URISyntaxException {
 		// given
 		final int length = 3;
 		final String letters = "ddggoooox";
@@ -118,8 +118,8 @@ public class WordSquareGeneratorTest {
 		final boolean firstMatchOnly = false;
 
 		// when
-		WordSquareGenerator.getAllWordSquares(startingWord, length, letters, wordShortlist, new ArrayList<String>(),
-				combinations, firstMatchOnly);
+		WordSquareGenerator.getValidWordSquaresForStartingWord(startingWord, length, letters, wordShortlist,
+				new ArrayList<String>(), combinations, firstMatchOnly);
 
 		// then
 		assertThat(combinations, hasSize(1));
@@ -127,7 +127,8 @@ public class WordSquareGeneratorTest {
 	}
 
 	/**
-	 * Test we can get all valid solutions for a 3-letter word square.
+	 * Test we can get all valid solutions for a 3-letter word square (there are two
+	 * in this case).
 	 */
 	@Test
 	public void shouldGetAllValidSolutions() throws IOException, URISyntaxException {
@@ -137,8 +138,7 @@ public class WordSquareGeneratorTest {
 		final boolean firstMatchOnly = false;
 
 		// when
-		final List<WordSquare> solutions = WordSquareGenerator.getAllPossibleCombinations(length, letters,
-				firstMatchOnly);
+		final List<WordSquare> solutions = WordSquareGenerator.getValidWordSquares(length, letters, firstMatchOnly);
 
 		// then
 		assertThat(solutions, hasSize(2));
@@ -157,8 +157,7 @@ public class WordSquareGeneratorTest {
 		final boolean firstMatchOnly = true;
 
 		// when
-		final List<WordSquare> solutions = WordSquareGenerator.getAllPossibleCombinations(length, letters,
-				firstMatchOnly);
+		final List<WordSquare> solutions = WordSquareGenerator.getValidWordSquares(length, letters, firstMatchOnly);
 
 		// then
 		assertThat(solutions, hasSize(1));

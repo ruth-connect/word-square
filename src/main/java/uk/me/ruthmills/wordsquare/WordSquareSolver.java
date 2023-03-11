@@ -44,6 +44,6 @@ public class WordSquareSolver {
 			throws IOException, URISyntaxException {
 		// Get all possible combinations of words, and then only keep the ones that are
 		// actually valid.
-		return WordSquareGenerator.getAllPossibleCombinations(length, letters, firstMatchOnly);
+		return WordSquareGenerator.getValidWordSquares(length, letters, firstMatchOnly);
 	}
 }
