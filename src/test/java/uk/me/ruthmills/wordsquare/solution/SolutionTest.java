@@ -91,4 +91,30 @@ public class SolutionTest {
 		assertThat(wordShortlist.get(39), is("vend"));
 		assertThat(wordShortlist.get(40), is("voes"));
 	}
+
+	/**
+	 * Test that we can solve a word square when there are two possible solutions:
+	 * dog, oxo, god AND god, oxo, dog.
+	 */
+	@Test
+	public void shouldSolveWordSquare_whenThereAreTwoSolutions() throws IOException, URISyntaxException {
+		// given
+		Solution solution = new Solution(3, "ddggoooox");
+
+		// when
+		List<WordCombination> solutions = solution.solveWordSquare();
+
+		// then
+		assertThat(solutions, hasSize(2));
+
+		List<String> dogOxoGod = solutions.get(0).getWords();
+		assertThat(dogOxoGod.get(0), is("dog"));
+		assertThat(dogOxoGod.get(1), is("oxo"));
+		assertThat(dogOxoGod.get(2), is("god"));
+
+		List<String> godOxoDog = solutions.get(1).getWords();
+		assertThat(godOxoDog.get(0), is("god"));
+		assertThat(godOxoDog.get(1), is("oxo"));
+		assertThat(godOxoDog.get(2), is("dog"));
+	}
 }

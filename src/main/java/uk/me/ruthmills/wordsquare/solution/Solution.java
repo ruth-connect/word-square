@@ -3,6 +3,7 @@ package uk.me.ruthmills.wordsquare.solution;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import uk.me.ruthmills.wordsquare.dictionary.Dictionary;
@@ -49,6 +50,18 @@ public class Solution {
 	}
 
 	/**
+	 * Solve the word square.
+	 * 
+	 * @return List of possible solutions to the word square (there may be more than
+	 *         one for some cases, e.g. dog, oxo, god AND god, oxo, dog).
+	 * @throws IOException        Thrown if we cannot read from the dictionary file.
+	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
+	 */
+	List<WordCombination> solveWordSquare() throws IOException, URISyntaxException {
+		return Collections.emptyList();
+	}
+
+	/**
 	 * Get the word shortlist.
 	 * 
 	 * @return The shortlist of words of the correct length, where each word
@@ -56,7 +69,7 @@ public class Solution {
 	 * @throws IOException        Thrown if we cannot read from the dictionary file.
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
 	 */
-	public List<String> getWordShortlist() throws IOException, URISyntaxException {
+	List<String> getWordShortlist() throws IOException, URISyntaxException {
 		return dictionary.getWordsMatchingPredicate(wordPredicate);
 	}
 }
