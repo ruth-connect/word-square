@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import uk.me.ruthmills.wordsquare.predicate.ListPredicate;
 import uk.me.ruthmills.wordsquare.predicate.WordContainsAvailableLettersPredicate;
@@ -31,11 +29,14 @@ public class WordSquareGenerator {
 	 * @throws IOException        Thrown if we cannot read from the dictionary file.
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
 	 */
-	public static Stream<WordSquare> getAllPossibleCombinations(final int length, final String letters)
+	public static List<WordSquare> getAllPossibleCombinations(final int length, final String letters)
 			throws IOException, URISyntaxException {
 		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
-		return wordShortlist.stream().flatMap(word -> getAllWordSquares(word, length, letters, wordShortlist,
-				new ArrayList<String>(), new ArrayList<WordSquare>()));
+		final List<WordSquare> wordSquares = new ArrayList<WordSquare>();
+		for (String word : wordShortlist) {
+			getAllWordSquares(word, length, letters, wordShortlist, new ArrayList<String>(), wordSquares);
+		}
+		return wordSquares;
 	}
 
 	/**
@@ -48,8 +49,11 @@ public class WordSquareGenerator {
 	 * @param wordShortlist The word shortlist.
 	 * @param words         The list of words so far.
 	 */
-	static Stream<WordSquare> getAllWordSquares(final String word, final int length, final String letters,
+	static void getAllWordSquares(final String word, final int length, final String letters,
 			final List<String> wordShortlist, final List<String> words, final List<WordSquare> wordSquares) {
+		if (words.size() == 0) {
+			System.out.println(word);
+		}
 		// Can the word be formed from the available letters?
 		if (isWordAbleToBeFormed(word, letters, words)) {
 			// Get the remaining letters left, after removing those from the current word
@@ -66,28 +70,24 @@ public class WordSquareGenerator {
 					.filter(wordContainsAvailableLettersPredicate).collect(Collectors.toList());
 
 			// Add the current word to the list of words.
-			List<String> updatedWords = Stream.concat(words.stream(), Collections.singletonList(word).stream())
-					.collect(Collectors.toList());
+			List<String> updatedWords = new ArrayList<String>();
+			updatedWords.addAll(words);
+			updatedWords.add(word);
 
-			// Do we have the required number of words in the list of words?
+			// Do we have the required number of words in the list of words to make a word
+			// square?
 			if (updatedWords.size() == length) {
-				// Return a new word square at the end of the list of word squares.
-				return Stream.concat(wordSquares.stream(),
-						Collections.singletonList(new WordSquare(length, updatedWords)).stream());
+				// Add a new word square to end of the list of word squares.
+				wordSquares.add(new WordSquare(length, updatedWords));
 
 			} else {
 				// Recursively call this function for each remaining word that meets the
 				// requirements.
-				return remainingWordShortlist.stream()
-						.flatMap(remainingWord -> getAllWordSquares(remainingWord, length, remainingLetters,
-								remainingWordShortlist.stream().collect(Collectors.toList()), updatedWords,
-								wordSquares));
-
+				for (String remainingWord : remainingWordShortlist) {
+					getAllWordSquares(remainingWord, length, remainingLetters, remainingWordShortlist, updatedWords,
+							wordSquares);
+				}
 			}
-		} else {
-			// Word CANNOT be formed from available letters. Return the word squares we have
-			// already.
-			return wordSquares.stream();
 		}
 	}
 

@@ -3,7 +3,6 @@ package uk.me.ruthmills.wordsquare;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import uk.me.ruthmills.wordsquare.solution.WordSquare;
 import uk.me.ruthmills.wordsquare.solution.WordSquareGenerator;
@@ -29,6 +28,6 @@ public class WordSquareSolver {
 			throws IOException, URISyntaxException {
 		// Get all possible combinations of words, and then only keep the ones that are
 		// actually valid.
-		return WordSquareGenerator.getAllPossibleCombinations(length, letters).collect(Collectors.toList());
+		return WordSquareGenerator.getAllPossibleCombinations(length, letters);
 	}
 }

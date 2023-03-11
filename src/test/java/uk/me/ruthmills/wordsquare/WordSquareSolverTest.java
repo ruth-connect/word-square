@@ -110,6 +110,10 @@ public class WordSquareSolverTest {
 		// when
 		final List<WordSquare> solutions = WordSquareSolver.solveWordSquare(length, letters);
 
+		for (WordSquare solution : solutions) {
+			System.out.println(solution.getWords());
+		}
+
 		// then
 		assertThat(solutions, hasSize(2)); // this actually has 2 solutions, just as I predicted was possible with the
 											// simpler case (dog, oxo, god AND god, oxo, dog).
@@ -169,6 +173,10 @@ public class WordSquareSolverTest {
 
 		// when
 		final List<WordSquare> solutions = WordSquareSolver.solveWordSquare(length, letters);
+
+		for (WordSquare solution : solutions) {
+			System.out.println(solution.getWords());
+		}
 
 		// then
 		assertThat(solutions, hasSize(1));

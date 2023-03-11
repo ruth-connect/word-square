@@ -9,7 +9,6 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.Test;
 
@@ -115,10 +114,11 @@ public class WordSquareGeneratorTest {
 		final String letters = "ddggoooox";
 		final String startingWord = "dog";
 		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
+		final List<WordSquare> combinations = new ArrayList<>();
 
 		// when
-		final List<WordSquare> combinations = WordSquareGenerator.getAllWordSquares(startingWord, length, letters,
-				wordShortlist, new ArrayList<String>(), new ArrayList<WordSquare>()).collect(Collectors.toList());
+		WordSquareGenerator.getAllWordSquares(startingWord, length, letters, wordShortlist, new ArrayList<String>(),
+				combinations);
 
 		// then
 		assertThat(combinations, hasSize(1));
@@ -135,8 +135,7 @@ public class WordSquareGeneratorTest {
 		final String letters = "ddggoooox";
 
 		// when
-		final List<WordSquare> combinations = WordSquareGenerator.getAllPossibleCombinations(length, letters)
-				.collect(Collectors.toList());
+		final List<WordSquare> combinations = WordSquareGenerator.getAllPossibleCombinations(length, letters);
 
 		// then
 		assertThat(combinations, hasSize(2));
