@@ -29,7 +29,6 @@ public class WordSquareSolver {
 			throws IOException, URISyntaxException {
 		// Get all possible combinations of words, and then only keep the ones that are
 		// actually valid.
-		return WordSquareGenerator.getAllPossibleCombinations(length, letters)
-				.filter(wordSquare -> wordSquare.isValid()).collect(Collectors.toList());
+		return WordSquareGenerator.getAllPossibleCombinations(length, letters).collect(Collectors.toList());
 	}
 }

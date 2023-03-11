@@ -3,12 +3,15 @@ package uk.me.ruthmills.wordsquare.solution;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import uk.me.ruthmills.wordsquare.predicate.ListPredicate;
 import uk.me.ruthmills.wordsquare.predicate.WordContainsAvailableLettersPredicate;
+import uk.me.ruthmills.wordsquare.predicate.WordMeetsRequirementsPredicate;
 
 /**
  * This class generates all possible word squares for the input parameters.
@@ -48,12 +51,12 @@ public class WordSquareGenerator {
 	static Stream<WordSquare> getAllWordSquares(final String word, final int length, final String letters,
 			final List<String> wordShortlist, final List<String> words, final List<WordSquare> wordSquares) {
 		// Can the word be formed from the available letters?
-		if (isWordAbleToBeFormedFromAvailableLetters(word, letters)) {
+		if (isWordAbleToBeFormed(word, letters, words)) {
 			// Get the remaining letters left, after removing those from the current word
 			// from the available letters.
 			final String remainingLetters = WordSquareGenerator.getRemainingLetters(word, letters);
 
-			// Create a predicate based on the remaining letters.
+			// Create a predicate based on the remaining letters. and the existing words.
 			final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
 					remainingLetters);
 
@@ -68,13 +71,25 @@ public class WordSquareGenerator {
 
 			// Do we have the required number of words in the list of words?
 			if (updatedWords.size() == length) {
-				// Return a new word square at the end of the list of word squares.
-				return Stream.concat(wordSquares.stream(),
-						Collections.singletonList(new WordSquare(length, updatedWords)).stream());
+				// Create a new word square.
+				WordSquare wordSquare = new WordSquare(length, updatedWords);
+
+				// Is the word square valid?
+				if (wordSquare.isValid()) {
+					// Return a new word square at the end of the list of word squares.
+					return Stream.concat(wordSquares.stream(),
+							Collections.singletonList(new WordSquare(length, updatedWords)).stream());
+				} else {
+					// Return the existing word squares.
+					return wordSquares.stream();
+				}
 			} else {
-				// Recursively call this function for each remaining word.
-				return remainingWordShortlist.stream().flatMap(remainingWord -> getAllWordSquares(remainingWord, length,
-						remainingLetters, remainingWordShortlist, updatedWords, wordSquares));
+				// Recursively call this function for each remaining word that meets the
+				// requirements.
+				return remainingWordShortlist.stream()
+						.flatMap(remainingWord -> getAllWordSquares(remainingWord, length, remainingLetters,
+								remainingWordShortlist.stream().collect(Collectors.toList()), updatedWords,
+								wordSquares));
 
 			}
 		} else {
@@ -85,17 +100,19 @@ public class WordSquareGenerator {
 	}
 
 	/**
-	 * Check if the word can be formed from the available letters.
+	 * Check if the word can be formed from the available letters and meets the
+	 * requirements.
 	 * 
 	 * @param word    The word.
 	 * @param letters The available letters.
+	 * @param words   The existing words in the word square.
 	 * @return true if the word can be formed from the available letters, or false
 	 *         if not.
 	 */
-	static boolean isWordAbleToBeFormedFromAvailableLetters(final String word, final String letters) {
-		final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
-				letters);
-		return wordContainsAvailableLettersPredicate.test(word);
+	static boolean isWordAbleToBeFormed(final String word, final String letters, final List<String> words) {
+		final ListPredicate<String> listPredicate = new ListPredicate<String>(Arrays
+				.asList(new WordContainsAvailableLettersPredicate(letters), new WordMeetsRequirementsPredicate(words)));
+		return listPredicate.test(word);
 	}
 
 	/**

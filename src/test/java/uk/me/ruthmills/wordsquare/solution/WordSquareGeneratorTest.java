@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.is;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,16 +21,17 @@ import org.junit.Test;
 public class WordSquareGeneratorTest {
 
 	/**
-	 * Test that word CAN be formed from available letters.
+	 * Test that word CAN be formed from available letters when there are no
+	 * existing words.
 	 */
 	@Test
-	public void shouldReturnTrue_whenWordCanBeFormedFromAvailableLetters() {
+	public void shouldReturnTrue_whenWordCanBeFormedFromAvailableLetters_andThereAreNoExistingWords() {
 		// given
 		final String word = "dog";
 		final String letters = "dgox";
 
 		// when
-		final boolean result = WordSquareGenerator.isWordAbleToBeFormedFromAvailableLetters(word, letters);
+		final boolean result = WordSquareGenerator.isWordAbleToBeFormed(word, letters, new ArrayList<String>());
 
 		// then
 		assertThat(result, is(true));
@@ -39,13 +41,47 @@ public class WordSquareGeneratorTest {
 	 * Test that word CANNOT be formed from available letters.
 	 */
 	@Test
-	public void shouldReturnFalse_whenWordCannotBeFormedFromAvailableLetters() {
+	public void shouldReturnFalse_whenWordCannotBeFormedFromAvailableLetters_andThereAreNoExistingWords() {
 		// given
 		final String word = "dog";
 		final String letters = "dgx";
 
 		// when
-		final boolean result = WordSquareGenerator.isWordAbleToBeFormedFromAvailableLetters(word, letters);
+		final boolean result = WordSquareGenerator.isWordAbleToBeFormed(word, letters, new ArrayList<String>());
+
+		// then
+		assertThat(result, is(false));
+	}
+
+	/**
+	 * Test that word CAN be formed when there are available letters AND the word is
+	 * valid.
+	 */
+	@Test
+	public void shouldReturnTrue_whenWordCanBeFormedFromAvailableLetters_andWordIsValid() {
+		// given
+		final String word = "oxo";
+		final String letters = "dgooox";
+
+		// when
+		final boolean result = WordSquareGenerator.isWordAbleToBeFormed(word, letters, Arrays.asList("dog"));
+
+		// then
+		assertThat(result, is(true));
+	}
+
+	/**
+	 * Test that word CANNOT be formed when there are available letters AND the word
+	 * is NOT valid.
+	 */
+	@Test
+	public void shouldReturnTrue_whenWordCanBeFormedFromAvailableLetters_andWordIsNotValid() {
+		// given
+		final String word = "god";
+		final String letters = "dgooox";
+
+		// when
+		final boolean result = WordSquareGenerator.isWordAbleToBeFormed(word, letters, Arrays.asList("dog"));
 
 		// then
 		assertThat(result, is(false));
@@ -69,8 +105,8 @@ public class WordSquareGeneratorTest {
 	}
 
 	/**
-	 * Test getting all combinations (including invalid ones) for a given starting
-	 * word in a 3-letter word square.
+	 * Test getting all valid combinations for a given starting word in a 3-letter
+	 * word square.
 	 */
 	@Test
 	public void shouldGetAllWordSquareCombinationsForStartingWord() throws IOException, URISyntaxException {
@@ -85,19 +121,15 @@ public class WordSquareGeneratorTest {
 				wordShortlist, new ArrayList<String>(), new ArrayList<WordSquare>()).collect(Collectors.toList());
 
 		// then
-		assertThat(combinations, hasSize(4));
-		assertThat(combinations.get(0).getWords().toString(), is("[dog, dog, oxo]"));
-		assertThat(combinations.get(1).getWords().toString(), is("[dog, god, oxo]"));
-		assertThat(combinations.get(2).getWords().toString(), is("[dog, oxo, dog]"));
-		assertThat(combinations.get(3).getWords().toString(), is("[dog, oxo, god]"));
+		assertThat(combinations, hasSize(1));
+		assertThat(combinations.get(0).getWords().toString(), is("[dog, oxo, god]"));
 	}
 
 	/**
-	 * Test we can get all possible combinations (including invalid ones) for a
-	 * 3-letter word square.
+	 * Test we can get all valid combinations for a 3-letter word square.
 	 */
 	@Test
-	public void shouldGetAllPossibleCombinations() throws IOException, URISyntaxException {
+	public void shouldGetAllValidCombinations() throws IOException, URISyntaxException {
 		// given
 		final int length = 3;
 		final String letters = "ddggoooox";
@@ -107,24 +139,8 @@ public class WordSquareGeneratorTest {
 				.collect(Collectors.toList());
 
 		// then
-		assertThat(combinations, hasSize(18));
-		assertThat(combinations.get(0).getWords().toString(), is("[dog, dog, oxo]"));
-		assertThat(combinations.get(1).getWords().toString(), is("[dog, god, oxo]"));
-		assertThat(combinations.get(2).getWords().toString(), is("[dog, oxo, dog]"));
-		assertThat(combinations.get(3).getWords().toString(), is("[dog, oxo, god]"));
-		assertThat(combinations.get(4).getWords().toString(), is("[god, dog, oxo]"));
-		assertThat(combinations.get(5).getWords().toString(), is("[god, god, oxo]"));
-		assertThat(combinations.get(6).getWords().toString(), is("[god, oxo, dog]"));
-		assertThat(combinations.get(7).getWords().toString(), is("[god, oxo, god]"));
-		assertThat(combinations.get(8).getWords().toString(), is("[goo, gox, odd]"));
-		assertThat(combinations.get(9).getWords().toString(), is("[goo, odd, gox]"));
-		assertThat(combinations.get(10).getWords().toString(), is("[gox, goo, odd]"));
-		assertThat(combinations.get(11).getWords().toString(), is("[gox, odd, goo]"));
-		assertThat(combinations.get(12).getWords().toString(), is("[odd, goo, gox]"));
-		assertThat(combinations.get(13).getWords().toString(), is("[odd, gox, goo]"));
-		assertThat(combinations.get(14).getWords().toString(), is("[oxo, dog, dog]"));
-		assertThat(combinations.get(15).getWords().toString(), is("[oxo, dog, god]"));
-		assertThat(combinations.get(16).getWords().toString(), is("[oxo, god, dog]"));
-		assertThat(combinations.get(17).getWords().toString(), is("[oxo, god, god]"));
+		assertThat(combinations, hasSize(2));
+		assertThat(combinations.get(0).getWords().toString(), is("[dog, oxo, god]"));
+		assertThat(combinations.get(1).getWords().toString(), is("[god, oxo, dog]"));
 	}
 }

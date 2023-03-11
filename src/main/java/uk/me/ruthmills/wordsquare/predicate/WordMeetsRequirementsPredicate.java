@@ -2,6 +2,7 @@ package uk.me.ruthmills.wordsquare.predicate;
 
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.IntStream;
 
 /**
  * Predicate to check if a given word meets the requirements, based on the
@@ -30,7 +31,8 @@ public class WordMeetsRequirementsPredicate implements Predicate<String> {
 	 * @return true if the word meets the requirements, or false if not.
 	 */
 	@Override
-	public boolean test(String word) {
-		return word.charAt(0) == words.get(0).charAt(words.size());
+	public boolean test(final String word) {
+		return IntStream.range(0, words.size())
+				.allMatch(index -> word.charAt(index) == words.get(index).charAt(words.size()));
 	}
 }
