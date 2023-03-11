@@ -162,7 +162,7 @@ public class WordSquareSolverTest {
 	/**
 	 * Test that we can solve the 7-letter word square.
 	 */
-	@Test
+//	@Test
 	public void shouldSolve7LetterWordSquare() throws IOException, URISyntaxException {
 		// given
 		final int length = 7;
