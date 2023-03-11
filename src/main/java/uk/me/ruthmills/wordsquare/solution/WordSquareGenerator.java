@@ -54,9 +54,6 @@ public class WordSquareGenerator {
 	 */
 	static void getAllWordSquares(final String word, final int length, final String letters,
 			final List<String> wordShortlist, final List<String> words, final List<WordSquare> wordSquares) {
-		if (words.size() == 0) {
-			System.out.println(word);
-		}
 		// Can the word be formed from the available letters?
 		if (isWordAbleToBeFormed(word, letters, words)) {
 			// Get the remaining letters left, after removing those from the current word

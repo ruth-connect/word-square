@@ -1,5 +1,6 @@
 package uk.me.ruthmills.wordsquare.solution;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,7 +14,7 @@ import uk.me.ruthmills.wordsquare.predicate.ValidWordSquarePredicate;
 public class WordSquare {
 
 	// Valid word square predicate.
-	private final static ValidWordSquarePredicate validWordSquarePredicate = new ValidWordSquarePredicate();
+	private final ValidWordSquarePredicate validWordSquarePredicate;
 
 	// list of words.
 	private final List<String> words;
@@ -22,9 +23,21 @@ public class WordSquare {
 	 * Constructor.
 	 * 
 	 * @param length Length of each word in the word square.
+	 * @param words  Array of words.
+	 */
+	public WordSquare(int length, String... words) {
+		// Call overloaded constructor.
+		this(length, Arrays.asList(words));
+	}
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param length Length of each word in the word square.
 	 * @param words  List of words.
 	 */
 	public WordSquare(final int length, final List<String> words) {
+		this.validWordSquarePredicate = new ValidWordSquarePredicate(length);
 		this.words = words;
 	}
 

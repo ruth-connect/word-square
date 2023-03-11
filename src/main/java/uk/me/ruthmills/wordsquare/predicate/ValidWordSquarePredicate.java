@@ -14,6 +14,22 @@ import uk.me.ruthmills.wordsquare.solution.WordSquare;
  */
 public class ValidWordSquarePredicate implements Predicate<WordSquare> {
 
+	// Word length predicate.
+	private final WordLengthPredicate wordLengthPredicate;
+
+	// Length of each word in the word square.
+	private final int length;
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param length Length of each word in the word square.
+	 */
+	public ValidWordSquarePredicate(int length) {
+		wordLengthPredicate = new WordLengthPredicate(length);
+		this.length = length;
+	}
+
 	/**
 	 * Check to see if a word square is valid.
 	 * 
@@ -24,11 +40,15 @@ public class ValidWordSquarePredicate implements Predicate<WordSquare> {
 	 */
 	@Override
 	public boolean test(final WordSquare wordSquare) {
-		// TODO - In Production code, we might want to assert the pre-requisites here
-		// (all words the same length, where the length of each word is the same as the
-		// number of words). However, in this instance, we will not have created any
-		// word squares not meeting those requirements before calling this
-		// predicate - so I think we are fine to skip this.
+		// Return false if we have the wrong number of words.
+		if (wordSquare.getWords().size() != length) {
+			return false;
+		}
+
+		// Return false if any word is the wrong length.
+		if (!wordSquare.getWords().stream().allMatch(wordLengthPredicate)) {
+			return false;
+		}
 
 		// Get the list of words from the word square.
 		List<String> words = wordSquare.getWords();

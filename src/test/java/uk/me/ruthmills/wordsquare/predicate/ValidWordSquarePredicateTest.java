@@ -29,7 +29,7 @@ public class ValidWordSquarePredicateTest {
 	 */
 	@Before
 	public void setUp() {
-		validWordSquarePredicate = new ValidWordSquarePredicate();
+		validWordSquarePredicate = new ValidWordSquarePredicate(WORD_LENGTH);
 	}
 
 	/**
@@ -63,11 +63,67 @@ public class ValidWordSquarePredicateTest {
 
 		// then
 		assertThat(translatedWords, hasSize(5));
-		assertThat(translatedWords.get(0), is("afkpu"));
-		assertThat(translatedWords.get(1), is("bglqv"));
-		assertThat(translatedWords.get(2), is("chmrw"));
-		assertThat(translatedWords.get(3), is("dinsx"));
-		assertThat(translatedWords.get(4), is("ejoty"));
+		assertThat(translatedWords.toString(), is("[afkpu, bglqv, chmrw, dinsx, ejoty]"));
+	}
+
+	/**
+	 * Test that the predicate returns false if the word square has too few words.
+	 */
+	@Test
+	public void shouldReturnFalse_whenWordSquareHasTooFewWords() {
+		// given
+		final WordSquare wordSquare = new WordSquare(WORD_LENGTH, "rose", "oven", "send");
+
+		// when
+		final boolean isValidWordSquare = validWordSquarePredicate.test(wordSquare);
+
+		// then
+		assertThat(isValidWordSquare, is(false));
+	}
+
+	/**
+	 * Test that the predicate returns false if the word square has too many words.
+	 */
+	@Test
+	public void shouldReturnFalse_whenWordSquareHasTooManyWords() {
+		// given
+		final WordSquare wordSquare = new WordSquare(WORD_LENGTH, "rose", "oven", "send", "ends", "ends");
+
+		// when
+		final boolean isValidWordSquare = validWordSquarePredicate.test(wordSquare);
+
+		// then
+		assertThat(isValidWordSquare, is(false));
+	}
+
+	/**
+	 * Test that the predicate returns false if one of the words is too short.
+	 */
+	@Test
+	public void shouldReturnFalse_whenWordIsTooShort() {
+		// given
+		final WordSquare wordSquare = new WordSquare(WORD_LENGTH, "rose", "oven", "end", "ends");
+
+		// when
+		final boolean isValidWordSquare = validWordSquarePredicate.test(wordSquare);
+
+		// then
+		assertThat(isValidWordSquare, is(false));
+	}
+
+	/**
+	 * Test that the predicate returns false if one of the words is too long.
+	 */
+	@Test
+	public void shouldReturnFalse_whenWordIsTooLong() {
+		// given
+		final WordSquare wordSquare = new WordSquare(WORD_LENGTH, "rose", "coven", "send", "ends");
+
+		// when
+		final boolean isValidWordSquare = validWordSquarePredicate.test(wordSquare);
+
+		// then
+		assertThat(isValidWordSquare, is(false));
 	}
 
 	/**
@@ -76,7 +132,7 @@ public class ValidWordSquarePredicateTest {
 	@Test
 	public void shouldReturnTrue_whenWordSquareIsValid() {
 		// given
-		WordSquare wordSquare = new WordSquare(WORD_LENGTH, Arrays.asList("rose", "oven", "send", "ends"));
+		WordSquare wordSquare = new WordSquare(WORD_LENGTH, "rose", "oven", "send", "ends");
 
 		// when
 		boolean isValidWordSquare = validWordSquarePredicate.test(wordSquare);
@@ -92,7 +148,7 @@ public class ValidWordSquarePredicateTest {
 	@Test
 	public void shouldReturnFalse_whenWordsSwappedSoWordSquareIsInvalid() {
 		// given
-		WordSquare wordSquare = new WordSquare(WORD_LENGTH, Arrays.asList("rose", "oven", "ends", "send"));
+		WordSquare wordSquare = new WordSquare(WORD_LENGTH, "rose", "oven", "ends", "send");
 
 		// when
 		boolean isValidWordSquare = validWordSquarePredicate.test(wordSquare);
@@ -108,7 +164,7 @@ public class ValidWordSquarePredicateTest {
 	@Test
 	public void shouldReturnFalse_whenWordSquareHasInvalidLetter() {
 		// given
-		WordSquare wordSquare = new WordSquare(WORD_LENGTH, Arrays.asList("rose", "oven", "sand", "ends"));
+		WordSquare wordSquare = new WordSquare(WORD_LENGTH, "rose", "oven", "sand", "ends");
 
 		// when
 		boolean isValidWordSquare = validWordSquarePredicate.test(wordSquare);
