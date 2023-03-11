@@ -28,6 +28,9 @@ public class WordShortlist {
 	 * @param length  The required length.
 	 * @param letters The available letters to solve the word square.
 	 * @return The shortlist of words.
+	 * @throws IOException        Thrown if we cannot read from the dictionary file.
+	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
+	 *                            when attempting to locate the dictionary file.
 	 */
 	public static List<String> getWordShortlist(final int length, final String letters)
 			throws IOException, URISyntaxException {

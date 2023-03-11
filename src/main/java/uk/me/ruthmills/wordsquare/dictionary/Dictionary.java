@@ -24,6 +24,7 @@ public class Dictionary {
 	 * @return A list of all the words from the dictionary file.
 	 * @throws IOException        Thrown if we cannot read from the dictionary file.
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
+	 *                            when attempting to locate the dictionary file.
 	 */
 	public static List<String> getAllWords() throws IOException, URISyntaxException {
 		try (Stream<String> linesStream = Dictionary.getWordsStream()) {
@@ -40,6 +41,7 @@ public class Dictionary {
 	 * @return A list of only those words matching the predicate.
 	 * @throws IOException        Thrown if we cannot read from the dictionary file.
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
+	 *                            when attempting to locate the dictionary file.
 	 */
 	public static List<String> getWordsMatchingPredicate(final Predicate<String> predicate)
 			throws IOException, URISyntaxException {
@@ -54,6 +56,7 @@ public class Dictionary {
 	 * @return A stream of strings (one string for each word in the dictionary).
 	 * @throws IOException        Thrown if we cannot read from the dictionary file.
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
+	 *                            when attempting to locate the dictionary file.
 	 */
 	private static Stream<String> getWordsStream() throws IOException, URISyntaxException {
 		return Files.lines(Paths.get(ClassLoader.getSystemResource(DICTIONARY_TEXT_FILE_NAME).toURI()));
