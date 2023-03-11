@@ -31,6 +31,7 @@ public class WordShortlist {
 	 */
 	public static List<String> getWordShortlist(final int length, final String letters)
 			throws IOException, URISyntaxException {
+		// The dictionary has ALL the words.
 		final Dictionary dictionary = new Dictionary();
 
 		// This predicate will first match on the required number of letters, and then
@@ -38,7 +39,7 @@ public class WordShortlist {
 		final ListPredicate wordPredicate = new ListPredicate(
 				Arrays.asList(new WordLengthPredicate(length), new WordContainsAvailableLettersPredicate(letters)));
 
-		// Return the shortlist of words.
+		// Return the shortlist of words (only those matching the predicate).
 		return dictionary.getWordsMatchingPredicate(wordPredicate);
 	}
 }

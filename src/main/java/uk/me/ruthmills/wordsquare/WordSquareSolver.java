@@ -1,9 +1,12 @@
-package uk.me.ruthmills.wordsquare.solution;
+package uk.me.ruthmills.wordsquare;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
+
+import uk.me.ruthmills.wordsquare.solution.WordShortlist;
+import uk.me.ruthmills.wordsquare.solution.WordSquare;
 
 /**
  * Class to solve a word square.
@@ -22,7 +25,7 @@ public class WordSquareSolver {
 	 * @throws IOException        Thrown if we cannot read from the dictionary file.
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
 	 */
-	static List<WordSquare> solveWordSquare(final int length, final String letters)
+	public static List<WordSquare> solveWordSquare(final int length, final String letters)
 			throws IOException, URISyntaxException {
 		List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
 		return Collections.emptyList();

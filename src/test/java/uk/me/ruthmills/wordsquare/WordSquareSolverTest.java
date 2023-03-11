@@ -1,4 +1,4 @@
-package uk.me.ruthmills.wordsquare.solution;
+package uk.me.ruthmills.wordsquare;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import org.junit.Test;
+
+import uk.me.ruthmills.wordsquare.solution.WordSquare;
 
 /**
  * Test suite for the Word Square Solver class.
