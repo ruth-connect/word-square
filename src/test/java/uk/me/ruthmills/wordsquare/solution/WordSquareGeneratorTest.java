@@ -108,22 +108,69 @@ public class WordSquareGeneratorTest {
 	 * square (there is only one in this case).
 	 */
 	@Test
-	public void shouldGetAllValidSolutionsForStartingWord() throws IOException, URISyntaxException {
+	public void shouldGetAllValidSolutionsFor3LetterStartingWord() throws IOException, URISyntaxException {
 		// given
 		final int length = 3;
 		final String letters = "ddggoooox";
 		final String startingWord = "dog";
 		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
-		final List<WordSquare> combinations = new ArrayList<>();
+		final List<WordSquare> solutions = new ArrayList<>();
 		final boolean firstMatchOnly = false;
 
 		// when
 		WordSquareGenerator.getValidWordSquaresForStartingWord(startingWord, length, letters, wordShortlist,
-				new ArrayList<String>(), combinations, firstMatchOnly);
+				new ArrayList<String>(), solutions, firstMatchOnly);
 
 		// then
-		assertThat(combinations, hasSize(1));
-		assertThat(combinations.get(0).getWords().toString(), is("[dog, oxo, god]"));
+		assertThat(solutions, hasSize(1));
+		assertThat(solutions.get(0).getWords().toString(), is("[dog, oxo, god]"));
+	}
+
+	/**
+	 * Test getting all valid solutions for a given starting word in a 5-letter word
+	 * square (there are two in this case).
+	 */
+	@Test
+	public void shouldGetAllValidSolutionsFor5LetterStartingWord() throws IOException, URISyntaxException {
+		// given
+		final int length = 5;
+		final String letters = "aaaeeeefhhmoonssrrrrttttw";
+		final String startingWord = "feast";
+		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
+		final List<WordSquare> solutions = new ArrayList<>();
+		final boolean firstMatchOnly = false;
+
+		// when
+		WordSquareGenerator.getValidWordSquaresForStartingWord(startingWord, length, letters, wordShortlist,
+				new ArrayList<String>(), solutions, firstMatchOnly);
+
+		// then
+		assertThat(solutions, hasSize(2));
+		assertThat(solutions.get(0).getWords().toString(), is("[feast, earth, armer, steno, throw]"));
+		assertThat(solutions.get(1).getWords().toString(), is("[feast, earth, armor, stone, threw]"));
+	}
+
+	/**
+	 * Test getting the first valid solutions for a given starting word in a
+	 * 5-letter word square.
+	 */
+	@Test
+	public void shouldGetFirstValidSolutionFor5LetterStartingWord() throws IOException, URISyntaxException {
+		// given
+		final int length = 5;
+		final String letters = "aaaeeeefhhmoonssrrrrttttw";
+		final String startingWord = "feast";
+		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
+		final List<WordSquare> solutions = new ArrayList<>();
+		final boolean firstMatchOnly = true;
+
+		// when
+		WordSquareGenerator.getValidWordSquaresForStartingWord(startingWord, length, letters, wordShortlist,
+				new ArrayList<String>(), solutions, firstMatchOnly);
+
+		// then
+		assertThat(solutions, hasSize(1));
+		assertThat(solutions.get(0).getWords().toString(), is("[feast, earth, armer, steno, throw]"));
 	}
 
 	/**
@@ -131,7 +178,7 @@ public class WordSquareGeneratorTest {
 	 * in this case).
 	 */
 	@Test
-	public void shouldGetAllValidSolutions() throws IOException, URISyntaxException {
+	public void shouldGetAllValidSolutionsFor3LetterWordSquare() throws IOException, URISyntaxException {
 		// given
 		final int length = 3;
 		final String letters = "ddggoooox";
@@ -150,7 +197,7 @@ public class WordSquareGeneratorTest {
 	 * Test we can get only the first matching solution for a 3-letter word square.
 	 */
 	@Test
-	public void shouldGetFirstMatchingSolution() throws IOException, URISyntaxException {
+	public void shouldGetFirstMatchingSolutionFor3LetterWordSquare() throws IOException, URISyntaxException {
 		// given
 		final int length = 3;
 		final String letters = "ddggoooox";

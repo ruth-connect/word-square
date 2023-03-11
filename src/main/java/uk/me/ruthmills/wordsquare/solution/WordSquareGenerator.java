@@ -85,11 +85,11 @@ public class WordSquareGenerator {
 			updatedWords.add(word);
 
 			// Do we have the required number of words in the list of words to make a word
-			// square?
-			if (updatedWords.size() == length) {
+			// square? And, if so, do we want to return all matches - or if we only want one
+			// match, is this the first match?
+			if (updatedWords.size() == length && (!firstMatchOnly || wordSquares.size() == 0)) {
 				// Add a new word square to end of the list of word squares.
 				wordSquares.add(new WordSquare(length, updatedWords));
-
 			} else {
 				// Recursively call this function for each remaining word that meets the
 				// requirements.

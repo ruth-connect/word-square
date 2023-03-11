@@ -23,6 +23,7 @@ public class WordSquareSolver {
 	 *         one for some cases, e.g. dog, oxo, god AND god, oxo, dog).
 	 * @throws IOException        Thrown if we cannot read from the dictionary file.
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
+	 *                            when attempting to locate the dictionary file.
 	 */
 	public static List<WordSquare> solveWordSquare(final int length, final String letters)
 			throws IOException, URISyntaxException {
@@ -39,6 +40,7 @@ public class WordSquareSolver {
 	 *         one for some cases, e.g. dog, oxo, god AND god, oxo, dog).
 	 * @throws IOException        Thrown if we cannot read from the dictionary file.
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
+	 *                            when attempting to locate the dictionary file.
 	 */
 	public static List<WordSquare> solveWordSquare(final int length, final String letters, boolean firstMatchOnly)
 			throws IOException, URISyntaxException {

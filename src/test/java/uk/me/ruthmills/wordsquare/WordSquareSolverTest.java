@@ -89,10 +89,11 @@ public class WordSquareSolverTest {
 	}
 
 	/**
-	 * Test that we can solve the first required 5-letter word square.
+	 * Test that we can solve the first required 5-letter word square. Return all
+	 * possible solutions (there are 2).
 	 */
 	@Test
-	public void shouldSolveFirst5LetterWordSquare() throws IOException, URISyntaxException {
+	public void shouldSolveFirst5LetterWordSquareAllSolutions() throws IOException, URISyntaxException {
 		// given
 		final int length = 5;
 		final String letters = "aaaeeeefhhmoonssrrrrttttw";
@@ -113,6 +114,28 @@ public class WordSquareSolverTest {
 		final List<String> solution2 = solutions.get(1).getWords();
 		assertThat(solution2, hasSize(5));
 		assertThat(solution2.toString(), is("[feast, earth, armor, stone, threw]"));
+	}
+
+	/**
+	 * Test that we can solve the first required 5-letter word square. Return only
+	 * the first solution.
+	 */
+	@Test
+	public void shouldSolveFirst5LetterWordSquareFirstSolutionOnly() throws IOException, URISyntaxException {
+		// given
+		final int length = 5;
+		final String letters = "aaaeeeefhhmoonssrrrrttttw";
+
+		// when
+		final List<WordSquare> solutions = WordSquareSolver.solveWordSquare(length, letters, true);
+
+		// then
+		assertThat(solutions, hasSize(1)); // first solution only, this time.
+		assertThat(solutions.get(0).isValid(), is(true));
+
+		final List<String> solution1 = solutions.get(0).getWords();
+		assertThat(solution1, hasSize(5));
+		assertThat(solution1.toString(), is("[feast, earth, armer, steno, throw]"));
 	}
 
 	/**
@@ -146,7 +169,12 @@ public class WordSquareSolverTest {
 		final String letters = "aaaaaaaaabbeeeeeeedddddggmmlloooonnssssrrrruvvyyy";
 
 		// when
-		final List<WordSquare> solutions = WordSquareSolver.solveWordSquare(length, letters);
+		// N.B. We pass the "firstMatchOnly" flag as true here - this is because there
+		// is only one solution (I checked) - and it's relatively early on in the total
+		// number of possible starting words. Hence, to avoid wasting time, there is no
+		// point in waiting for any other solutions - as there aren't any for this case
+		// anyway!
+		final List<WordSquare> solutions = WordSquareSolver.solveWordSquare(length, letters, true);
 
 		// then
 		assertThat(solutions, hasSize(1));
