@@ -28,7 +28,7 @@ public class ListPredicateTest {
 	private WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate;
 
 	// List predicate to test.
-	private ListPredicate listPredicate;
+	private ListPredicate<String> listPredicate;
 
 	/**
 	 * Set up the test dependencies.
@@ -42,7 +42,8 @@ public class ListPredicateTest {
 		// time, so we should execute this first.
 		// Then, if the word length matches, we can go on and execute the available
 		// letters predicate.
-		listPredicate = new ListPredicate(Arrays.asList(wordLengthPredicate, wordContainsAvailableLettersPredicate));
+		listPredicate = new ListPredicate<String>(
+				Arrays.asList(wordLengthPredicate, wordContainsAvailableLettersPredicate));
 	}
 
 	/**

@@ -9,31 +9,31 @@ import java.util.function.Predicate;
  * 
  * @author ruth
  */
-public class ListPredicate implements Predicate<String> {
+public class ListPredicate<T> implements Predicate<T> {
 
 	// List of predicates to execute.
-	private final List<Predicate<String>> predicates;
+	private final List<Predicate<T>> predicates;
 
 	/**
 	 * Constructor. Takes the list of predicates to execute in sequence.
 	 * 
 	 * @param predicates The list of predicates.
 	 */
-	public ListPredicate(final List<Predicate<String>> predicates) {
+	public ListPredicate(final List<Predicate<T>> predicates) {
 		this.predicates = predicates;
 	}
 
 	/**
-	 * Test if the supplied word matches ALL the predicates in the list. If any
+	 * Test if the supplied object matches ALL the predicates in the list. If any
 	 * predicates return false, we short-circuit and don't bother executing the
 	 * rest.
 	 * 
-	 * @param word The word to test.
+	 * @param object The object to test.
 	 * @return true if ALL the predicates match, or false if not.
 	 */
 	@Override
-	public boolean test(final String word) {
+	public boolean test(final T object) {
 		// allMatch() is a short-circuiting function.
-		return predicates.stream().allMatch(predicate -> predicate.test(word));
+		return predicates.stream().allMatch(predicate -> predicate.test(object));
 	}
 }

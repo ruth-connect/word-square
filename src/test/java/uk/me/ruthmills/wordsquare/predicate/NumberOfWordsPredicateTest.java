@@ -38,9 +38,8 @@ public class NumberOfWordsPredicateTest {
 	@Test
 	public void shouldReturnFalse_whenThereAreTooFewWords() {
 		// given
-		final WordSquare wordSquare = new WordSquare(Arrays.asList("banana", "apple", "orange")); // we don't care about
-																									// word
-		// length here.
+		final WordSquare wordSquare = new WordSquare(NUMBER_OF_WORDS, Arrays.asList("banana", "apple", "orange"));
+
 		// when
 		final boolean hasExpectedNumberOfWords = numberOfWordsPredicate.test(wordSquare);
 
@@ -55,7 +54,8 @@ public class NumberOfWordsPredicateTest {
 	@Test
 	public void shouldReturnTrue_whenThereAreTheCorrectNumberOfWords() {
 		// given
-		final WordSquare wordSquare = new WordSquare(Arrays.asList("banana", "apple", "orange", "pear"));
+		final WordSquare wordSquare = new WordSquare(NUMBER_OF_WORDS,
+				Arrays.asList("banana", "apple", "orange", "pear"));
 
 		// when
 		final boolean hasExpectedNumberOfWords = numberOfWordsPredicate.test(wordSquare);
@@ -70,7 +70,8 @@ public class NumberOfWordsPredicateTest {
 	@Test
 	public void shouldReturnFalse_whenThereAreTooManyWords() {
 		// given
-		WordSquare wordSquare = new WordSquare(Arrays.asList("banana", "apple", "orange", "pear", "grape"));
+		WordSquare wordSquare = new WordSquare(NUMBER_OF_WORDS,
+				Arrays.asList("banana", "apple", "orange", "pear", "grape"));
 
 		// when
 		boolean hasExpectedNumberOfWords = numberOfWordsPredicate.test(wordSquare);

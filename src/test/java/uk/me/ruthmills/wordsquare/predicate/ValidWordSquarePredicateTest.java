@@ -18,6 +18,8 @@ import uk.me.ruthmills.wordsquare.solution.WordSquare;
  * @author ruth
  */
 public class ValidWordSquarePredicateTest {
+	// Word length.
+	private static final int WORD_LENGTH = 4;
 
 	// Object to test.
 	private ValidWordSquarePredicate validWordSquarePredicate;
@@ -74,7 +76,7 @@ public class ValidWordSquarePredicateTest {
 	@Test
 	public void shouldReturnTrue_whenWordSquareIsValid() {
 		// given
-		WordSquare wordSquare = new WordSquare(Arrays.asList("rose", "oven", "send", "ends"));
+		WordSquare wordSquare = new WordSquare(WORD_LENGTH, Arrays.asList("rose", "oven", "send", "ends"));
 
 		// when
 		boolean isValidWordSquare = validWordSquarePredicate.test(wordSquare);
@@ -90,7 +92,7 @@ public class ValidWordSquarePredicateTest {
 	@Test
 	public void shouldReturnFalse_whenWordsSwappedSoWordSquareIsInvalid() {
 		// given
-		WordSquare wordSquare = new WordSquare(Arrays.asList("rose", "oven", "ends", "send"));
+		WordSquare wordSquare = new WordSquare(WORD_LENGTH, Arrays.asList("rose", "oven", "ends", "send"));
 
 		// when
 		boolean isValidWordSquare = validWordSquarePredicate.test(wordSquare);
@@ -106,7 +108,7 @@ public class ValidWordSquarePredicateTest {
 	@Test
 	public void shouldReturnFalse_whenWordSquareHasInvalidLetter() {
 		// given
-		WordSquare wordSquare = new WordSquare(Arrays.asList("rose", "oven", "sand", "ends"));
+		WordSquare wordSquare = new WordSquare(WORD_LENGTH, Arrays.asList("rose", "oven", "sand", "ends"));
 
 		// when
 		boolean isValidWordSquare = validWordSquarePredicate.test(wordSquare);

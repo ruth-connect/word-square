@@ -37,9 +37,8 @@ public class AllWordsLengthPredicateTest {
 	@Test
 	public void shouldReturnFalse_whenWordPresentThatIsTooShort() {
 		// given
-		final WordSquare wordSquare = new WordSquare(Arrays.asList("test", "one", "newt")); // we don't care how many
-																							// words
-		// there are in the list.
+		final WordSquare wordSquare = new WordSquare(WORD_LENGTH, Arrays.asList("test", "one", "newt"));
+
 		// when
 		final boolean areAllWordsExpectedLength = allWordsLengthPredicate.test(wordSquare);
 
@@ -53,7 +52,7 @@ public class AllWordsLengthPredicateTest {
 	@Test
 	public void shouldReturnTrue_whenAllWordsAreCorrectLength() {
 		// given
-		final WordSquare wordSquare = new WordSquare(Arrays.asList("test", "once", "newt"));
+		final WordSquare wordSquare = new WordSquare(WORD_LENGTH, Arrays.asList("test", "once", "newt"));
 
 		// when
 		final boolean areAllWordsExpectedLength = allWordsLengthPredicate.test(wordSquare);
@@ -68,7 +67,7 @@ public class AllWordsLengthPredicateTest {
 	@Test
 	public void shouldReturnFalse_whenWordPresentThatIsTooLong() {
 		// given
-		final WordSquare wordSquare = new WordSquare(Arrays.asList("tests", "once", "newt"));
+		final WordSquare wordSquare = new WordSquare(WORD_LENGTH, Arrays.asList("tests", "once", "newt"));
 
 		// when
 		final boolean areAllWordsExpectedLength = allWordsLengthPredicate.test(wordSquare);
