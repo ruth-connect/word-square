@@ -36,3 +36,10 @@ once
 acme
 need
 ```
+
+## Caveats
+1. The test for the 7-letter word square currently has an @Ignore annotation. This is because this
+test takes several minutes to run, which would delay the Maven build (as Maven runs all the tests during
+the build process). Please remove the @Ignore annotation if you want to run this test.
+2. When executing from the command line, only the first valid word square encountered is returned. We do, however, check for all valid word squares in the unit tests (there are a couple of cases where we get
+two word squares returned).
