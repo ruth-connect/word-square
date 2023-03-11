@@ -27,17 +27,25 @@ public class WordSquareGenerator {
 	 * Get all possible word square combinations (including ones which might not be
 	 * valid).
 	 * 
-	 * @param length  Number of letters in each word.
-	 * @param letters Available letters to create the words from.
+	 * @param length         Number of letters in each word.
+	 * @param letters        Available letters to create the words from.
+	 * @param firstMatchOnly true to stop at the first matching word square, false
+	 *                       to carry on until all possible words are exhausted.
 	 * @throws IOException        Thrown if we cannot read from the dictionary file.
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
 	 */
-	public static List<WordSquare> getAllPossibleCombinations(final int length, final String letters)
-			throws IOException, URISyntaxException {
+	public static List<WordSquare> getAllPossibleCombinations(final int length, final String letters,
+			final boolean firstMatchOnly) throws IOException, URISyntaxException {
 		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
 		final List<WordSquare> wordSquares = new ArrayList<WordSquare>();
-		for (String word : wordShortlist) {
-			getAllWordSquares(word, length, letters, wordShortlist, new ArrayList<String>(), wordSquares);
+		for (final String word : wordShortlist) {
+			getAllWordSquares(word, length, letters, wordShortlist, new ArrayList<String>(), wordSquares,
+					firstMatchOnly);
+
+			// If we are to return the first match only, and we have a match, return it.
+			if (firstMatchOnly && wordSquares.size() > 0) {
+				return wordSquares;
+			}
 		}
 		return wordSquares;
 	}
@@ -53,7 +61,8 @@ public class WordSquareGenerator {
 	 * @param words         The list of words so far.
 	 */
 	static void getAllWordSquares(final String word, final int length, final String letters,
-			final List<String> wordShortlist, final List<String> words, final List<WordSquare> wordSquares) {
+			final List<String> wordShortlist, final List<String> words, final List<WordSquare> wordSquares,
+			final boolean firstMatchOnly) {
 		// Can the word be formed from the available letters?
 		if (isWordAbleToBeFormed(word, letters, words)) {
 			// Get the remaining letters left, after removing those from the current word
@@ -85,7 +94,7 @@ public class WordSquareGenerator {
 				// requirements.
 				for (String remainingWord : remainingWordShortlist) {
 					getAllWordSquares(remainingWord, length, remainingLetters, remainingWordShortlist, updatedWords,
-							wordSquares);
+							wordSquares, firstMatchOnly);
 				}
 			}
 		}

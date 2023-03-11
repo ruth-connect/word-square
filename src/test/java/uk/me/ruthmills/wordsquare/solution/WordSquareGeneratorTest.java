@@ -115,10 +115,11 @@ public class WordSquareGeneratorTest {
 		final String startingWord = "dog";
 		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
 		final List<WordSquare> combinations = new ArrayList<>();
+		final boolean firstMatchOnly = false;
 
 		// when
 		WordSquareGenerator.getAllWordSquares(startingWord, length, letters, wordShortlist, new ArrayList<String>(),
-				combinations);
+				combinations, firstMatchOnly);
 
 		// then
 		assertThat(combinations, hasSize(1));
@@ -126,20 +127,41 @@ public class WordSquareGeneratorTest {
 	}
 
 	/**
-	 * Test we can get all valid combinations for a 3-letter word square.
+	 * Test we can get all valid solutions for a 3-letter word square.
 	 */
 	@Test
-	public void shouldGetAllValidCombinations() throws IOException, URISyntaxException {
+	public void shouldGetAllValidSolutions() throws IOException, URISyntaxException {
 		// given
 		final int length = 3;
 		final String letters = "ddggoooox";
+		final boolean firstMatchOnly = false;
 
 		// when
-		final List<WordSquare> combinations = WordSquareGenerator.getAllPossibleCombinations(length, letters);
+		final List<WordSquare> solutions = WordSquareGenerator.getAllPossibleCombinations(length, letters,
+				firstMatchOnly);
 
 		// then
-		assertThat(combinations, hasSize(2));
-		assertThat(combinations.get(0).getWords().toString(), is("[dog, oxo, god]"));
-		assertThat(combinations.get(1).getWords().toString(), is("[god, oxo, dog]"));
+		assertThat(solutions, hasSize(2));
+		assertThat(solutions.get(0).getWords().toString(), is("[dog, oxo, god]"));
+		assertThat(solutions.get(1).getWords().toString(), is("[god, oxo, dog]"));
+	}
+
+	/**
+	 * Test we can get only the first matching solution for a 3-letter word square.
+	 */
+	@Test
+	public void shouldGetFirstMatchingSolution() throws IOException, URISyntaxException {
+		// given
+		final int length = 3;
+		final String letters = "ddggoooox";
+		final boolean firstMatchOnly = true;
+
+		// when
+		final List<WordSquare> solutions = WordSquareGenerator.getAllPossibleCombinations(length, letters,
+				firstMatchOnly);
+
+		// then
+		assertThat(solutions, hasSize(1));
+		assertThat(solutions.get(0).getWords().toString(), is("[dog, oxo, god]"));
 	}
 }
