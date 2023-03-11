@@ -21,7 +21,7 @@ public class ValidWordSquarePredicate implements Predicate<WordCombination> {
 	 * @return true if it is a valid word square, or false if not.
 	 */
 	@Override
-	public boolean test(WordCombination wordCombination) {
+	public boolean test(final WordCombination wordCombination) {
 		List<String> words = wordCombination.getWords();
 
 		// Swap the vertical and horizontal words.
@@ -36,7 +36,7 @@ public class ValidWordSquarePredicate implements Predicate<WordCombination> {
 	 * Translate columns to rows. This will return a new list of strings where the
 	 * vertical and horizontal words are swapped.
 	 */
-	List<String> translateColumnsToRows(List<String> words) {
+	List<String> translateColumnsToRows(final List<String> words) {
 		return IntStream.range(0, words.size()).mapToObj(column -> getColumn(words, column))
 				.collect(Collectors.toList());
 	}
@@ -48,7 +48,7 @@ public class ValidWordSquarePredicate implements Predicate<WordCombination> {
 	 * @param column The integer index of the column.
 	 * @return A String comprising the word in the column.
 	 */
-	String getColumn(List<String> words, int column) {
+	String getColumn(final List<String> words, final int column) {
 		return IntStream.range(0, words.size()).mapToObj(row -> words.get(row).charAt(column)).map(String::valueOf)
 				.collect(Collectors.joining());
 	}
