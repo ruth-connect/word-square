@@ -16,6 +16,7 @@ where:
 `<letters>` is the letters to create the word square from
 
 ### Examples
+#### 3-letter word square
 `java -jar target/wordsquare-0.0.1-SNAPSHOT-jar-with-dependencies.jar 3 ddggoooox`
 
 Expected output:
@@ -25,6 +26,7 @@ oxo
 god
 ```
 
+#### 4-letter word square
 `java -jar target/wordsquare-0.0.1-SNAPSHOT-jar-with-dependencies.jar 4 aaccdeeeemmnnnoo`
 
 Expected output:
