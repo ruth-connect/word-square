@@ -34,6 +34,8 @@ public class WordSquareSolverTest {
 
 		// then
 		assertThat(solutions, hasSize(2));
+		assertThat(solutions.get(0).isValid(), is(true));
+		assertThat(solutions.get(1).isValid(), is(true));
 
 		final List<String> dogOxoGod = solutions.get(0).getWords();
 		assertThat(dogOxoGod, hasSize(3));
@@ -62,6 +64,7 @@ public class WordSquareSolverTest {
 
 		// then
 		assertThat(solutions, hasSize(1));
+		assertThat(solutions.get(0).isValid(), is(true));
 
 		final List<String> solution = solutions.get(0).getWords();
 		assertThat(solution, hasSize(4));
@@ -85,6 +88,7 @@ public class WordSquareSolverTest {
 
 		// then
 		assertThat(solutions, hasSize(1));
+		assertThat(solutions.get(0).isValid(), is(true));
 
 		final List<String> solution = solutions.get(0).getWords();
 		assertThat(solution, hasSize(4));
@@ -108,6 +112,7 @@ public class WordSquareSolverTest {
 
 		// then
 		assertThat(solutions, hasSize(1));
+		assertThat(solutions.get(0).isValid(), is(true));
 
 		final List<String> solution = solutions.get(0).getWords();
 		assertThat(solution, hasSize(5));
@@ -132,6 +137,7 @@ public class WordSquareSolverTest {
 
 		// then
 		assertThat(solutions, hasSize(1));
+		assertThat(solutions.get(0).isValid(), is(true));
 
 		final List<String> solution = solutions.get(0).getWords();
 		assertThat(solution, hasSize(5));
@@ -156,6 +162,7 @@ public class WordSquareSolverTest {
 
 		// then
 		assertThat(solutions, hasSize(1));
+		assertThat(solutions.get(0).isValid(), is(true));
 
 		final List<String> solution = solutions.get(0).getWords();
 		assertThat(solution, hasSize(7));

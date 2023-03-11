@@ -5,7 +5,6 @@ import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 
-import uk.me.ruthmills.wordsquare.solution.WordShortlist;
 import uk.me.ruthmills.wordsquare.solution.WordSquare;
 
 /**
@@ -27,7 +26,6 @@ public class WordSquareSolver {
 	 */
 	public static List<WordSquare> solveWordSquare(final int length, final String letters)
 			throws IOException, URISyntaxException {
-		List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
 		return Collections.emptyList();
 	}
 }
