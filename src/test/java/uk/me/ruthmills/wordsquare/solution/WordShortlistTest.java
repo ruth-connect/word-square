@@ -31,12 +31,7 @@ public class WordShortlistTest {
 
 		// then
 		assertThat(wordShortlist, hasSize(6));
-		assertThat(wordShortlist.get(0), is("dog"));
-		assertThat(wordShortlist.get(1), is("god"));
-		assertThat(wordShortlist.get(2), is("goo"));
-		assertThat(wordShortlist.get(3), is("gox"));
-		assertThat(wordShortlist.get(4), is("odd"));
-		assertThat(wordShortlist.get(5), is("oxo"));
+		assertThat(wordShortlist.toString(), is("[dog, god, goo, gox, odd, oxo]"));
 	}
 
 	/**
