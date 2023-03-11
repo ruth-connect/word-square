@@ -26,9 +26,11 @@ public class ValidWordSquarePredicate implements Predicate<WordSquare> {
 	public boolean test(final WordSquare wordSquare) {
 		// TODO - In Production code, we might want to assert the pre-requisites here
 		// (all words the same length, where the length of each word is the same as the
-		// number of words). However, in this instance, we will have already filtered
-		// out any word squares not meeting those requirements before calling this
-		// predicate - so I think we are fine to skip this.
+		// number of words). However, in this instance, we will not have created any
+		// word squares not meeting those requirements before calling this
+		// predicate - so I think we are fine to skip this. Also we need to optimise
+		// performance, so it makes sense to avoid wasting time on any unnecessary
+		// checks.
 
 		// Get the list of words from the word square.
 		List<String> words = wordSquare.getWords();

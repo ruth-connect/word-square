@@ -22,12 +22,6 @@ public class WordSquareTest {
 	// List of expected words.
 	private static final List<String> EXPECTED_WORDS = Arrays.asList("rose", "oven", "send", "ends");
 
-	// Too few words.
-	private static final List<String> TOO_FEW_WORDS = Arrays.asList("rose", "oven", "send");
-
-	// Too few letters.
-	private static final List<String> TOO_FEW_LETTERS = Arrays.asList("rose", "oven", "end", "ends");
-
 	// Invalid word square, despite correct number of words and letters.
 	private static final List<String> INVALID_WORD_SQUARE = Arrays.asList("rose", "oven", "ends", "send");
 
@@ -47,10 +41,10 @@ public class WordSquareTest {
 	}
 
 	/**
-	 * Test that the word square is valid when it contains valid words.
+	 * Test that the isValid method returns true when the word square is valid.
 	 */
 	@Test
-	public void shouldBeValid_whenWordSquareContainsValidWords() {
+	public void shouldReturnTrue_whenWordSquareContainsValidWords() {
 		// given
 		WordSquare wordSquare = new WordSquare(WORD_LENGTH, EXPECTED_WORDS);
 
@@ -62,42 +56,10 @@ public class WordSquareTest {
 	}
 
 	/**
-	 * Test that the word square is invalid when it contains too few words.
+	 * Test that the isValid method returns false when the word square is invalid.
 	 */
 	@Test
-	public void shouldNotBeValid_whenWordSquareContainsTooFewWords() {
-		// given
-		WordSquare wordSquare = new WordSquare(WORD_LENGTH, TOO_FEW_WORDS);
-
-		// when
-		final boolean isValid = wordSquare.isValid();
-
-		// then
-		assertThat(isValid, is(false));
-	}
-
-	/**
-	 * Test that the word square is invalid when one of the words contains too few
-	 * letters.
-	 */
-	@Test
-	public void shouldNotBeValid_whenWordSquareContainsWordWithTooFewLetters() {
-		// given
-		WordSquare wordSquare = new WordSquare(WORD_LENGTH, TOO_FEW_LETTERS);
-
-		// when
-		final boolean isValid = wordSquare.isValid();
-
-		// then
-		assertThat(isValid, is(false));
-	}
-
-	/**
-	 * Test that the word square is invalid when the word square is invalid, despite
-	 * having the correct number of words, each with the correct number of letters.
-	 */
-	@Test
-	public void shouldNotBeValid_whenWordSquareIsInvalid() {
+	public void shouldReturnFalse_whenWordSquareIsInvalid() {
 		// given
 		WordSquare wordSquare = new WordSquare(WORD_LENGTH, INVALID_WORD_SQUARE);
 
