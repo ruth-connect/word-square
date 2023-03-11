@@ -1,7 +1,6 @@
 package uk.me.ruthmills.wordsquare.solution;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,12 +27,9 @@ public class WordShortlist {
 	 * @param length  The required length.
 	 * @param letters The available letters to solve the word square.
 	 * @return The shortlist of words.
-	 * @throws IOException        Thrown if we cannot read from the dictionary file.
-	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
-	 *                            when attempting to locate the dictionary file.
+	 * @throws IOException Thrown if we cannot read from the dictionary file.
 	 */
-	public static List<String> getWordShortlist(final int length, final String letters)
-			throws IOException, URISyntaxException {
+	public static List<String> getWordShortlist(final int length, final String letters) throws IOException {
 		// This predicate will first match on the required number of letters, and then
 		// ensure that each word contains ONLY a subset of the available letters.
 		final ListPredicate<String> wordPredicate = new ListPredicate<String>(

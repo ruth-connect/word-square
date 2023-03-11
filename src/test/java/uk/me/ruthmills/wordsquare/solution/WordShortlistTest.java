@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 import org.junit.Test;
@@ -21,7 +20,7 @@ public class WordShortlistTest {
 	 * Should return the expected word shortlist for a given input.
 	 */
 	@Test
-	public void shouldReturnExpectedWordShortlist() throws IOException, URISyntaxException {
+	public void shouldReturnExpectedWordShortlist() throws IOException {
 		// given
 		final int length = 3;
 		final String availableLetters = "ddggoooox";
@@ -38,7 +37,7 @@ public class WordShortlistTest {
 	 * Should return the word shortlist for the 4-letter test case.
 	 */
 	@Test
-	public void shouldReturnWordShortlist_for4LetterTestCase() throws IOException, URISyntaxException {
+	public void shouldReturnWordShortlist_for4LetterTestCase() throws IOException {
 		// given
 		final int length = 4;
 		final String availableLetters = "aaccdeeeemmnnnoo";
@@ -54,7 +53,7 @@ public class WordShortlistTest {
 	 * Should return the word shortlist for the first 5-letter test case.
 	 */
 	@Test
-	public void shouldReturnWordShortlist_forFirst5LetterTestCase() throws IOException, URISyntaxException {
+	public void shouldReturnWordShortlist_forFirst5LetterTestCase() throws IOException {
 		// given
 		final int length = 5;
 		final String availableLetters = "aaaeeeefhhmoonssrrrrttttw";
@@ -70,7 +69,7 @@ public class WordShortlistTest {
 	 * Should return the word shortlist for the second 5-letter test case.
 	 */
 	@Test
-	public void shouldReturnWordShortlist_forSecond5LetterTestCase() throws IOException, URISyntaxException {
+	public void shouldReturnWordShortlist_forSecond5LetterTestCase() throws IOException {
 		// given
 		final int length = 5;
 		final String availableLetters = "aabbeeeeeeeehmosrrrruttvv";
@@ -86,7 +85,7 @@ public class WordShortlistTest {
 	 * Should return the word shortlist for the 7-letter test case.
 	 */
 	@Test
-	public void shouldReturnWordShortlist_for7LetterTestCase() throws IOException, URISyntaxException {
+	public void shouldReturnWordShortlist_for7LetterTestCase() throws IOException {
 		// given
 		final int length = 7;
 		final String availableLetters = "aaaaaaaaabbeeeeeeedddddggmmlloooonnssssrrrruvvyyy";

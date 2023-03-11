@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -108,7 +107,7 @@ public class WordSquareGeneratorTest {
 	 * square (there is only one in this case).
 	 */
 	@Test
-	public void shouldGetAllValidSolutionsFor3LetterStartingWord() throws IOException, URISyntaxException {
+	public void shouldGetAllValidSolutionsFor3LetterStartingWord() throws IOException {
 		// given
 		final int length = 3;
 		final String letters = "ddggoooox";
@@ -131,7 +130,7 @@ public class WordSquareGeneratorTest {
 	 * square (there are two in this case).
 	 */
 	@Test
-	public void shouldGetAllValidSolutionsFor5LetterStartingWord() throws IOException, URISyntaxException {
+	public void shouldGetAllValidSolutionsFor5LetterStartingWord() throws IOException {
 		// given
 		final int length = 5;
 		final String letters = "aaaeeeefhhmoonssrrrrttttw";
@@ -155,7 +154,7 @@ public class WordSquareGeneratorTest {
 	 * 5-letter word square.
 	 */
 	@Test
-	public void shouldGetFirstValidSolutionFor5LetterStartingWord() throws IOException, URISyntaxException {
+	public void shouldGetFirstValidSolutionFor5LetterStartingWord() throws IOException {
 		// given
 		final int length = 5;
 		final String letters = "aaaeeeefhhmoonssrrrrttttw";
@@ -178,7 +177,7 @@ public class WordSquareGeneratorTest {
 	 * in this case).
 	 */
 	@Test
-	public void shouldGetAllValidSolutionsFor3LetterWordSquare() throws IOException, URISyntaxException {
+	public void shouldGetAllValidSolutionsFor3LetterWordSquare() throws IOException {
 		// given
 		final int length = 3;
 		final String letters = "ddggoooox";
@@ -197,7 +196,7 @@ public class WordSquareGeneratorTest {
 	 * Test we can get only the first matching solution for a 3-letter word square.
 	 */
 	@Test
-	public void shouldGetFirstMatchingSolutionFor3LetterWordSquare() throws IOException, URISyntaxException {
+	public void shouldGetFirstMatchingSolutionFor3LetterWordSquare() throws IOException {
 		// given
 		final int length = 3;
 		final String letters = "ddggoooox";

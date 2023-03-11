@@ -1,7 +1,6 @@
 package uk.me.ruthmills.wordsquare.solution;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -31,12 +30,10 @@ public class WordSquareGenerator {
 	 * @param letters        Available letters to create the words from.
 	 * @param firstMatchOnly true to stop at the first matching word square, false
 	 *                       to carry on until all possible words are exhausted.
-	 * @throws IOException        Thrown if we cannot read from the dictionary file.
-	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax
-	 *                            when attempting to locate the dictionary file.
+	 * @throws IOException Thrown if we cannot read from the dictionary file.
 	 */
 	public static List<WordSquare> getValidWordSquares(final int length, final String letters,
-			final boolean firstMatchOnly) throws IOException, URISyntaxException {
+			final boolean firstMatchOnly) throws IOException {
 		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
 		final List<WordSquare> wordSquares = new ArrayList<WordSquare>();
 		for (final String word : wordShortlist) {

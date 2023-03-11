@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.text.CharSequenceLength.hasLength;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -48,7 +47,7 @@ public class DictionaryTest {
 	 * start, to verify that we can actually read from the dictionary file.
 	 */
 	@Test
-	public void shouldReadAllWordsFromDictionaryTextFile() throws IOException, URISyntaxException {
+	public void shouldReadAllWordsFromDictionaryTextFile() throws IOException {
 		// when
 		final List<String> words = Dictionary
 				.getWordsMatchingPredicate(new ListPredicate<String>(Collections.emptyList()));
@@ -62,7 +61,7 @@ public class DictionaryTest {
 	 * all other words that are not of the required length.
 	 */
 	@Test
-	public void shouldReadOnly4LetterWordsFromDictionaryTextFile() throws IOException, URISyntaxException {
+	public void shouldReadOnly4LetterWordsFromDictionaryTextFile() throws IOException {
 		// given
 		final WordLengthPredicate wordLengthPredicate = new WordLengthPredicate(4);
 
@@ -80,7 +79,7 @@ public class DictionaryTest {
 	 * available letters. We filter out all other words.
 	 */
 	@Test
-	public void shouldReadOnlyWordsWhichContainOnlyASubsetOfAvailableLetters() throws IOException, URISyntaxException {
+	public void shouldReadOnlyWordsWhichContainOnlyASubsetOfAvailableLetters() throws IOException {
 		// given
 		final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
 				AVAILABLE_LETTERS);
@@ -101,8 +100,7 @@ public class DictionaryTest {
 	 * words.
 	 */
 	@Test
-	public void shouldReadOnly4LetterWordsWhichContainOnlyASubsetOfAvailableLetters()
-			throws IOException, URISyntaxException {
+	public void shouldReadOnly4LetterWordsWhichContainOnlyASubsetOfAvailableLetters() throws IOException {
 		// given
 		final ListPredicate<String> listPredicate = new ListPredicate<String>(Arrays.asList(new WordLengthPredicate(4),
 				new WordContainsAvailableLettersPredicate(AVAILABLE_LETTERS))); // chain the 2 other predicates

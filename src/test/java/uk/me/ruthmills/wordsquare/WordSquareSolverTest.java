@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 import org.junit.Test;
@@ -24,7 +23,7 @@ public class WordSquareSolverTest {
 	 * dog, oxo, god AND god, oxo, dog.
 	 */
 	@Test
-	public void shouldSolveWordSquare_whenThereAreTwoSolutions() throws IOException, URISyntaxException {
+	public void shouldSolveWordSquare_whenThereAreTwoSolutions() throws IOException {
 		// given
 		final int length = 3;
 		final String letters = "ddggoooox";
@@ -50,7 +49,7 @@ public class WordSquareSolverTest {
 	 * Test that we can solve the example word square: rose, oven, send, ends
 	 */
 	@Test
-	public void shouldSolveExampleWordSquare() throws IOException, URISyntaxException {
+	public void shouldSolveExampleWordSquare() throws IOException {
 		// given
 		final int length = 4;
 		final String letters = "eeeeddoonnnsssrv";
@@ -71,7 +70,7 @@ public class WordSquareSolverTest {
 	 * Test that we can solve the required 4-letter word square.
 	 */
 	@Test
-	public void shouldSolve4LetterWordSquare() throws IOException, URISyntaxException {
+	public void shouldSolve4LetterWordSquare() throws IOException {
 		// given
 		final int length = 4;
 		final String letters = "aaccdeeeemmnnnoo";
@@ -93,7 +92,7 @@ public class WordSquareSolverTest {
 	 * possible solutions (there are 2).
 	 */
 	@Test
-	public void shouldSolveFirst5LetterWordSquareAllSolutions() throws IOException, URISyntaxException {
+	public void shouldSolveFirst5LetterWordSquareAllSolutions() throws IOException {
 		// given
 		final int length = 5;
 		final String letters = "aaaeeeefhhmoonssrrrrttttw";
@@ -121,7 +120,7 @@ public class WordSquareSolverTest {
 	 * the first solution.
 	 */
 	@Test
-	public void shouldSolveFirst5LetterWordSquareFirstSolutionOnly() throws IOException, URISyntaxException {
+	public void shouldSolveFirst5LetterWordSquareFirstSolutionOnly() throws IOException {
 		// given
 		final int length = 5;
 		final String letters = "aaaeeeefhhmoonssrrrrttttw";
@@ -142,7 +141,7 @@ public class WordSquareSolverTest {
 	 * Test that we can solve the second required 5-letter word square.
 	 */
 	@Test
-	public void shouldSolveSecond5LetterWordSquare() throws IOException, URISyntaxException {
+	public void shouldSolveSecond5LetterWordSquare() throws IOException {
 		// given
 		final int length = 5;
 		final String letters = "aabbeeeeeeeehmosrrrruttvv";
@@ -163,7 +162,7 @@ public class WordSquareSolverTest {
 	 * Test that we can solve the 7-letter word square.
 	 */
 //	@Test
-	public void shouldSolve7LetterWordSquare() throws IOException, URISyntaxException {
+	public void shouldSolve7LetterWordSquare() throws IOException {
 		// given
 		final int length = 7;
 		final String letters = "aaaaaaaaabbeeeeeeedddddggmmlloooonnssssrrrruvvyyy";
