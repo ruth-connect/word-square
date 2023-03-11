@@ -53,6 +53,21 @@ steno
 throw
 ```
 
+#### 7-letter word square
+**WARNING: This will take several minutes to run! Best to enjoy a nice coffee while this is running!**
+`java -jar target/wordsquare-0.0.1-SNAPSHOT-jar-with-dependencies.jar 7 aaaaaaaaabbeeeeeeedddddggmmlloooonnssssrrrruvvyyy`
+
+Expected output:
+```
+bravado
+renamed
+analogy
+valuers
+amoebas
+degrade
+odyssey
+```
+
 ## Caveats
 1. The test for the 7-letter word square currently has an @Ignore annotation. This is because this
 test takes several minutes to run, which would delay the Maven build (as Maven runs all the tests during
