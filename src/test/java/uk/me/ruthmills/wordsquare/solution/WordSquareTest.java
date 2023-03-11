@@ -107,4 +107,19 @@ public class WordSquareTest {
 		// then
 		assertThat(isValid, is(false));
 	}
+
+	/**
+	 * Test that this word square will correctly convert to a string.
+	 */
+	@Test
+	public void shouldConvertToString() {
+		// given
+		WordSquare wordSquare = new WordSquare(WORD_LENGTH, EXPECTED_WORDS);
+
+		// when
+		String wordSquareString = wordSquare.toString();
+
+		// then
+		assertThat(wordSquareString, is("rose\noven\nsend\nends\n"));
+	}
 }

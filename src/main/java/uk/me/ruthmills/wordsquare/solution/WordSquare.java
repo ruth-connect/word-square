@@ -2,6 +2,7 @@ package uk.me.ruthmills.wordsquare.solution;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import uk.me.ruthmills.wordsquare.predicate.AllWordsLengthPredicate;
 import uk.me.ruthmills.wordsquare.predicate.ListPredicate;
@@ -58,5 +59,14 @@ public class WordSquare {
 				Arrays.asList(new NumberOfWordsPredicate(length), new AllWordsLengthPredicate(length),
 						new ValidWordSquarePredicate()));
 		return listPredicate.test(this);
+	}
+
+	/**
+	 * Convert to string.
+	 * 
+	 * @return String representation of this word square.
+	 */
+	public String toString() {
+		return words.stream().map(word -> word + "\n").collect(Collectors.joining());
 	}
 }

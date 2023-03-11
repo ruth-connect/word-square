@@ -36,11 +36,11 @@ public class DictionaryTest {
 
 	// All the words in the dictionary made up of a subset of the letters
 	// "eeeeddoonnnsssrv".
-	private static final int EXPECTED_NUMBER_OF_WORDS_CONTAINING_ONLY_SUBSET_OF_AVAILABLE_LETTERS = 124;
+	private static final int EXPECTED_NUMBER_OF_WORDS_CONTAINING_ONLY_SUBSET_OF_AVAILABLE_LETTERS = 402;
 
 	// All the 4-letter words in the dictionary made up of a subset of the letters
 	// "eeeeddoonnnsssrv".
-	private static final int EXPECTED_NUMBER_OF_4_LETTER_WORDS_CONTAINING_ONLY_SUBSET_OF_AVAILABLE_LETTERS = 41;
+	private static final int EXPECTED_NUMBER_OF_4_LETTER_WORDS_CONTAINING_ONLY_SUBSET_OF_AVAILABLE_LETTERS = 84;
 
 	// The Dictionary object under test.
 	private Dictionary dictionary;
@@ -114,7 +114,7 @@ public class DictionaryTest {
 	public void shouldReadOnly4LetterWordsWhichContainOnlyASubsetOfAvailableLetters()
 			throws IOException, URISyntaxException {
 		// given
-		final ListPredicate listPredicate = new ListPredicate(Arrays.asList(new WordLengthPredicate(4),
+		final ListPredicate<String> listPredicate = new ListPredicate<String>(Arrays.asList(new WordLengthPredicate(4),
 				new WordContainsAvailableLettersPredicate(AVAILABLE_LETTERS))); // chain the 2 other predicates
 																				// together.
 		// when

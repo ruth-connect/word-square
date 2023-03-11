@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import uk.me.ruthmills.wordsquare.predicate.WordContainsAvailableLettersPredicate;
 
@@ -30,9 +31,8 @@ public class WordSquareGenerator {
 	public static List<WordSquare> getAllPossibleCombinations(final int length, final String letters)
 			throws IOException, URISyntaxException {
 		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
-		return wordShortlist.stream().flatMap(
-				word -> getAllWordSquares(word, length, letters, wordShortlist, new ArrayList<String>()).stream())
-				.collect(Collectors.toList());
+		return wordShortlist.stream().flatMap(word -> getAllWordSquares(word, length, letters, wordShortlist,
+				new ArrayList<String>(), new ArrayList<WordSquare>()).stream()).collect(Collectors.toList());
 	}
 
 	/**
@@ -46,14 +46,60 @@ public class WordSquareGenerator {
 	 * @param words         The list of words so far.
 	 */
 	static List<WordSquare> getAllWordSquares(final String word, final int length, final String letters,
-			final List<String> wordShortlist, final List<String> words) {
+			final List<String> wordShortlist, final List<String> words, final List<WordSquare> wordSquares) {
+		// Can the word be formed from the available letters?
+		if (isWordAbleToBeFormedFromAvailableLetters(word, letters)) {
+			// Get the remaining letters left, after removing those from the current word
+			// from the available letters.
+			final String remainingLetters = WordSquareGenerator.getRemainingLetters(word, letters);
 
-		String remainingLetters = WordSquareGenerator.getRemainingLetters(word, letters);
-		WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
-				remainingLetters);
-		List<String> remainingWords = wordShortlist.stream().filter(wordContainsAvailableLettersPredicate)
-				.collect(Collectors.toList());
-		return Collections.emptyList();
+			// Create a predicate based on the remaining letters.
+			final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
+					remainingLetters);
+
+			// Get the remaining words available, by filtering only those left where the
+			// word shortlist contains the remaining letters.
+			final List<String> remainingWordShortlist = wordShortlist.stream()
+					.filter(wordContainsAvailableLettersPredicate).collect(Collectors.toList());
+
+			// Add the current word to the list of words.
+			List<String> updatedWords = Stream.concat(words.stream(), Collections.singletonList(word).stream())
+					.collect(Collectors.toList());
+
+			// Do we have the required number of words in the list of words?
+			if (updatedWords.size() == length) {
+				// Return a new word square at the end of the list of word squares.
+				return Stream
+						.concat(wordSquares.stream(),
+								Collections.singletonList(new WordSquare(length, updatedWords)).stream())
+						.collect(Collectors.toList());
+			} else {
+				// Recursively call this function for each remaining word.
+				return remainingWordShortlist.stream()
+						.flatMap(remainingWord -> getAllWordSquares(remainingWord, length, remainingLetters,
+								remainingWordShortlist, updatedWords, wordSquares).stream())
+						.collect(Collectors.toList());
+
+			}
+		} else {
+			// Word CANNOT be formed from available letters. Return the word squares we have
+			// already.
+			return wordSquares;
+		}
+	}
+
+	/**
+	 * Check if the word can be formed from the available letters.
+	 * 
+	 * @param word    The word.
+	 * @param letters The available letters.
+	 * @return true if the word can be formed from the available letters, or false
+	 *         if not.
+	 */
+	static boolean isWordAbleToBeFormedFromAvailableLetters(final String word, final String letters) {
+		final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
+				letters);
+		return wordContainsAvailableLettersPredicate.test(word);
 	}
 
 	/**
@@ -74,7 +120,7 @@ public class WordSquareGenerator {
 			final String firstLetter = word.substring(0, 1);
 
 			// Remove the first letter of the word from the available letters.
-			String remainingLetters = letters.replaceFirst(firstLetter, "");
+			final String remainingLetters = letters.replaceFirst(firstLetter, "");
 
 			// Recursively call this function, removing the first letter from the word.
 			return getRemainingLetters(word.substring(1, word.length()), remainingLetters);

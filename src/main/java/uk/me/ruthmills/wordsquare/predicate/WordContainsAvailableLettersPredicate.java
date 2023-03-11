@@ -59,7 +59,7 @@ public class WordContainsAvailableLettersPredicate implements Predicate<String> 
 				return true;
 			} else {
 				// Work out which letters are still available.
-				final String remainingLetters = availableLetters.replace(firstLetter, "");
+				final String remainingLetters = availableLetters.replaceFirst(firstLetter, "");
 
 				// Recurse until we reach the last letter of the word.
 				return wordContainsAvailableLetters(word.substring(1, word.length()), remainingLetters);
