@@ -24,11 +24,11 @@ public class WordSquareGeneratorTest {
 	@Test
 	public void shouldReturnTrue_whenWordCanBeFormedFromAvailableLetters() {
 		// given
-		String word = "dog";
-		String letters = "dgox";
+		final String word = "dog";
+		final String letters = "dgox";
 
 		// when
-		boolean result = WordSquareGenerator.isWordAbleToBeFormedFromAvailableLetters(word, letters);
+		final boolean result = WordSquareGenerator.isWordAbleToBeFormedFromAvailableLetters(word, letters);
 
 		// then
 		assertThat(result, is(true));
@@ -40,11 +40,11 @@ public class WordSquareGeneratorTest {
 	@Test
 	public void shouldReturnFalse_whenWordCannotBeFormedFromAvailableLetters() {
 		// given
-		String word = "dog";
-		String letters = "dgx";
+		final String word = "dog";
+		final String letters = "dgx";
 
 		// when
-		boolean result = WordSquareGenerator.isWordAbleToBeFormedFromAvailableLetters(word, letters);
+		final boolean result = WordSquareGenerator.isWordAbleToBeFormedFromAvailableLetters(word, letters);
 
 		// then
 		assertThat(result, is(false));
@@ -57,11 +57,11 @@ public class WordSquareGeneratorTest {
 	@Test
 	public void shouldGetRemainingLetters_whenRemovingLettersFromCurrentWord() {
 		// given
-		String word = "dog";
-		String letters = "ddggoooox";
+		final String word = "dog";
+		final String letters = "ddggoooox";
 
 		// when
-		String remainingLetters = WordSquareGenerator.getRemainingLetters(word, letters);
+		final String remainingLetters = WordSquareGenerator.getRemainingLetters(word, letters);
 
 		// then
 		assertThat(remainingLetters, is("dgooox"));
