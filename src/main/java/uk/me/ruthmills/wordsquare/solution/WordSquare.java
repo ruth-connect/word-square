@@ -25,7 +25,7 @@ public class WordSquare {
 	 * @param length Length of each word in the word square.
 	 * @param words  Array of words.
 	 */
-	public WordSquare(int length, String... words) {
+	public WordSquare(final int length, final String... words) {
 		// Call overloaded constructor.
 		this(length, Arrays.asList(words));
 	}

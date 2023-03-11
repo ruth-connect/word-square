@@ -25,7 +25,7 @@ public class ValidWordSquarePredicate implements Predicate<WordSquare> {
 	 * 
 	 * @param length Length of each word in the word square.
 	 */
-	public ValidWordSquarePredicate(int length) {
+	public ValidWordSquarePredicate(final int length) {
 		wordLengthPredicate = new WordLengthPredicate(length);
 		this.length = length;
 	}

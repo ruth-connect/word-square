@@ -66,7 +66,8 @@ public class WordSquareGenerator {
 	static void getValidWordSquaresForStartingWord(final String word, final int length, final String letters,
 			final List<String> wordShortlist, final List<String> words, final List<WordSquare> wordSquares,
 			final boolean firstMatchOnly) {
-		// Can the word be formed from the available letters?
+		// Can the word be formed from the available letters and is it valid with the
+		// existing words?
 		if (isWordAbleToBeFormed(word, letters, words)) {
 			// Get the remaining letters left, after removing those from the current word
 			// from the available letters.
@@ -93,9 +94,14 @@ public class WordSquareGenerator {
 			} else {
 				// Recursively call this function for each remaining word that meets the
 				// requirements.
-				for (String remainingWord : remainingWordShortlist) {
+				for (final String remainingWord : remainingWordShortlist) {
 					getValidWordSquaresForStartingWord(remainingWord, length, remainingLetters, remainingWordShortlist,
 							updatedWords, wordSquares, firstMatchOnly);
+
+					// If we are to return the first match only, and we have a match, return now.
+					if (firstMatchOnly && wordSquares.size() > 0) {
+						return;
+					}
 				}
 			}
 		}

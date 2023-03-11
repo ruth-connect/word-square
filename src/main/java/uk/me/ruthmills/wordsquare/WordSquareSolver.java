@@ -42,10 +42,10 @@ public class WordSquareSolver {
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
 	 *                            when attempting to locate the dictionary file.
 	 */
-	public static List<WordSquare> solveWordSquare(final int length, final String letters, boolean firstMatchOnly)
+	public static List<WordSquare> solveWordSquare(final int length, final String letters, final boolean firstMatchOnly)
 			throws IOException, URISyntaxException {
-		// Get all possible combinations of words, and then only keep the ones that are
-		// actually valid.
+		// Get the valid word squares, optionally returning only the first if
+		// firstMatchOnly is true.
 		return WordSquareGenerator.getValidWordSquares(length, letters, firstMatchOnly);
 	}
 }
