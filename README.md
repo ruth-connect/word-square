@@ -6,6 +6,8 @@ Given an n*n grid, and a set of letters, generate a valid word square.
 2. `cd word-square`
 3. `sh mvnw install`
 
+N.B. If installing on a Windows machine, you will need to run `mvnw.cmd install` for step 3 above.
+
 ## Running
 **IMPORTANT:** The application must be run from the same directory that the Maven install (as in step 3 above) was run from.
 
