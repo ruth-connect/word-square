@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.is;
 import java.io.IOException;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import uk.me.ruthmills.wordsquare.solution.WordSquare;
@@ -160,8 +161,12 @@ public class WordSquareSolverTest {
 
 	/**
 	 * Test that we can solve the 7-letter word square.
+	 * 
+	 * N.B. This test is ignored by default, as it takes several minutes to execute.
+	 * If you REALLY want to run it, please remove the @Ignore annotation.
 	 */
-//	@Test
+	@Ignore
+	@Test
 	public void shouldSolve7LetterWordSquare() throws IOException {
 		// given
 		final int length = 7;
