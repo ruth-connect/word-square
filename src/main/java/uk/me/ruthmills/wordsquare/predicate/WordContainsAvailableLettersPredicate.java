@@ -34,14 +34,14 @@ public class WordContainsAvailableLettersPredicate implements Predicate<String> 
 	 */
 	@Override
 	public boolean test(final String word) {
-		// Create a hash bag of available letters.
-		Bag<Byte> availableLetters = new HashBag<Byte>();
-		for (Byte letter : letters.getBytes()) {
+		// Create a bag of available letters.
+		final Bag<Byte> availableLetters = new HashBag<Byte>();
+		for (final Byte letter : letters.getBytes()) {
 			availableLetters.add(letter);
 		}
 
 		// Iterate through each letter in the word.
-		for (Byte letter : word.getBytes()) {
+		for (final Byte letter : word.getBytes()) {
 			// If the letter is not in the available letters, return false.
 			if (!availableLetters.remove(letter, 1)) {
 				return false;

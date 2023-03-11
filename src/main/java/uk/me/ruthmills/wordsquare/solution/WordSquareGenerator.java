@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.bag.HashBag;
 
 import uk.me.ruthmills.wordsquare.predicate.ListPredicate;
@@ -80,9 +82,7 @@ public class WordSquareGenerator {
 					.filter(wordContainsAvailableLettersPredicate).collect(Collectors.toList());
 
 			// Add the current word to the list of words.
-			List<String> updatedWords = new ArrayList<String>();
-			updatedWords.addAll(words);
-			updatedWords.add(word);
+			final List<String> updatedWords = ListUtils.union(words, Collections.singletonList(word));
 
 			// Do we have the required number of words in the list of words to make a word
 			// square? And, if so, do we want to return all matches - or if we only want one
@@ -126,15 +126,15 @@ public class WordSquareGenerator {
 	 * @return The remaining letters.
 	 */
 	static String getRemainingLetters(final String word, final String letters) {
-		// Create a hash bag of remaining letters.
-		Bag<Byte> remainingLetters = new HashBag<Byte>();
-		for (Byte letter : letters.getBytes()) {
+		// Create a bag of remaining letters.
+		final Bag<Byte> remainingLetters = new HashBag<Byte>();
+		for (final Byte letter : letters.getBytes()) {
 			remainingLetters.add(letter);
 		}
 
 		// Iterate through each letter in the word.
-		for (Byte letter : word.getBytes()) {
-			// Remove the letter from the remaining letters.
+		for (final Byte letter : word.getBytes()) {
+			// Remove the letter from the bag.
 			remainingLetters.remove(letter, 1);
 		}
 
