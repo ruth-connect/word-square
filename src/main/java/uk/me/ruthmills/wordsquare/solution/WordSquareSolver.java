@@ -6,11 +6,11 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Class to represent the solution of a word square.
+ * Class to solve a word square.
  * 
  * @author ruth
  */
-public class Solution {
+public class WordSquareSolver {
 
 	/**
 	 * Solve the word square.
@@ -22,7 +22,7 @@ public class Solution {
 	 * @throws IOException        Thrown if we cannot read from the dictionary file.
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
 	 */
-	List<WordCombination> solveWordSquare(final int length, final String letters)
+	static List<WordCombination> solveWordSquare(final int length, final String letters)
 			throws IOException, URISyntaxException {
 		List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
 		return Collections.emptyList();

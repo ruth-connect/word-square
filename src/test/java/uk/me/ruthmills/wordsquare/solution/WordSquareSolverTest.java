@@ -11,11 +11,11 @@ import java.util.List;
 import org.junit.Test;
 
 /**
- * Test suite for the Solution class.
+ * Test suite for the Word Square Solver class.
  * 
  * @author ruth
  */
-public class SolutionTest {
+public class WordSquareSolverTest {
 
 	/**
 	 * Test that we can solve a word square when there are two possible solutions:
@@ -24,10 +24,11 @@ public class SolutionTest {
 	@Test
 	public void shouldSolveWordSquare_whenThereAreTwoSolutions() throws IOException, URISyntaxException {
 		// given
-		Solution solution = new Solution();
+		final int length = 3;
+		final String letters = "ddggoooox";
 
 		// when
-		List<WordCombination> solutions = solution.solveWordSquare(3, "ddggoooox");
+		final List<WordCombination> solutions = WordSquareSolver.solveWordSquare(length, letters);
 
 		// then
 		assertThat(solutions, hasSize(2));
