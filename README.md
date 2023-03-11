@@ -41,6 +41,18 @@ acme
 need
 ```
 
+#### 5-letter word square
+`java -jar target/wordsquare-0.0.1-SNAPSHOT-jar-with-dependencies.jar 5 aaaeeeefhhmoonssrrrrttttw`
+
+Expected output:
+```
+feast
+earth
+armer
+steno
+throw
+```
+
 ## Caveats
 1. The test for the 7-letter word square currently has an @Ignore annotation. This is because this
 test takes several minutes to run, which would delay the Maven build (as Maven runs all the tests during
