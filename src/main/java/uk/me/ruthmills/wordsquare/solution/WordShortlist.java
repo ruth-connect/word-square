@@ -31,15 +31,12 @@ public class WordShortlist {
 	 */
 	public static List<String> getWordShortlist(final int length, final String letters)
 			throws IOException, URISyntaxException {
-		// The dictionary has ALL the words.
-		final Dictionary dictionary = new Dictionary();
-
 		// This predicate will first match on the required number of letters, and then
 		// ensure that each word contains ONLY a subset of the available letters.
 		final ListPredicate<String> wordPredicate = new ListPredicate<String>(
 				Arrays.asList(new WordLengthPredicate(length), new WordContainsAvailableLettersPredicate(letters)));
 
 		// Return the shortlist of words (only those matching the predicate).
-		return dictionary.getWordsMatchingPredicate(wordPredicate);
+		return Dictionary.getWordsMatchingPredicate(wordPredicate);
 	}
 }

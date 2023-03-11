@@ -11,7 +11,6 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import uk.me.ruthmills.wordsquare.predicate.ListPredicate;
@@ -42,17 +41,6 @@ public class DictionaryTest {
 	// "eeeeddoonnnsssrv".
 	private static final int EXPECTED_NUMBER_OF_4_LETTER_WORDS_CONTAINING_ONLY_SUBSET_OF_AVAILABLE_LETTERS = 84;
 
-	// The Dictionary object under test.
-	private Dictionary dictionary;
-
-	/**
-	 * Set up the test dependencies.
-	 */
-	@Before
-	public void setUp() {
-		dictionary = new Dictionary();
-	}
-
 	/**
 	 * Test that we can read all the expected words from the dictionary file. We
 	 * won't need ALL the words for our word square, but this is a good place to
@@ -61,7 +49,7 @@ public class DictionaryTest {
 	@Test
 	public void shouldReadAllWordsFromDictionaryTextFile() throws IOException, URISyntaxException {
 		// when
-		final List<String> words = dictionary.getAllWords();
+		final List<String> words = Dictionary.getAllWords();
 
 		// then
 		assertThat(words, hasSize(EXPECTED_NUMBER_OF_ALL_WORDS)); // expected number of all the words!
@@ -77,7 +65,7 @@ public class DictionaryTest {
 		final WordLengthPredicate wordLengthPredicate = new WordLengthPredicate(4);
 
 		// when
-		final List<String> words = dictionary.getWordsMatchingPredicate(wordLengthPredicate);
+		final List<String> words = Dictionary.getWordsMatchingPredicate(wordLengthPredicate);
 
 		// then
 		assertThat(words.size(), lessThan(EXPECTED_NUMBER_OF_ALL_WORDS)); // will be less than all the words!
@@ -96,7 +84,7 @@ public class DictionaryTest {
 				AVAILABLE_LETTERS);
 
 		// when
-		final List<String> words = dictionary.getWordsMatchingPredicate(wordContainsAvailableLettersPredicate);
+		final List<String> words = Dictionary.getWordsMatchingPredicate(wordContainsAvailableLettersPredicate);
 
 		// then
 		assertThat(words.size(), lessThan(EXPECTED_NUMBER_OF_ALL_WORDS)); // will be less than all the words!
@@ -118,7 +106,7 @@ public class DictionaryTest {
 				new WordContainsAvailableLettersPredicate(AVAILABLE_LETTERS))); // chain the 2 other predicates
 																				// together.
 		// when
-		final List<String> words = dictionary.getWordsMatchingPredicate(listPredicate);
+		final List<String> words = Dictionary.getWordsMatchingPredicate(listPredicate);
 
 		// then
 		assertThat(words.size(), lessThan(EXPECTED_NUMBER_OF_ALL_WORDS)); // will be less than all the words!

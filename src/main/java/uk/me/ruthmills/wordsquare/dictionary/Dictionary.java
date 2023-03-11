@@ -25,8 +25,8 @@ public class Dictionary {
 	 * @throws IOException        Thrown if we cannot read from the dictionary file.
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
 	 */
-	public List<String> getAllWords() throws IOException, URISyntaxException {
-		try (Stream<String> linesStream = getWordsStream()) {
+	public static List<String> getAllWords() throws IOException, URISyntaxException {
+		try (Stream<String> linesStream = Dictionary.getWordsStream()) {
 			// we have to do the ".map(word -> word.toString())" here, or else it complains
 			// that we are trying to cast an Object to a String.
 			return linesStream.map(word -> word.toString()).collect(Collectors.toList());
@@ -41,9 +41,9 @@ public class Dictionary {
 	 * @throws IOException        Thrown if we cannot read from the dictionary file.
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
 	 */
-	public List<String> getWordsMatchingPredicate(final Predicate<String> predicate)
+	public static List<String> getWordsMatchingPredicate(final Predicate<String> predicate)
 			throws IOException, URISyntaxException {
-		try (Stream<String> linesStream = getWordsStream()) {
+		try (Stream<String> linesStream = Dictionary.getWordsStream()) {
 			return linesStream.filter(predicate).collect(Collectors.toList());
 		}
 	}
@@ -55,7 +55,7 @@ public class Dictionary {
 	 * @throws IOException        Thrown if we cannot read from the dictionary file.
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
 	 */
-	private Stream<String> getWordsStream() throws IOException, URISyntaxException {
+	private static Stream<String> getWordsStream() throws IOException, URISyntaxException {
 		return Files.lines(Paths.get(ClassLoader.getSystemResource(DICTIONARY_TEXT_FILE_NAME).toURI()));
 	}
 }
