@@ -7,6 +7,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.bag.HashBag;
+
 import uk.me.ruthmills.wordsquare.predicate.ListPredicate;
 import uk.me.ruthmills.wordsquare.predicate.WordContainsAvailableLettersPredicate;
 import uk.me.ruthmills.wordsquare.predicate.WordMeetsRequirementsPredicate;
@@ -116,19 +119,20 @@ public class WordSquareGenerator {
 	 * @return The remaining letters.
 	 */
 	static String getRemainingLetters(final String word, final String letters) {
-		// If we have run out of letters in the word, return the remaining letters left
-		// from the available letters.
-		if (word.length() == 0) {
-			return letters;
-		} else {
-			// Get the first letter of the word.
-			final String firstLetter = word.substring(0, 1);
-
-			// Remove the first letter of the word from the available letters.
-			final String remainingLetters = letters.replaceFirst(firstLetter, "");
-
-			// Recursively call this function, removing the first letter from the word.
-			return getRemainingLetters(word.substring(1, word.length()), remainingLetters);
+		// Create a hash bag of remaining letters.
+		Bag<Byte> remainingLetters = new HashBag<Byte>();
+		for (Byte letter : letters.getBytes()) {
+			remainingLetters.add(letter);
 		}
+
+		// Iterate through each letter in the word.
+		for (Byte letter : word.getBytes()) {
+			// Remove the letter from the remaining letters.
+			remainingLetters.remove(letter, 1);
+		}
+
+		// Return the remaining letters.
+		return remainingLetters.stream().map(value -> String.valueOf((char) value.byteValue())).sorted()
+				.collect(Collectors.joining());
 	}
 }
