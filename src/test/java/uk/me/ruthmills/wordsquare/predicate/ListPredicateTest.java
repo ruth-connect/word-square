@@ -27,7 +27,7 @@ public class ListPredicateTest {
 	// Available letters predicate.
 	private WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate;
 
-	// List predicate.
+	// List predicate to test.
 	private ListPredicate listPredicate;
 
 	/**
