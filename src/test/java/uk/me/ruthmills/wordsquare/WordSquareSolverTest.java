@@ -39,15 +39,11 @@ public class WordSquareSolverTest {
 
 		final List<String> dogOxoGod = solutions.get(0).getWords();
 		assertThat(dogOxoGod, hasSize(3));
-		assertThat(dogOxoGod.get(0), is("dog"));
-		assertThat(dogOxoGod.get(1), is("oxo"));
-		assertThat(dogOxoGod.get(2), is("god"));
+		assertThat(dogOxoGod.toString(), is("[dog, oxo, god]"));
 
 		final List<String> godOxoDog = solutions.get(1).getWords();
 		assertThat(godOxoDog, hasSize(3));
-		assertThat(godOxoDog.get(0), is("god"));
-		assertThat(godOxoDog.get(1), is("oxo"));
-		assertThat(godOxoDog.get(2), is("dog"));
+		assertThat(godOxoDog.toString(), is("[god, oxo, dog]"));
 	}
 
 	/**
@@ -68,10 +64,7 @@ public class WordSquareSolverTest {
 
 		final List<String> solution = solutions.get(0).getWords();
 		assertThat(solution, hasSize(4));
-		assertThat(solution.get(0), is("rose"));
-		assertThat(solution.get(1), is("oven"));
-		assertThat(solution.get(2), is("send"));
-		assertThat(solution.get(3), is("ends"));
+		assertThat(solution.toString(), is("[rose, oven, send, ends]"));
 	}
 
 	/**
@@ -92,10 +85,7 @@ public class WordSquareSolverTest {
 
 		final List<String> solution = solutions.get(0).getWords();
 		assertThat(solution, hasSize(4));
-		assertThat(solution.get(0), is("moan"));
-		assertThat(solution.get(1), is("once"));
-		assertThat(solution.get(2), is("acme"));
-		assertThat(solution.get(3), is("need"));
+		assertThat(solution.toString(), is("[moan, once, acme, need]"));
 	}
 
 	/**
@@ -110,10 +100,6 @@ public class WordSquareSolverTest {
 		// when
 		final List<WordSquare> solutions = WordSquareSolver.solveWordSquare(length, letters);
 
-		for (WordSquare solution : solutions) {
-			System.out.println(solution.getWords());
-		}
-
 		// then
 		assertThat(solutions, hasSize(2)); // this actually has 2 solutions, just as I predicted was possible with the
 											// simpler case (dog, oxo, god AND god, oxo, dog).
@@ -122,19 +108,11 @@ public class WordSquareSolverTest {
 
 		final List<String> solution1 = solutions.get(0).getWords();
 		assertThat(solution1, hasSize(5));
-		assertThat(solution1.get(0), is("feast"));
-		assertThat(solution1.get(1), is("earth"));
-		assertThat(solution1.get(2), is("armer"));
-		assertThat(solution1.get(3), is("steno"));
-		assertThat(solution1.get(4), is("throw"));
+		assertThat(solution1.toString(), is("[feast, earth, armer, steno, throw]"));
 
 		final List<String> solution2 = solutions.get(1).getWords();
 		assertThat(solution2, hasSize(5));
-		assertThat(solution2.get(0), is("feast"));
-		assertThat(solution2.get(1), is("earth"));
-		assertThat(solution2.get(2), is("armor"));
-		assertThat(solution2.get(3), is("stone"));
-		assertThat(solution2.get(4), is("threw"));
+		assertThat(solution2.toString(), is("[feast, earth, armor, stone, threw]"));
 	}
 
 	/**
@@ -155,11 +133,7 @@ public class WordSquareSolverTest {
 
 		final List<String> solution = solutions.get(0).getWords();
 		assertThat(solution, hasSize(5));
-		assertThat(solution.get(0), is("heart"));
-		assertThat(solution.get(1), is("ember"));
-		assertThat(solution.get(2), is("above"));
-		assertThat(solution.get(3), is("revue"));
-		assertThat(solution.get(4), is("trees"));
+		assertThat(solution.toString(), is("[heart, ember, above, revue, trees]"));
 	}
 
 	/**
@@ -174,22 +148,12 @@ public class WordSquareSolverTest {
 		// when
 		final List<WordSquare> solutions = WordSquareSolver.solveWordSquare(length, letters);
 
-		for (WordSquare solution : solutions) {
-			System.out.println(solution.getWords());
-		}
-
 		// then
 		assertThat(solutions, hasSize(1));
 		assertThat(solutions.get(0).isValid(), is(true));
 
 		final List<String> solution = solutions.get(0).getWords();
 		assertThat(solution, hasSize(7));
-		assertThat(solution.get(0), is("bravado"));
-		assertThat(solution.get(1), is("renamed"));
-		assertThat(solution.get(2), is("analogy"));
-		assertThat(solution.get(3), is("valuers"));
-		assertThat(solution.get(4), is("amoebas"));
-		assertThat(solution.get(5), is("degrade"));
-		assertThat(solution.get(6), is("odyssey"));
+		assertThat(solution.toString(), is("[bravado, renamed, analogy, valuers, amoebas, degrade, odyssey]"));
 	}
 }
