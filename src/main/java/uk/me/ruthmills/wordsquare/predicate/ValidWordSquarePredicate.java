@@ -5,24 +5,24 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import uk.me.ruthmills.wordsquare.solution.WordCombination;
+import uk.me.ruthmills.wordsquare.solution.WordSquare;
 
 /**
  * Predicate class to check if a word square is valid or not.
  * 
  * @author ruth
  */
-public class ValidWordSquarePredicate implements Predicate<WordCombination> {
+public class ValidWordSquarePredicate implements Predicate<WordSquare> {
 
 	/**
-	 * Check to see if a word combination is a valid word square.
+	 * Check to see if a word square is valid.
 	 * 
-	 * @param wordCombination The word combination to check.
+	 * @param wordSquare The word square to check.
 	 * @return true if it is a valid word square, or false if not.
 	 */
 	@Override
-	public boolean test(final WordCombination wordCombination) {
-		List<String> words = wordCombination.getWords();
+	public boolean test(final WordSquare wordSquare) {
+		List<String> words = wordSquare.getWords();
 
 		// Swap the vertical and horizontal words.
 		List<String> verticalWords = translateColumnsToRows(words);

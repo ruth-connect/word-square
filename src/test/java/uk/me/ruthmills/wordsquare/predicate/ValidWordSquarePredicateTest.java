@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.me.ruthmills.wordsquare.solution.WordCombination;
+import uk.me.ruthmills.wordsquare.solution.WordSquare;
 
 /**
  * Test suite for the Valid Word Square Predicate class.
@@ -74,10 +74,10 @@ public class ValidWordSquarePredicateTest {
 	@Test
 	public void shouldReturnTrue_whenWordSquareIsValid() {
 		// given
-		WordCombination wordCombination = new WordCombination(Arrays.asList("rose", "oven", "send", "ends"));
+		WordSquare wordSquare = new WordSquare(Arrays.asList("rose", "oven", "send", "ends"));
 
 		// when
-		boolean isValidWordSquare = validWordSquarePredicate.test(wordCombination);
+		boolean isValidWordSquare = validWordSquarePredicate.test(wordSquare);
 
 		// then
 		assertThat(isValidWordSquare, is(true));
@@ -90,10 +90,10 @@ public class ValidWordSquarePredicateTest {
 	@Test
 	public void shouldReturnFalse_whenWordsSwappedSoWordSquareIsInvalid() {
 		// given
-		WordCombination wordCombination = new WordCombination(Arrays.asList("rose", "oven", "ends", "send"));
+		WordSquare wordSquare = new WordSquare(Arrays.asList("rose", "oven", "ends", "send"));
 
 		// when
-		boolean isValidWordSquare = validWordSquarePredicate.test(wordCombination);
+		boolean isValidWordSquare = validWordSquarePredicate.test(wordSquare);
 
 		// then
 		assertThat(isValidWordSquare, is(false));
@@ -106,10 +106,10 @@ public class ValidWordSquarePredicateTest {
 	@Test
 	public void shouldReturnFalse_whenWordSquareHasInvalidLetter() {
 		// given
-		WordCombination wordCombination = new WordCombination(Arrays.asList("rose", "oven", "sand", "ends"));
+		WordSquare wordSquare = new WordSquare(Arrays.asList("rose", "oven", "sand", "ends"));
 
 		// when
-		boolean isValidWordSquare = validWordSquarePredicate.test(wordCombination);
+		boolean isValidWordSquare = validWordSquarePredicate.test(wordSquare);
 
 		// then
 		assertThat(isValidWordSquare, is(false));

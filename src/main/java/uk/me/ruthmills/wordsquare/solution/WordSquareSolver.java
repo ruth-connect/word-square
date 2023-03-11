@@ -22,7 +22,7 @@ public class WordSquareSolver {
 	 * @throws IOException        Thrown if we cannot read from the dictionary file.
 	 * @throws URISyntaxException Thrown if there is a problem with the URI syntax.
 	 */
-	static List<WordCombination> solveWordSquare(final int length, final String letters)
+	static List<WordSquare> solveWordSquare(final int length, final String letters)
 			throws IOException, URISyntaxException {
 		List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
 		return Collections.emptyList();

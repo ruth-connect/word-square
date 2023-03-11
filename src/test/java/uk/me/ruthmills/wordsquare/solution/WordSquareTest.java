@@ -10,33 +10,33 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test suite for the Word Combination class.
+ * Test suite for the Word Square class.
  * 
  * @author ruth
  */
-public class WordCombinationTest {
+public class WordSquareTest {
 
 	// List of expected words.
 	private static final List<String> EXPECTED_WORDS = Arrays.asList("rose", "oven", "send", "ends");
 
-	// The Word Combination object under test.
-	private WordCombination wordCombination;
+	// The Word Square object under test.
+	private WordSquare wordSquare;
 
 	/**
 	 * Set up the test dependencies.
 	 */
 	@Before
 	public void setUp() {
-		wordCombination = new WordCombination(EXPECTED_WORDS);
+		wordSquare = new WordSquare(EXPECTED_WORDS);
 	}
 
 	/**
-	 * Test that the word combination contains the expected words.
+	 * Test that the word square contains the expected words.
 	 */
 	@Test
 	public void shouldContainExpectedWords() {
 		// given
-		final List<String> words = wordCombination.getWords();
+		final List<String> words = wordSquare.getWords();
 
 		// then
 		assertThat(words, equalTo(EXPECTED_WORDS));

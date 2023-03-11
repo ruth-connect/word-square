@@ -28,7 +28,7 @@ public class WordSquareSolverTest {
 		final String letters = "ddggoooox";
 
 		// when
-		final List<WordCombination> solutions = WordSquareSolver.solveWordSquare(length, letters);
+		final List<WordSquare> solutions = WordSquareSolver.solveWordSquare(length, letters);
 
 		// then
 		assertThat(solutions, hasSize(2));
