@@ -17,11 +17,20 @@ public class ValidWordSquarePredicate implements Predicate<WordSquare> {
 	/**
 	 * Check to see if a word square is valid.
 	 * 
-	 * @param wordSquare The word square to check.
+	 * @param wordSquare The word square to check. PRE-REQUISITES: the words must
+	 *                   ALL be the same length, which MUST the same as the number
+	 *                   of words.
 	 * @return true if it is a valid word square, or false if not.
 	 */
 	@Override
 	public boolean test(final WordSquare wordSquare) {
+		// TODO - In Production code, we might want to assert the pre-requisites here
+		// (all words the same length, where the length of each word is the same as the
+		// number of words). However, in this instance, we will have already filtered
+		// out any word squares not meeting those requirements before calling this
+		// predicate - so I think we are fine to skip this.
+
+		// Get the list of words from the word square.
 		List<String> words = wordSquare.getWords();
 
 		// Swap the vertical and horizontal words.
