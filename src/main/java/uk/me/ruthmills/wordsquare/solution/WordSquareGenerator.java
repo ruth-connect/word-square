@@ -124,6 +124,14 @@ public class WordSquareGenerator {
 	 *         if not.
 	 */
 	static boolean isWordAbleToBeFormed(final String word, final String letters, final List<String> words) {
+		// We execute the two predicates in the following order:
+		// 1. Check if the word meets the requirements in terms of the existing words in
+		// the word square.
+		// 2. Check if the word contains the available letters.
+		// This is because the first predicate is computationally less expensive, so if
+		// it does NOT pass, then we short-circuit at that point, avoiding the more
+		// time-consuming check (this shaved off around 160 seconds for solving the
+		// 7-letter word square on my 2013-vintage Lenovo Intel i7 Windows laptop).
 		final ListPredicate<String> listPredicate = new ListPredicate<String>(Arrays
 				.asList(new WordMeetsRequirementsPredicate(words), new WordContainsAvailableLettersPredicate(letters)));
 		return listPredicate.test(word);

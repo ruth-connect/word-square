@@ -2,7 +2,6 @@ package uk.me.ruthmills.wordsquare.predicate;
 
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.IntStream;
 
 /**
  * Predicate to check if a given word meets the requirements, based on the
@@ -32,7 +31,20 @@ public class WordMeetsRequirementsPredicate implements Predicate<String> {
 	 */
 	@Override
 	public boolean test(final String word) {
-		return IntStream.range(0, words.size())
-				.allMatch(index -> word.charAt(index) == words.get(index).charAt(words.size()));
+		// Doing this check "old school" (using a for loop) is faster than doing it in
+		// the "functional" way using an IntStream that we were doing previously.
+		// This shaved a further 115 seconds off the time to complete the 7-letter word
+		// square (in addition to executing this predicate first, before checking if the
+		// word can be formed from the remaining letters) on my 2013-vintage Intel i7
+		// laptop running Windows 10.
+		// I think it's worth doing this to gain the performance improvement, as it
+		// is still readable.
+		int numWords = words.size();
+		for (int index = 0; index < numWords; index++) {
+			if (word.charAt(index) != words.get(index).charAt(numWords)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
