@@ -191,11 +191,8 @@ public class SolutionState {
 		// Do we have the required number of words in the list of words to make a word
 		// square?
 		if (words.size() == length - 1) {
-			// Add the current word to the list of words.
-			final List<String> updatedWords = ListUtils.union(words, Collections.singletonList(word));
-
 			// Add a new word square to end of the list of word squares.
-			addWordSquare(new WordSquare(length, updatedWords));
+			addWordSquare(new WordSquare(length, ListUtils.union(words, Collections.singletonList(word))));
 		} else {
 			// Get the remaining letters left, after removing those from the current word
 			// from the available letters.
