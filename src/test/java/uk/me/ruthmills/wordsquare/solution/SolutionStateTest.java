@@ -139,7 +139,7 @@ public class SolutionStateTest {
 		final String startingWord = "dog";
 
 		// when
-		solutionState.getValidWordSquaresForStartingWord(startingWord);
+		solutionState.getValidWordSquares(startingWord);
 
 		// then
 		assertThat(solutionState.getWordSquares(), hasSize(1));
@@ -158,7 +158,7 @@ public class SolutionStateTest {
 		final String startingWord = "feast";
 
 		// when
-		solutionState.getValidWordSquaresForStartingWord(startingWord);
+		solutionState.getValidWordSquares(startingWord);
 
 		// then
 		assertThat(solutionState.getWordSquares(), hasSize(2));
@@ -180,7 +180,7 @@ public class SolutionStateTest {
 
 		// when
 		try {
-			solutionState.getValidWordSquaresForStartingWord(startingWord);
+			solutionState.getValidWordSquares(startingWord);
 			fail("Expected FirstWordSquareSolvedException was not thrown");
 		} catch (FirstWordSquareSolvedException ex) {
 			// then

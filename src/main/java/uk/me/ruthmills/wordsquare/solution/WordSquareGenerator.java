@@ -37,7 +37,7 @@ public class WordSquareGenerator {
 			for (final String word : solutionState.getWordShortlist()) {
 				// Get any valid word squares beginning with the current word from the
 				// shortlist.
-				solutionState.getValidWordSquaresForStartingWord(word);
+				solutionState.getValidWordSquares(word);
 			}
 
 			// Return the word squares.

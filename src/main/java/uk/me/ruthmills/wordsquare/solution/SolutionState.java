@@ -158,7 +158,7 @@ public class SolutionState {
 	 * @throws InvalidWordSquareException     Thrown if a word square we are trying
 	 *                                        to add is invalid.
 	 */
-	public void getValidWordSquaresForStartingWord(final String word)
+	public void getValidWordSquares(final String word)
 			throws FirstWordSquareSolvedException, InvalidWordSquareException {
 		// Do we have the required number of words in the list of words to make a word
 		// square?
@@ -255,8 +255,9 @@ public class SolutionState {
 				// Create a new Solution State for the word.
 				SolutionState solutionState = new SolutionState(this, remainingLetters, remainingWordShortlist,
 						updatedWords);
-				// Recursively call this function for the word that is valid.
-				solutionState.getValidWordSquaresForStartingWord(remainingWord);
+
+				// Get valid word squares starting from the remaining word.
+				solutionState.getValidWordSquares(remainingWord);
 			}
 		}
 	}
