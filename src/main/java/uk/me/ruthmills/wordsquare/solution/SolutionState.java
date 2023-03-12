@@ -2,12 +2,18 @@ package uk.me.ruthmills.wordsquare.solution;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.commons.collections4.ListUtils;
 
 import uk.me.ruthmills.wordsquare.exception.FirstWordSquareSolvedException;
 import uk.me.ruthmills.wordsquare.exception.InvalidWordSquareException;
 import uk.me.ruthmills.wordsquare.letters.AvailableLetters;
 import uk.me.ruthmills.wordsquare.letters.AvailableLettersFactory;
+import uk.me.ruthmills.wordsquare.predicate.WordContainsAvailableLettersPredicate;
+import uk.me.ruthmills.wordsquare.predicate.WordMeetsRequirementsPredicate;
 
 /**
  * This class represents the state of play during the solving of a word square.
@@ -170,15 +176,65 @@ public class SolutionState {
 	}
 
 	/**
-	 * Get an updated solution state.
+	 * Get valid word squares for a given starting word, available letters, and word
+	 * shortlist.
 	 * 
-	 * @param letters       Updated available letters.
-	 * @param wordShortlist Updated word shortlist.
-	 * @param words         Updated words.
-	 * @return updated solution state.
+	 * @param word The current word.
+	 * @throws FirstWordSquareSolvedException Thrown if the firstMatchOnly flag is
+	 *                                        true (we have found the first match,
+	 *                                        so there is no need to find any more).
+	 * @throws InvalidWordSquareException     Thrown if a word square we are trying
+	 *                                        to add is invalid.
 	 */
-	public SolutionState getUpdatedSolutionState(final AvailableLetters letters, final List<String> wordShortlist,
-			final List<String> words) {
-		return new SolutionState(this, letters, wordShortlist, words);
+	public void getValidWordSquaresForStartingWord(final String word)
+			throws FirstWordSquareSolvedException, InvalidWordSquareException {
+		// Do we have the required number of words in the list of words to make a word
+		// square?
+		if (words.size() == length - 1) {
+			// Add the current word to the list of words.
+			final List<String> updatedWords = ListUtils.union(words, Collections.singletonList(word));
+
+			// Add a new word square to end of the list of word squares.
+			addWordSquare(new WordSquare(length, updatedWords));
+		} else {
+			// Get the remaining letters left, after removing those from the current word
+			// from the available letters.
+			final AvailableLetters remainingLetters = letters.getRemainingLetters(word);
+
+			if (remainingLetters.getCount() >= length) { // only if we have enough letters left to
+															// make a word.
+				// Create a predicate based on the remaining letters.
+				final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
+						remainingLetters);
+
+				// Get the remaining words available, by filtering only those left where the
+				// word shortlist contains the remaining letters.
+				final List<String> remainingWordShortlist = wordShortlist.stream()
+						.filter(wordContainsAvailableLettersPredicate).collect(Collectors.toList());
+
+				// Are there any remaining words?
+				if (remainingWordShortlist.size() > 0) {
+					// Add the current word to the list of words.
+					final List<String> updatedWords = ListUtils.union(words, Collections.singletonList(word));
+
+					// Create a predicate based on the words being valid at the next position in the
+					// word square.
+					WordMeetsRequirementsPredicate wordMeetsRequirementsPredicate = new WordMeetsRequirementsPredicate(
+							updatedWords);
+
+					// Iterate for each remaining word in the shortlist.
+					for (final String remainingWord : remainingWordShortlist) {
+						// Are the requirements met for this being the next word in the word square?
+						if (wordMeetsRequirementsPredicate.test(remainingWord)) {
+							// Create a new Solution State for the word.
+							SolutionState solutionState = new SolutionState(this, remainingLetters,
+									remainingWordShortlist, updatedWords);
+							// Recursively call this function for the word that is valid.
+							solutionState.getValidWordSquaresForStartingWord(remainingWord);
+						}
+					}
+				}
+			}
+		}
 	}
 }
