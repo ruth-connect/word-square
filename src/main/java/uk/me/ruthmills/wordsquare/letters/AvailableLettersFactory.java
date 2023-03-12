@@ -1,7 +1,7 @@
 package uk.me.ruthmills.wordsquare.letters;
 
 /**
- * Factor class to get the prefered implementation of the Available Letters
+ * Factory class to get the prefered implementation of the Available Letters
  * interface. This will let us swap between implementations quickly, if one
  * proves to be more performant than another.
  * 
