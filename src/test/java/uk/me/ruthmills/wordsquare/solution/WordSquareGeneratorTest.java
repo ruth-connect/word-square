@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.is;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
@@ -17,73 +16,6 @@ import org.junit.Test;
  * @author ruth
  */
 public class WordSquareGeneratorTest {
-
-	/**
-	 * Test that word CAN be formed from available letters when there are no
-	 * existing words.
-	 */
-	@Test
-	public void shouldReturnTrue_whenWordCanBeFormedFromAvailableLetters_andThereAreNoExistingWords() {
-		// given
-		final String word = "dog";
-		final String letters = "dgox";
-
-		// when
-		final boolean result = WordSquareGenerator.isWordAbleToBeFormed(word, letters, new ArrayList<String>());
-
-		// then
-		assertThat(result, is(true));
-	}
-
-	/**
-	 * Test that word CANNOT be formed from available letters.
-	 */
-	@Test
-	public void shouldReturnFalse_whenWordCannotBeFormedFromAvailableLetters_andThereAreNoExistingWords() {
-		// given
-		final String word = "dog";
-		final String letters = "dgx";
-
-		// when
-		final boolean result = WordSquareGenerator.isWordAbleToBeFormed(word, letters, new ArrayList<String>());
-
-		// then
-		assertThat(result, is(false));
-	}
-
-	/**
-	 * Test that word CAN be formed when there are available letters AND the word is
-	 * valid.
-	 */
-	@Test
-	public void shouldReturnTrue_whenWordCanBeFormedFromAvailableLetters_andWordIsValid() {
-		// given
-		final String word = "oxo";
-		final String letters = "dgooox";
-
-		// when
-		final boolean result = WordSquareGenerator.isWordAbleToBeFormed(word, letters, Arrays.asList("dog"));
-
-		// then
-		assertThat(result, is(true));
-	}
-
-	/**
-	 * Test that word CANNOT be formed when there are available letters AND the word
-	 * is NOT valid.
-	 */
-	@Test
-	public void shouldReturnTrue_whenWordCanBeFormedFromAvailableLetters_andWordIsNotValid() {
-		// given
-		final String word = "god";
-		final String letters = "dgooox";
-
-		// when
-		final boolean result = WordSquareGenerator.isWordAbleToBeFormed(word, letters, Arrays.asList("dog"));
-
-		// then
-		assertThat(result, is(false));
-	}
 
 	/**
 	 * Test getting the remaining letters after removing those in the current word

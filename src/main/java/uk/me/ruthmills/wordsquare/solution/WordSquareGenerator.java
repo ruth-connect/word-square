@@ -2,7 +2,6 @@ package uk.me.ruthmills.wordsquare.solution;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +10,6 @@ import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.bag.HashBag;
 
-import uk.me.ruthmills.wordsquare.predicate.ListPredicate;
 import uk.me.ruthmills.wordsquare.predicate.WordContainsAvailableLettersPredicate;
 import uk.me.ruthmills.wordsquare.predicate.WordMeetsRequirementsPredicate;
 
@@ -72,23 +70,21 @@ public class WordSquareGenerator {
 	static void getValidWordSquaresForStartingWord(final String word, final int length, final String letters,
 			final List<String> wordShortlist, final List<String> words, final List<WordSquare> wordSquares,
 			final boolean firstMatchOnly) {
-		// Can the word be formed from the available letters and is it valid with the
-		// existing words?
-		if (isWordAbleToBeFormed(word, letters, words)) {
+		// Do we have the required number of words in the list of words to make a word
+		// square? And, if so, do we want to return all matches - or if we only want one
+		// match, is this the first match?
+		if (words.size() == length - 1 && (!firstMatchOnly || wordSquares.size() == 0)) {
+			// Add the current word to the list of words.
+			final List<String> updatedWords = ListUtils.union(words, Collections.singletonList(word));
+
+			// Add a new word square to end of the list of word squares.
+			wordSquares.add(new WordSquare(length, updatedWords));
+		} else {
 			// Get the remaining letters left, after removing those from the current word
 			// from the available letters.
 			final String remainingLetters = WordSquareGenerator.getRemainingLetters(word, letters);
 
-			// Add the current word to the list of words.
-			final List<String> updatedWords = ListUtils.union(words, Collections.singletonList(word));
-
-			// Do we have the required number of words in the list of words to make a word
-			// square? And, if so, do we want to return all matches - or if we only want one
-			// match, is this the first match?
-			if (updatedWords.size() == length && (!firstMatchOnly || wordSquares.size() == 0)) {
-				// Add a new word square to end of the list of word squares.
-				wordSquares.add(new WordSquare(length, updatedWords));
-			} else if (remainingLetters.length() >= length) { // only if we have enough letters left to make a word.
+			if (remainingLetters.length() >= length) { // only if we have enough letters left to make a word.
 				// Create a predicate based on the remaining letters.
 				final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
 						remainingLetters);
@@ -98,43 +94,31 @@ public class WordSquareGenerator {
 				final List<String> remainingWordShortlist = wordShortlist.stream()
 						.filter(wordContainsAvailableLettersPredicate).collect(Collectors.toList());
 
-				// Recursively call this function for each remaining word that meets the
-				// requirements.
-				for (final String remainingWord : remainingWordShortlist) {
-					getValidWordSquaresForStartingWord(remainingWord, length, remainingLetters, remainingWordShortlist,
-							updatedWords, wordSquares, firstMatchOnly);
+				// Are there any remaining words?
+				if (remainingWordShortlist.size() > 0) {
+					// Add the current word to the list of words.
+					final List<String> updatedWords = ListUtils.union(words, Collections.singletonList(word));
 
-					// If we are to return the first match only, and we have a match, return now.
-					if (firstMatchOnly && wordSquares.size() > 0) {
-						return;
+					// Create a predicate based on the words being valid at the next position in the
+					// word square.
+					WordMeetsRequirementsPredicate wordMeetsRequirementsPredicate = new WordMeetsRequirementsPredicate(
+							updatedWords);
+
+					for (final String remainingWord : remainingWordShortlist) {
+						if (wordMeetsRequirementsPredicate.test(remainingWord)) {
+							// Recursively call this function for the word that is valid.
+							getValidWordSquaresForStartingWord(remainingWord, length, remainingLetters,
+									remainingWordShortlist, updatedWords, wordSquares, firstMatchOnly);
+
+							// If we are to return the first match only, and we have a match, return now.
+							if (firstMatchOnly && wordSquares.size() > 0) {
+								return;
+							}
+						}
 					}
 				}
 			}
 		}
-	}
-
-	/**
-	 * Check if the word can be formed from the available letters and meets the
-	 * requirements.
-	 * 
-	 * @param word    The word.
-	 * @param letters The available letters.
-	 * @param words   The existing words in the word square.
-	 * @return true if the word can be formed from the available letters, or false
-	 *         if not.
-	 */
-	static boolean isWordAbleToBeFormed(final String word, final String letters, final List<String> words) {
-		// We execute the two predicates in the following order:
-		// 1. Check if the word meets the requirements in terms of the existing words in
-		// the word square.
-		// 2. Check if the word contains the available letters.
-		// This is because the first predicate is computationally less expensive, so if
-		// it does NOT pass, then we short-circuit at that point, avoiding the more
-		// time-consuming check (this shaved off around 160 seconds for solving the
-		// 7-letter word square on my 2013-vintage Lenovo Intel i7 Windows laptop).
-		final ListPredicate<String> listPredicate = new ListPredicate<String>(Arrays
-				.asList(new WordMeetsRequirementsPredicate(words), new WordContainsAvailableLettersPredicate(letters)));
-		return listPredicate.test(word);
 	}
 
 	/**
