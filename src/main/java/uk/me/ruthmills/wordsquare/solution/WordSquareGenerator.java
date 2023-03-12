@@ -88,27 +88,25 @@ public class WordSquareGenerator {
 			if (updatedWords.size() == length && (!firstMatchOnly || wordSquares.size() == 0)) {
 				// Add a new word square to end of the list of word squares.
 				wordSquares.add(new WordSquare(length, updatedWords));
-			} else {
-				if (remainingLetters.length() > 0) {
-					// Create a predicate based on the remaining letters. and the existing words.
-					final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
-							remainingLetters);
+			} else if (remainingLetters.length() > 0) {
+				// Create a predicate based on the remaining letters.
+				final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
+						remainingLetters);
 
-					// Get the remaining words available, by filtering only those left where the
-					// word shortlist contains the remaining letters.
-					final List<String> remainingWordShortlist = wordShortlist.stream()
-							.filter(wordContainsAvailableLettersPredicate).collect(Collectors.toList());
+				// Get the remaining words available, by filtering only those left where the
+				// word shortlist contains the remaining letters.
+				final List<String> remainingWordShortlist = wordShortlist.stream()
+						.filter(wordContainsAvailableLettersPredicate).collect(Collectors.toList());
 
-					// Recursively call this function for each remaining word that meets the
-					// requirements.
-					for (final String remainingWord : remainingWordShortlist) {
-						getValidWordSquaresForStartingWord(remainingWord, length, remainingLetters,
-								remainingWordShortlist, updatedWords, wordSquares, firstMatchOnly);
+				// Recursively call this function for each remaining word that meets the
+				// requirements.
+				for (final String remainingWord : remainingWordShortlist) {
+					getValidWordSquaresForStartingWord(remainingWord, length, remainingLetters, remainingWordShortlist,
+							updatedWords, wordSquares, firstMatchOnly);
 
-						// If we are to return the first match only, and we have a match, return now.
-						if (firstMatchOnly && wordSquares.size() > 0) {
-							return;
-						}
+					// If we are to return the first match only, and we have a match, return now.
+					if (firstMatchOnly && wordSquares.size() > 0) {
+						return;
 					}
 				}
 			}
