@@ -34,9 +34,18 @@ public class WordSquareGenerator {
 	 */
 	public static List<WordSquare> getValidWordSquares(final int length, final String letters,
 			final boolean firstMatchOnly) throws IOException {
+		// Get the word shortlist - this is the subset of words that are the required
+		// length, and are made up of a subset of the letters we have available.
 		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
+
+		// Create an empty list to hold the word squares. This gets passed down and
+		// populated as we find each word square.
 		final List<WordSquare> wordSquares = new ArrayList<WordSquare>();
+
+		// Iterate through each word in the shortlist.
 		for (final String word : wordShortlist) {
+			// Get any valid word squares beginning with the current word from the
+			// shortlist.
 			getValidWordSquaresForStartingWord(word, length, letters, wordShortlist, new ArrayList<String>(),
 					wordSquares, firstMatchOnly);
 
@@ -70,15 +79,6 @@ public class WordSquareGenerator {
 			// from the available letters.
 			final String remainingLetters = WordSquareGenerator.getRemainingLetters(word, letters);
 
-			// Create a predicate based on the remaining letters. and the existing words.
-			final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
-					remainingLetters);
-
-			// Get the remaining words available, by filtering only those left where the
-			// word shortlist contains the remaining letters.
-			final List<String> remainingWordShortlist = wordShortlist.stream()
-					.filter(wordContainsAvailableLettersPredicate).collect(Collectors.toList());
-
 			// Add the current word to the list of words.
 			final List<String> updatedWords = ListUtils.union(words, Collections.singletonList(word));
 
@@ -89,15 +89,26 @@ public class WordSquareGenerator {
 				// Add a new word square to end of the list of word squares.
 				wordSquares.add(new WordSquare(length, updatedWords));
 			} else {
-				// Recursively call this function for each remaining word that meets the
-				// requirements.
-				for (final String remainingWord : remainingWordShortlist) {
-					getValidWordSquaresForStartingWord(remainingWord, length, remainingLetters, remainingWordShortlist,
-							updatedWords, wordSquares, firstMatchOnly);
+				if (remainingLetters.length() > 0) {
+					// Create a predicate based on the remaining letters. and the existing words.
+					final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
+							remainingLetters);
 
-					// If we are to return the first match only, and we have a match, return now.
-					if (firstMatchOnly && wordSquares.size() > 0) {
-						return;
+					// Get the remaining words available, by filtering only those left where the
+					// word shortlist contains the remaining letters.
+					final List<String> remainingWordShortlist = wordShortlist.stream()
+							.filter(wordContainsAvailableLettersPredicate).collect(Collectors.toList());
+
+					// Recursively call this function for each remaining word that meets the
+					// requirements.
+					for (final String remainingWord : remainingWordShortlist) {
+						getValidWordSquaresForStartingWord(remainingWord, length, remainingLetters,
+								remainingWordShortlist, updatedWords, wordSquares, firstMatchOnly);
+
+						// If we are to return the first match only, and we have a match, return now.
+						if (firstMatchOnly && wordSquares.size() > 0) {
+							return;
+						}
 					}
 				}
 			}
