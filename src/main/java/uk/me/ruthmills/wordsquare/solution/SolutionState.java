@@ -148,34 +148,6 @@ public class SolutionState {
 	}
 
 	/**
-	 * Add a word square (after having found a valid solution).
-	 * 
-	 * @param wordSquare The word square to add.
-	 * @throws FirstWordSquareSolvedException Thrown if the firstMatchOnly flag is
-	 *                                        true (we have found the first match,
-	 *                                        so there is no need to find any more).
-	 * @throws InvalidWordSquareException     Thrown if the word square we are
-	 *                                        trying to add is invalid.
-	 */
-	public void addWordSquare(final WordSquare wordSquare)
-			throws FirstWordSquareSolvedException, InvalidWordSquareException {
-		// Make sure that the word square is valid.
-		if (!wordSquare.isValid()) {
-			throw new InvalidWordSquareException(wordSquare);
-		}
-
-		// Is the firstMatchOnly flag true?
-		if (firstMatchOnly) {
-			// We only want the first valid word square. Throw a
-			// FirstWordSquareSolvedException.
-			throw new FirstWordSquareSolvedException(wordSquare);
-		}
-
-		// Add the word square to the list of word squares.
-		wordSquares.add(wordSquare);
-	}
-
-	/**
 	 * Get valid word squares for a given starting word, available letters, and word
 	 * shortlist.
 	 * 
@@ -198,39 +170,93 @@ public class SolutionState {
 			// from the available letters.
 			final AvailableLetters remainingLetters = letters.getRemainingLetters(word);
 
-			if (remainingLetters.getCount() >= length) { // only if we have enough letters left to
-															// make a word.
-				// Create a predicate based on the remaining letters.
-				final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
-						remainingLetters);
+			// Do we have enough letters left to make a word?
+			if (remainingLetters.getCount() >= length) {
+				// Get the remaining word shortlist.
+				List<String> remainingWordShortlist = getRemainingWordShortlist(remainingLetters);
 
-				// Get the remaining words available, by filtering only those left where the
-				// word shortlist contains the remaining letters.
-				final List<String> remainingWordShortlist = wordShortlist.stream()
-						.filter(wordContainsAvailableLettersPredicate).collect(Collectors.toList());
-
-				// Are there any remaining words?
+				// Are there any remaining words? If so, iterate through them.
 				if (remainingWordShortlist.size() > 0) {
-					// Add the current word to the list of words.
-					final List<String> updatedWords = ListUtils.union(words, Collections.singletonList(word));
-
-					// Create a predicate based on the words being valid at the next position in the
-					// word square.
-					WordMeetsRequirementsPredicate wordMeetsRequirementsPredicate = new WordMeetsRequirementsPredicate(
-							updatedWords);
-
-					// Iterate for each remaining word in the shortlist.
-					for (final String remainingWord : remainingWordShortlist) {
-						// Are the requirements met for this being the next word in the word square?
-						if (wordMeetsRequirementsPredicate.test(remainingWord)) {
-							// Create a new Solution State for the word.
-							SolutionState solutionState = new SolutionState(this, remainingLetters,
-									remainingWordShortlist, updatedWords);
-							// Recursively call this function for the word that is valid.
-							solutionState.getValidWordSquaresForStartingWord(remainingWord);
-						}
-					}
+					iterateThroughRemainingWords(word, remainingLetters, remainingWordShortlist);
 				}
+			}
+		}
+	}
+
+	/**
+	 * Add a word square (after having found a valid solution).
+	 * 
+	 * @param wordSquare The word square to add.
+	 * @throws FirstWordSquareSolvedException Thrown if the firstMatchOnly flag is
+	 *                                        true (we have found the first match,
+	 *                                        so there is no need to find any more).
+	 * @throws InvalidWordSquareException     Thrown if the word square we are
+	 *                                        trying to add is invalid.
+	 */
+	void addWordSquare(final WordSquare wordSquare) throws FirstWordSquareSolvedException, InvalidWordSquareException {
+		// Make sure that the word square is valid.
+		if (!wordSquare.isValid()) {
+			throw new InvalidWordSquareException(wordSquare);
+		}
+
+		// Is the firstMatchOnly flag true?
+		if (firstMatchOnly) {
+			// We only want the first valid word square. Throw a
+			// FirstWordSquareSolvedException.
+			throw new FirstWordSquareSolvedException(wordSquare);
+		}
+
+		// Add the word square to the list of word squares.
+		wordSquares.add(wordSquare);
+	}
+
+	/**
+	 * Get the remaining word shortlist.
+	 * 
+	 * @param remainingLetters The remaining letters.
+	 * @return The remaining word shortlist for next time round.
+	 */
+	private List<String> getRemainingWordShortlist(AvailableLetters remainingLetters) {
+		// Create a predicate based on the remaining letters.
+		final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
+				remainingLetters);
+
+		// Get the remaining words available, by filtering only those left where the
+		// word shortlist contains the remaining letters.
+		return wordShortlist.stream().filter(wordContainsAvailableLettersPredicate).collect(Collectors.toList());
+	}
+
+	/**
+	 * Iterate through remaining words.
+	 * 
+	 * @param word                   The current word.
+	 * @param remainingLetters       The remaining letters.
+	 * @param remainingWordShortlist The remaining word shortlist.
+	 * @throws FirstWordSquareSolvedException Thrown if the firstMatchOnly flag is
+	 *                                        true (we have found the first match,
+	 *                                        so there is no need to find any more).
+	 * @throws InvalidWordSquareException     Thrown if the word square we are
+	 *                                        trying to add is invalid.
+	 */
+	private void iterateThroughRemainingWords(String word, AvailableLetters remainingLetters,
+			List<String> remainingWordShortlist) throws FirstWordSquareSolvedException, InvalidWordSquareException {
+		// Add the current word to the list of words.
+		final List<String> updatedWords = ListUtils.union(words, Collections.singletonList(word));
+
+		// Create a predicate based on the words being valid at the next position in the
+		// word square.
+		WordMeetsRequirementsPredicate wordMeetsRequirementsPredicate = new WordMeetsRequirementsPredicate(
+				updatedWords);
+
+		// Iterate for each remaining word in the shortlist.
+		for (final String remainingWord : remainingWordShortlist) {
+			// Are the requirements met for this being the next word in the word square?
+			if (wordMeetsRequirementsPredicate.test(remainingWord)) {
+				// Create a new Solution State for the word.
+				SolutionState solutionState = new SolutionState(this, remainingLetters, remainingWordShortlist,
+						updatedWords);
+				// Recursively call this function for the word that is valid.
+				solutionState.getValidWordSquaresForStartingWord(remainingWord);
 			}
 		}
 	}
