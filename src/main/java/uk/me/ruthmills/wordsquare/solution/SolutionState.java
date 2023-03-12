@@ -161,7 +161,7 @@ public class SolutionState {
 	public void getValidWordSquares(final String word)
 			throws FirstWordSquareSolvedException, InvalidWordSquareException {
 		// Do we have the required number of words in the list of words to make a word
-		// square?
+		// square, once we have added the current word to them?
 		if (words.size() == length - 1) {
 			// Add a new word square to end of the list of word squares.
 			addWordSquare(new WordSquare(length, ListUtils.union(words, Collections.singletonList(word))));
