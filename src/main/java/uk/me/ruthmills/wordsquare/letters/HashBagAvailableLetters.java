@@ -6,7 +6,8 @@ import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.bag.HashBag;
 
 /**
- * Hash Bag implementation of available letters.
+ * Hash Bag implementation of available letters. This is slower than the Hash
+ * Map implementation.
  * 
  * @author ruth
  */

@@ -7,7 +7,8 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Hash Map implementation of available letters.
+ * Hash Map implementation of available letters. This is significantly faster
+ * than the Hash Bag implementation.
  * 
  * @author ruth
  */
