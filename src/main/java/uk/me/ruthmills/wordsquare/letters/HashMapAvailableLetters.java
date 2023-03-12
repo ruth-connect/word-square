@@ -51,8 +51,8 @@ public class HashMapAvailableLetters implements AvailableLetters {
 	@Override
 	public String toString() {
 		return availableLetters.entrySet().stream().map(entry -> {
-			char letter = (char) entry.getKey().byteValue();
-			int count = entry.getValue();
+			final char letter = (char) entry.getKey().byteValue();
+			final int count = entry.getValue();
 			return StringUtils.repeat(letter, count);
 		}).sorted().collect(Collectors.joining());
 	}
@@ -65,7 +65,7 @@ public class HashMapAvailableLetters implements AvailableLetters {
 	 *         if not.
 	 */
 	@Override
-	public boolean isWordFormable(String word) {
+	public boolean isWordFormable(final String word) {
 		// Get a copy of the Hash Map.
 		Map<Byte, Integer> availableLetters = new HashMap<Byte, Integer>(this.availableLetters);
 
@@ -96,14 +96,14 @@ public class HashMapAvailableLetters implements AvailableLetters {
 	 * @return The remaining letters.
 	 */
 	@Override
-	public AvailableLetters getRemainingLetters(String word) {
+	public AvailableLetters getRemainingLetters(final String word) {
 		// Get a copy of the Hash Bag.
-		Map<Byte, Integer> remainingLetters = new HashMap<Byte, Integer>(this.availableLetters);
+		final Map<Byte, Integer> remainingLetters = new HashMap<Byte, Integer>(this.availableLetters);
 
 		// Iterate through each letter in the word.
 		for (final Byte letter : word.getBytes()) {
 			// Remove the letter.
-			Integer count = remainingLetters.get(letter);
+			final Integer count = remainingLetters.get(letter);
 			if (count > 1) {
 				remainingLetters.put(letter, count - 1);
 			} else {

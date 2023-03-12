@@ -22,7 +22,7 @@ public class AvailableLettersFactoryTest {
 		final String AVAILABLE_LETTERS = "ddeeeennnoorsssv";
 
 		// when
-		AvailableLetters availableLetters = AvailableLettersFactory.getInstance(AVAILABLE_LETTERS);
+		final AvailableLetters availableLetters = AvailableLettersFactory.getInstance(AVAILABLE_LETTERS);
 
 		// then
 		assertThat(availableLetters, notNullValue());

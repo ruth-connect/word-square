@@ -14,7 +14,7 @@ public class HashMapAvailableLettersTest extends AvailableLettersTest {
 	 * @return HashMapAvailableLetters object.
 	 */
 	@Override
-	AvailableLetters getAvailableLetters(String letters) {
+	AvailableLetters getAvailableLetters(final String letters) {
 		return new HashMapAvailableLetters(letters);
 	}
 }

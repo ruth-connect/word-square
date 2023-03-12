@@ -14,7 +14,7 @@ public class HashBagAvailableLettersTest extends AvailableLettersTest {
 	 * @return HashBagAvailableLetters object.
 	 */
 	@Override
-	AvailableLetters getAvailableLetters(String letters) {
+	AvailableLetters getAvailableLetters(final String letters) {
 		return new HashBagAvailableLetters(letters);
 	}
 }

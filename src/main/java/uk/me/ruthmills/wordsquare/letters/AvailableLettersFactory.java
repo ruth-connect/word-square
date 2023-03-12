@@ -16,7 +16,7 @@ public class AvailableLettersFactory {
 	 * @param letters String containing the available letters.
 	 * @return Instance of the preferred implementation of Available Letters.
 	 */
-	public static AvailableLetters getInstance(String letters) {
+	public static AvailableLetters getInstance(final String letters) {
 		return new HashMapAvailableLetters(letters);
 	}
 }

@@ -57,9 +57,9 @@ public class HashBagAvailableLetters implements AvailableLetters {
 	 *         if not.
 	 */
 	@Override
-	public boolean isWordFormable(String word) {
+	public boolean isWordFormable(final String word) {
 		// Get a copy of the Hash Bag.
-		Bag<Byte> availableLetters = new HashBag<Byte>(this.availableLetters);
+		final Bag<Byte> availableLetters = new HashBag<Byte>(this.availableLetters);
 
 		// Iterate through each letter in the word.
 		for (final Byte letter : word.getBytes()) {
@@ -81,9 +81,9 @@ public class HashBagAvailableLetters implements AvailableLetters {
 	 * @return The remaining letters.
 	 */
 	@Override
-	public AvailableLetters getRemainingLetters(String word) {
+	public AvailableLetters getRemainingLetters(final String word) {
 		// Get a copy of the Hash Bag.
-		Bag<Byte> remainingLetters = new HashBag<Byte>(this.availableLetters);
+		final Bag<Byte> remainingLetters = new HashBag<Byte>(this.availableLetters);
 
 		// Iterate through each letter in the word.
 		for (final Byte letter : word.getBytes()) {

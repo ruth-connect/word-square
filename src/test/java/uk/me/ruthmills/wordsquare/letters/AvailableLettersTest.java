@@ -22,7 +22,7 @@ public abstract class AvailableLettersTest {
 	 * 
 	 * @param letters String containing the available letters.
 	 */
-	abstract AvailableLetters getAvailableLetters(String letters);
+	abstract AvailableLetters getAvailableLetters(final String letters);
 
 	/**
 	 * Should construct OK, and convert to a String with the expected letters in it
@@ -179,8 +179,8 @@ public abstract class AvailableLettersTest {
 		final String letters = "ddggoooox";
 
 		// when
-		AvailableLetters availableLetters = getAvailableLetters(letters);
-		int count = availableLetters.getCount();
+		final AvailableLetters availableLetters = getAvailableLetters(letters);
+		final int count = availableLetters.getCount();
 
 		// then
 		assertThat(count, is(letters.length()));
