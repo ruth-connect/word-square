@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import uk.me.ruthmills.wordsquare.dictionary.Dictionary;
+import uk.me.ruthmills.wordsquare.letters.AvailableLetters;
 import uk.me.ruthmills.wordsquare.predicate.ListPredicate;
 import uk.me.ruthmills.wordsquare.predicate.WordContainsAvailableLettersPredicate;
 import uk.me.ruthmills.wordsquare.predicate.WordLengthPredicate;
@@ -29,7 +30,7 @@ public class WordShortlist {
 	 * @return The shortlist of words.
 	 * @throws IOException Thrown if we cannot read from the dictionary file.
 	 */
-	public static List<String> getWordShortlist(final int length, final String letters) throws IOException {
+	public static List<String> getWordShortlist(final int length, final AvailableLetters letters) throws IOException {
 		// This predicate will first match on the required number of letters, and then
 		// ensure that each word contains ONLY a subset of the available letters.
 		final ListPredicate<String> wordPredicate = new ListPredicate<String>(

@@ -8,6 +8,8 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.me.ruthmills.wordsquare.letters.AvailableLettersFactory;
+
 /**
  * Test suite for the List Predicate class.
  * 
@@ -36,7 +38,8 @@ public class ListPredicateTest {
 	@Before
 	public void setUp() {
 		wordLengthPredicate = new WordLengthPredicate(EXPECTED_WORD_LENGTH);
-		wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(AVAILABLE_LETTERS);
+		wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
+				AvailableLettersFactory.getInstance(AVAILABLE_LETTERS));
 
 		// The word length predicate should be less expensive in terms of processing
 		// time, so we should execute this first.

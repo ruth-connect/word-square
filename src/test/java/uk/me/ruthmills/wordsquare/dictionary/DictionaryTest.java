@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import uk.me.ruthmills.wordsquare.letters.AvailableLettersFactory;
 import uk.me.ruthmills.wordsquare.predicate.ListPredicate;
 import uk.me.ruthmills.wordsquare.predicate.WordContainsAvailableLettersPredicate;
 import uk.me.ruthmills.wordsquare.predicate.WordLengthPredicate;
@@ -82,7 +83,7 @@ public class DictionaryTest {
 	public void shouldReadOnlyWordsWhichContainOnlyASubsetOfAvailableLetters() throws IOException {
 		// given
 		final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
-				AVAILABLE_LETTERS);
+				AvailableLettersFactory.getInstance(AVAILABLE_LETTERS));
 
 		// when
 		final List<String> words = Dictionary.getWordsMatchingPredicate(wordContainsAvailableLettersPredicate);
@@ -103,8 +104,8 @@ public class DictionaryTest {
 	public void shouldReadOnly4LetterWordsWhichContainOnlyASubsetOfAvailableLetters() throws IOException {
 		// given
 		final ListPredicate<String> listPredicate = new ListPredicate<String>(Arrays.asList(new WordLengthPredicate(4),
-				new WordContainsAvailableLettersPredicate(AVAILABLE_LETTERS))); // chain the 2 other predicates
-																				// together.
+				new WordContainsAvailableLettersPredicate(AvailableLettersFactory.getInstance(AVAILABLE_LETTERS))));
+
 		// when
 		final List<String> words = Dictionary.getWordsMatchingPredicate(listPredicate);
 

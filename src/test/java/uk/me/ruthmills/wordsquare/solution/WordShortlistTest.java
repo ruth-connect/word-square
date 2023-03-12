@@ -9,6 +9,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import uk.me.ruthmills.wordsquare.letters.AvailableLetters;
+import uk.me.ruthmills.wordsquare.letters.AvailableLettersFactory;
+
 /**
  * Test suite for the Word Shortlist class.
  * 
@@ -23,7 +26,7 @@ public class WordShortlistTest {
 	public void shouldReturnExpectedWordShortlist() throws IOException {
 		// given
 		final int length = 3;
-		final String availableLetters = "ddggoooox";
+		final AvailableLetters availableLetters = AvailableLettersFactory.getInstance("ddggoooox");
 
 		// when
 		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, availableLetters);
@@ -40,7 +43,7 @@ public class WordShortlistTest {
 	public void shouldReturnWordShortlist_for4LetterTestCase() throws IOException {
 		// given
 		final int length = 4;
-		final String availableLetters = "aaccdeeeemmnnnoo";
+		final AvailableLetters availableLetters = AvailableLettersFactory.getInstance("aaccdeeeemmnnnoo");
 
 		// when
 		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, availableLetters);
@@ -56,7 +59,7 @@ public class WordShortlistTest {
 	public void shouldReturnWordShortlist_forFirst5LetterTestCase() throws IOException {
 		// given
 		final int length = 5;
-		final String availableLetters = "aaaeeeefhhmoonssrrrrttttw";
+		final AvailableLetters availableLetters = AvailableLettersFactory.getInstance("aaaeeeefhhmoonssrrrrttttw");
 
 		// when
 		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, availableLetters);
@@ -72,7 +75,7 @@ public class WordShortlistTest {
 	public void shouldReturnWordShortlist_forSecond5LetterTestCase() throws IOException {
 		// given
 		final int length = 5;
-		final String availableLetters = "aabbeeeeeeeehmosrrrruttvv";
+		final AvailableLetters availableLetters = AvailableLettersFactory.getInstance("aabbeeeeeeeehmosrrrruttvv");
 
 		// when
 		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, availableLetters);
@@ -88,7 +91,8 @@ public class WordShortlistTest {
 	public void shouldReturnWordShortlist_for7LetterTestCase() throws IOException {
 		// given
 		final int length = 7;
-		final String availableLetters = "aaaaaaaaabbeeeeeeedddddggmmlloooonnssssrrrruvvyyy";
+		final AvailableLetters availableLetters = AvailableLettersFactory
+				.getInstance("aaaaaaaaabbeeeeeeedddddggmmlloooonnssssrrrruvvyyy");
 
 		// when
 		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, availableLetters);

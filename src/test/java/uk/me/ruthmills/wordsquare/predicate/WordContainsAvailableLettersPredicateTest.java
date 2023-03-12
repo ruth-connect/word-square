@@ -6,6 +6,8 @@ import static org.hamcrest.Matchers.is;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.me.ruthmills.wordsquare.letters.HashBagAvailableLetters;
+
 /**
  * Test suite for the Word Contains Available Letters Predicate class.
  * 
@@ -24,7 +26,8 @@ public class WordContainsAvailableLettersPredicateTest {
 	 */
 	@Before
 	public void setUp() {
-		wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(AVAILABLE_LETTERS);
+		wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
+				new HashBagAvailableLetters(AVAILABLE_LETTERS));
 	}
 
 	/**

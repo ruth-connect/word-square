@@ -151,4 +151,38 @@ public abstract class AvailableLettersTest {
 		// then
 		assertThat(wordContainsAvailableLetters, is(true));
 	}
+
+	/**
+	 * Test getting the remaining letters after removing those in the current word
+	 * from the available letters.
+	 */
+	@Test
+	public void shouldGetRemainingLetters_whenRemovingLettersFromCurrentWord() {
+		// given
+		final String word = "dog";
+		final String letters = "ddggoooox";
+
+		// when
+		AvailableLetters availableLetters = getAvailableLetters(letters);
+		final String remainingLetters = availableLetters.getRemainingLetters(word).toString();
+
+		// then
+		assertThat(remainingLetters, is("dgooox"));
+	}
+
+	/**
+	 * Test getting the count of available letters.
+	 */
+	@Test
+	public void shouldGetCountOfAvailableLetters() {
+		// given
+		final String letters = "ddggoooox";
+
+		// when
+		AvailableLetters availableLetters = getAvailableLetters(letters);
+		int count = availableLetters.getCount();
+
+		// then
+		assertThat(count, is(letters.length()));
+	}
 }

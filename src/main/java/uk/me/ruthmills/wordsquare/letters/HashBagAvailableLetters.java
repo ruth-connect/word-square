@@ -29,6 +29,15 @@ public class HashBagAvailableLetters implements AvailableLetters {
 	}
 
 	/**
+	 * Constructor.
+	 * 
+	 * @param letters Bag containing the available letters.
+	 */
+	public HashBagAvailableLetters(final Bag<Byte> letters) {
+		this.availableLetters = letters;
+	}
+
+	/**
 	 * Convert to a String.
 	 * 
 	 * @return String containing the available letters.
@@ -61,5 +70,37 @@ public class HashBagAvailableLetters implements AvailableLetters {
 
 		// All the letters in the word are available. Return true.
 		return true;
+	}
+
+	/**
+	 * Get the remaining letters, after removing the letters for the supplied word
+	 * from the available letters.
+	 * 
+	 * @param word The word to remove the letters from.
+	 * @return The remaining letters.
+	 */
+	@Override
+	public AvailableLetters getRemainingLetters(String word) {
+		// Get a copy of the Hash Bag.
+		Bag<Byte> remainingLetters = new HashBag<Byte>(this.availableLetters);
+
+		// Iterate through each letter in the word.
+		for (final Byte letter : word.getBytes()) {
+			// Remove the letter from the bag.
+			remainingLetters.remove(letter, 1);
+		}
+
+		// Return the remaining letters.
+		return new HashBagAvailableLetters(remainingLetters);
+	}
+
+	/**
+	 * Get the count of available letters.
+	 * 
+	 * @return The count of available letters.
+	 */
+	@Override
+	public int getCount() {
+		return availableLetters.size();
 	}
 }

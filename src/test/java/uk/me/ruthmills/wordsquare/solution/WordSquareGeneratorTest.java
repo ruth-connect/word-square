@@ -10,29 +10,15 @@ import java.util.List;
 
 import org.junit.Test;
 
+import uk.me.ruthmills.wordsquare.letters.AvailableLetters;
+import uk.me.ruthmills.wordsquare.letters.AvailableLettersFactory;
+
 /**
  * Test suite for the Word Square Generator class.
  * 
  * @author ruth
  */
 public class WordSquareGeneratorTest {
-
-	/**
-	 * Test getting the remaining letters after removing those in the current word
-	 * from the available letters.
-	 */
-	@Test
-	public void shouldGetRemainingLetters_whenRemovingLettersFromCurrentWord() {
-		// given
-		final String word = "dog";
-		final String letters = "ddggoooox";
-
-		// when
-		final String remainingLetters = WordSquareGenerator.getRemainingLetters(word, letters);
-
-		// then
-		assertThat(remainingLetters, is("dgooox"));
-	}
 
 	/**
 	 * Test getting all valid solutions for a given starting word in a 3-letter word
@@ -42,7 +28,7 @@ public class WordSquareGeneratorTest {
 	public void shouldGetAllValidSolutionsFor3LetterStartingWord() throws IOException {
 		// given
 		final int length = 3;
-		final String letters = "ddggoooox";
+		final AvailableLetters letters = AvailableLettersFactory.getInstance("ddggoooox");
 		final String startingWord = "dog";
 		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
 		final List<WordSquare> solutions = new ArrayList<>();
@@ -65,7 +51,7 @@ public class WordSquareGeneratorTest {
 	public void shouldGetAllValidSolutionsFor5LetterStartingWord() throws IOException {
 		// given
 		final int length = 5;
-		final String letters = "aaaeeeefhhmoonssrrrrttttw";
+		final AvailableLetters letters = AvailableLettersFactory.getInstance("aaaeeeefhhmoonssrrrrttttw");
 		final String startingWord = "feast";
 		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
 		final List<WordSquare> solutions = new ArrayList<>();
@@ -89,7 +75,7 @@ public class WordSquareGeneratorTest {
 	public void shouldGetFirstValidSolutionFor5LetterStartingWord() throws IOException {
 		// given
 		final int length = 5;
-		final String letters = "aaaeeeefhhmoonssrrrrttttw";
+		final AvailableLetters letters = AvailableLettersFactory.getInstance("aaaeeeefhhmoonssrrrrttttw");
 		final String startingWord = "feast";
 		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
 		final List<WordSquare> solutions = new ArrayList<>();

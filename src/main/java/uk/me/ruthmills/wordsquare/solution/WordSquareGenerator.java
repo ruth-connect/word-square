@@ -6,10 +6,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.ListUtils;
-import org.apache.commons.collections4.bag.HashBag;
 
+import uk.me.ruthmills.wordsquare.letters.AvailableLetters;
+import uk.me.ruthmills.wordsquare.letters.AvailableLettersFactory;
 import uk.me.ruthmills.wordsquare.predicate.WordContainsAvailableLettersPredicate;
 import uk.me.ruthmills.wordsquare.predicate.WordMeetsRequirementsPredicate;
 
@@ -32,9 +32,12 @@ public class WordSquareGenerator {
 	 */
 	public static List<WordSquare> getValidWordSquares(final int length, final String letters,
 			final boolean firstMatchOnly) throws IOException {
+		// Create the Available Letters object.
+		AvailableLetters availableLetters = AvailableLettersFactory.getInstance(letters);
+
 		// Get the word shortlist - this is the subset of words that are the required
 		// length, and are made up of a subset of the letters we have available.
-		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
+		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, availableLetters);
 
 		// Create an empty list to hold the word squares. This gets passed down and
 		// populated as we find each word square.
@@ -44,7 +47,7 @@ public class WordSquareGenerator {
 		for (final String word : wordShortlist) {
 			// Get any valid word squares beginning with the current word from the
 			// shortlist.
-			getValidWordSquaresForStartingWord(word, length, letters, wordShortlist, new ArrayList<String>(),
+			getValidWordSquaresForStartingWord(word, length, availableLetters, wordShortlist, new ArrayList<String>(),
 					wordSquares, firstMatchOnly);
 
 			// If we are to return the first match only, and we have a match, return it.
@@ -67,7 +70,7 @@ public class WordSquareGenerator {
 	 * @param firstMatchOnly true to stop at the first matching word square, false
 	 *                       to carry on until all possible words are exhausted.
 	 */
-	static void getValidWordSquaresForStartingWord(final String word, final int length, final String letters,
+	static void getValidWordSquaresForStartingWord(final String word, final int length, final AvailableLetters letters,
 			final List<String> wordShortlist, final List<String> words, final List<WordSquare> wordSquares,
 			final boolean firstMatchOnly) {
 		// Do we have the required number of words in the list of words to make a word
@@ -82,9 +85,9 @@ public class WordSquareGenerator {
 		} else {
 			// Get the remaining letters left, after removing those from the current word
 			// from the available letters.
-			final String remainingLetters = WordSquareGenerator.getRemainingLetters(word, letters);
+			final AvailableLetters remainingLetters = letters.getRemainingLetters(word);
 
-			if (remainingLetters.length() >= length) { // only if we have enough letters left to make a word.
+			if (remainingLetters.getCount() >= length) { // only if we have enough letters left to make a word.
 				// Create a predicate based on the remaining letters.
 				final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
 						remainingLetters);
@@ -119,31 +122,5 @@ public class WordSquareGenerator {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Get the remaining letters after taking the letters from the current word away
-	 * from the available letters.
-	 * 
-	 * @param word    The word.
-	 * @param letters The available letters.
-	 * @return The remaining letters.
-	 */
-	static String getRemainingLetters(final String word, final String letters) {
-		// Create a bag of remaining letters.
-		final Bag<Byte> remainingLetters = new HashBag<Byte>();
-		for (final Byte letter : letters.getBytes()) {
-			remainingLetters.add(letter);
-		}
-
-		// Iterate through each letter in the word.
-		for (final Byte letter : word.getBytes()) {
-			// Remove the letter from the bag.
-			remainingLetters.remove(letter, 1);
-		}
-
-		// Return the remaining letters.
-		return remainingLetters.stream().map(value -> String.valueOf((char) value.byteValue())).sorted()
-				.collect(Collectors.joining());
 	}
 }

@@ -2,8 +2,7 @@ package uk.me.ruthmills.wordsquare.predicate;
 
 import java.util.function.Predicate;
 
-import org.apache.commons.collections4.Bag;
-import org.apache.commons.collections4.bag.HashBag;
+import uk.me.ruthmills.wordsquare.letters.AvailableLetters;
 
 /**
  * Predicate class to check if a word contains only the letters available.
@@ -13,7 +12,7 @@ import org.apache.commons.collections4.bag.HashBag;
 public class WordContainsAvailableLettersPredicate implements Predicate<String> {
 
 	// Available letters to match.
-	private final String letters;
+	private final AvailableLetters letters;
 
 	/**
 	 * Constructor. Takes the available letters (the word MUST contain only those
@@ -21,7 +20,7 @@ public class WordContainsAvailableLettersPredicate implements Predicate<String> 
 	 * 
 	 * @param letters The available letters.
 	 */
-	public WordContainsAvailableLettersPredicate(final String letters) {
+	public WordContainsAvailableLettersPredicate(final AvailableLetters letters) {
 		this.letters = letters;
 	}
 
@@ -34,21 +33,6 @@ public class WordContainsAvailableLettersPredicate implements Predicate<String> 
 	 */
 	@Override
 	public boolean test(final String word) {
-		// Create a bag of available letters.
-		final Bag<Byte> availableLetters = new HashBag<Byte>();
-		for (final Byte letter : letters.getBytes()) {
-			availableLetters.add(letter);
-		}
-
-		// Iterate through each letter in the word.
-		for (final Byte letter : word.getBytes()) {
-			// If the letter is not in the available letters, return false.
-			if (!availableLetters.remove(letter, 1)) {
-				return false;
-			}
-		}
-
-		// All the letters in the word are available. Return true.
-		return true;
+		return letters.isWordFormable(word);
 	}
 }

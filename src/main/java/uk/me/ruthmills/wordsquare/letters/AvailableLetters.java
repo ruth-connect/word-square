@@ -17,4 +17,20 @@ public interface AvailableLetters {
 	 *         if not.
 	 */
 	public boolean isWordFormable(String word);
+
+	/**
+	 * Get the remaining letters, after removing the letters for the supplied word
+	 * from the available letters.
+	 * 
+	 * @param word The word to remove the letters from.
+	 * @return The remaining letters.
+	 */
+	public AvailableLetters getRemainingLetters(String word);
+
+	/**
+	 * Get the count of available letters.
+	 * 
+	 * @return The count of available letters.
+	 */
+	public int getCount();
 }
