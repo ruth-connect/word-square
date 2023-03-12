@@ -5,12 +5,12 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
+
 import org.junit.Test;
 
 import uk.me.ruthmills.wordsquare.exception.FirstWordSquareSolvedException;
 import uk.me.ruthmills.wordsquare.exception.InvalidWordSquareException;
-import uk.me.ruthmills.wordsquare.letters.AvailableLetters;
-import uk.me.ruthmills.wordsquare.letters.AvailableLettersFactory;
 
 /**
  * Test suite for the Solution State class.
@@ -23,7 +23,7 @@ public class SolutionStateTest {
 	private static final int WORD_LENGTH = 3;
 
 	// Available letters.
-	private static final AvailableLetters AVAILABLE_LETTERS = AvailableLettersFactory.getInstance("ddggoooox");
+	private static final String AVAILABLE_LETTERS = "ddggoooox";
 
 	// Valid word square.
 	private static final WordSquare VALID_WORD_SQUARE = new WordSquare(3, "dog", "oxo", "god");
@@ -36,14 +36,16 @@ public class SolutionStateTest {
 	 * length and available letters).
 	 */
 	@Test
-	public void shouldConstructNewSolutionStateFromInitialParameters() {
+	public void shouldConstructNewSolutionStateFromInitialParameters() throws IOException {
 		// when
 		final SolutionState solutionState = new SolutionState(WORD_LENGTH, AVAILABLE_LETTERS);
 
 		// then
 		assertThat(solutionState.getLength(), is(WORD_LENGTH));
-		assertThat(solutionState.getLetters(), is(AVAILABLE_LETTERS));
+		assertThat(solutionState.getLetters().toString(), is(AVAILABLE_LETTERS));
 		assertThat(solutionState.isFirstMatchOnly(), is(false));
+		assertThat(solutionState.getWordShortlist(), hasSize(6));
+		assertThat(solutionState.getWords(), hasSize(0));
 		assertThat(solutionState.getWordSquares(), hasSize(0));
 	}
 
@@ -52,7 +54,7 @@ public class SolutionStateTest {
 	 * match only flag.
 	 */
 	@Test
-	public void shouldConstructNewSolutionStateWithFirstMatchOnly() {
+	public void shouldConstructNewSolutionStateWithFirstMatchOnly() throws IOException {
 		// given
 		final boolean firstMatchOnly = true;
 
@@ -61,8 +63,10 @@ public class SolutionStateTest {
 
 		// then
 		assertThat(solutionState.getLength(), is(WORD_LENGTH));
-		assertThat(solutionState.getLetters(), is(AVAILABLE_LETTERS));
+		assertThat(solutionState.getLetters().toString(), is(AVAILABLE_LETTERS));
 		assertThat(solutionState.isFirstMatchOnly(), is(firstMatchOnly));
+		assertThat(solutionState.getWordShortlist(), hasSize(6));
+		assertThat(solutionState.getWords(), hasSize(0));
 		assertThat(solutionState.getWordSquares(), hasSize(0));
 	}
 
@@ -70,7 +74,8 @@ public class SolutionStateTest {
 	 * Test that we can add a valid word square.
 	 */
 	@Test
-	public void shouldAddValidWordSquare() throws FirstWordSquareSolvedException, InvalidWordSquareException {
+	public void shouldAddValidWordSquare()
+			throws FirstWordSquareSolvedException, InvalidWordSquareException, IOException {
 		// given
 		final SolutionState solutionState = new SolutionState(WORD_LENGTH, AVAILABLE_LETTERS);
 
@@ -88,7 +93,7 @@ public class SolutionStateTest {
 	 */
 	@Test
 	public void shouldThrowInvalidWordSquareException_whenAddingInvalidWordSquare()
-			throws FirstWordSquareSolvedException, InvalidWordSquareException {
+			throws FirstWordSquareSolvedException, InvalidWordSquareException, IOException {
 		// given
 		final SolutionState solutionState = new SolutionState(WORD_LENGTH, AVAILABLE_LETTERS);
 
@@ -108,7 +113,7 @@ public class SolutionStateTest {
 	 */
 	@Test
 	public void shouldThrowFirstWordSquareSolvedException_whenAddingFirstWordSquare_andFirstMatchOnlyIsTrue()
-			throws FirstWordSquareSolvedException, InvalidWordSquareException {
+			throws FirstWordSquareSolvedException, InvalidWordSquareException, IOException {
 		// given
 		final SolutionState solutionState = new SolutionState(WORD_LENGTH, AVAILABLE_LETTERS, true);
 

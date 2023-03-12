@@ -1,11 +1,13 @@
 package uk.me.ruthmills.wordsquare.solution;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import uk.me.ruthmills.wordsquare.exception.FirstWordSquareSolvedException;
 import uk.me.ruthmills.wordsquare.exception.InvalidWordSquareException;
 import uk.me.ruthmills.wordsquare.letters.AvailableLetters;
+import uk.me.ruthmills.wordsquare.letters.AvailableLettersFactory;
 
 /**
  * This class represents the state of play during the solving of a word square.
@@ -27,11 +29,11 @@ public class SolutionState {
 	// than checking if there are any others.
 	private final boolean firstMatchOnly;
 
-	// The current word we are evaluating.
-	private String word;
+	// The shortlist of valid words to iterate through.
+	private final List<String> wordShortlist;
 
 	// The current list of words we have in the word square so far.
-	private List<String> words;
+	private final List<String> words;
 
 	// The word squares we have solved so far.
 	private final List<WordSquare> wordSquares;
@@ -42,8 +44,9 @@ public class SolutionState {
 	 * 
 	 * @param length  The length of each word in the word square.
 	 * @param letters The available letters from which to form words.
+	 * @throws IOException Thrown if there is a problem reading from the dictionary.
 	 */
-	public SolutionState(final int length, final AvailableLetters letters) {
+	public SolutionState(final int length, final String letters) throws IOException {
 		this(length, letters, false);
 	}
 
@@ -54,12 +57,25 @@ public class SolutionState {
 	 * @param letters        The available letters from which to form words.
 	 * @param firstMatchOnly true to stop at the first valid word square, false to
 	 *                       continue until we run out of words.
+	 * @throws IOException Thrown if there is a problem reading from the dictionary.
 	 */
-	public SolutionState(final int length, final AvailableLetters letters, final boolean firstMatchOnly) {
+	public SolutionState(final int length, final String letters, final boolean firstMatchOnly) throws IOException {
 		this.length = length;
-		this.letters = letters;
+		this.letters = AvailableLettersFactory.getInstance(letters);
 		this.firstMatchOnly = firstMatchOnly;
-		wordSquares = new ArrayList<>();
+		this.wordShortlist = WordShortlist.getWordShortlist(length, this.letters);
+		this.words = new ArrayList<>();
+		this.wordSquares = new ArrayList<>();
+	}
+
+	private SolutionState(SolutionState solutionState, AvailableLetters letters, List<String> wordShortlist,
+			List<String> words) {
+		this.length = solutionState.length;
+		this.letters = letters;
+		this.firstMatchOnly = solutionState.firstMatchOnly;
+		this.wordShortlist = wordShortlist;
+		this.words = words;
+		this.wordSquares = solutionState.wordSquares;
 	}
 
 	/**
@@ -92,6 +108,23 @@ public class SolutionState {
 	}
 
 	/**
+	 * Get the word shortlist - the list of valid words to form word squares from.
+	 * 
+	 * @return The word shortlist.
+	 */
+	public List<String> getWordShortlist() {
+		return wordShortlist;
+	}
+
+	/**
+	 * Get the list of words - this is the valid words we have so far on the way to
+	 * completing a word square.
+	 */
+	public List<String> getWords() {
+		return words;
+	}
+
+	/**
 	 * Get the list of word squares.
 	 * 
 	 * @return List of word squares.
@@ -104,12 +137,11 @@ public class SolutionState {
 	 * Add a word square (after having found a valid solution).
 	 * 
 	 * @param wordSquare The word square to add.
-	 * @exception FirstWordSquareSolvedException Thrown if the firstMatchOnly flag
-	 *                                           is true (we have found the first
-	 *                                           match, so there is no need to find
-	 *                                           any more).
-	 * @exception InvalidWordSquareException     Thrown if the word square we are
-	 *                                           trying to add is invalid.
+	 * @throws FirstWordSquareSolvedException Thrown if the firstMatchOnly flag is
+	 *                                        true (we have found the first match,
+	 *                                        so there is no need to find any more).
+	 * @throws InvalidWordSquareException     Thrown if the word square we are
+	 *                                        trying to add is invalid.
 	 */
 	public void addWordSquare(WordSquare wordSquare) throws FirstWordSquareSolvedException, InvalidWordSquareException {
 		// Make sure that the word square is valid.
@@ -126,5 +158,18 @@ public class SolutionState {
 
 		// Add the word square to the list of word squares.
 		wordSquares.add(wordSquare);
+	}
+
+	/**
+	 * Get an updated solution state.
+	 * 
+	 * @param letters       Updated available letters.
+	 * @param wordShortlist Updated word shortlist.
+	 * @param words         Updated words.
+	 * @return updated solution state.
+	 */
+	public SolutionState getUpdatedSolutionState(AvailableLetters letters, List<String> wordShortlist,
+			List<String> words) {
+		return new SolutionState(this, letters, wordShortlist, words);
 	}
 }

@@ -3,15 +3,15 @@ package uk.me.ruthmills.wordsquare.solution;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 
-import uk.me.ruthmills.wordsquare.letters.AvailableLetters;
-import uk.me.ruthmills.wordsquare.letters.AvailableLettersFactory;
+import uk.me.ruthmills.wordsquare.exception.FirstWordSquareSolvedException;
+import uk.me.ruthmills.wordsquare.exception.InvalidWordSquareException;
 
 /**
  * Test suite for the Word Square Generator class.
@@ -25,22 +25,18 @@ public class WordSquareGeneratorTest {
 	 * square (there is only one in this case).
 	 */
 	@Test
-	public void shouldGetAllValidSolutionsFor3LetterStartingWord() throws IOException {
+	public void shouldGetAllValidSolutionsFor3LetterStartingWord()
+			throws FirstWordSquareSolvedException, InvalidWordSquareException, IOException {
 		// given
-		final int length = 3;
-		final AvailableLetters letters = AvailableLettersFactory.getInstance("ddggoooox");
+		final SolutionState solutionState = new SolutionState(3, "ddggoooox");
 		final String startingWord = "dog";
-		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
-		final List<WordSquare> solutions = new ArrayList<>();
-		final boolean firstMatchOnly = false;
 
 		// when
-		WordSquareGenerator.getValidWordSquaresForStartingWord(startingWord, length, letters, wordShortlist,
-				new ArrayList<String>(), solutions, firstMatchOnly);
+		WordSquareGenerator.getValidWordSquaresForStartingWord(solutionState, startingWord);
 
 		// then
-		assertThat(solutions, hasSize(1));
-		assertThat(solutions.get(0).getWords().toString(), is("[dog, oxo, god]"));
+		assertThat(solutionState.getWordSquares(), hasSize(1));
+		assertThat(solutionState.getWordSquares().get(0).getWords().toString(), is("[dog, oxo, god]"));
 	}
 
 	/**
@@ -48,23 +44,21 @@ public class WordSquareGeneratorTest {
 	 * square (there are two in this case).
 	 */
 	@Test
-	public void shouldGetAllValidSolutionsFor5LetterStartingWord() throws IOException {
+	public void shouldGetAllValidSolutionsFor5LetterStartingWord()
+			throws FirstWordSquareSolvedException, InvalidWordSquareException, IOException {
 		// given
-		final int length = 5;
-		final AvailableLetters letters = AvailableLettersFactory.getInstance("aaaeeeefhhmoonssrrrrttttw");
+		final SolutionState solutionState = new SolutionState(5, "aaaeeeefhhmoonssrrrrttttw");
 		final String startingWord = "feast";
-		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
-		final List<WordSquare> solutions = new ArrayList<>();
-		final boolean firstMatchOnly = false;
 
 		// when
-		WordSquareGenerator.getValidWordSquaresForStartingWord(startingWord, length, letters, wordShortlist,
-				new ArrayList<String>(), solutions, firstMatchOnly);
+		WordSquareGenerator.getValidWordSquaresForStartingWord(solutionState, startingWord);
 
 		// then
-		assertThat(solutions, hasSize(2));
-		assertThat(solutions.get(0).getWords().toString(), is("[feast, earth, armer, steno, throw]"));
-		assertThat(solutions.get(1).getWords().toString(), is("[feast, earth, armor, stone, threw]"));
+		assertThat(solutionState.getWordSquares(), hasSize(2));
+		assertThat(solutionState.getWordSquares().get(0).getWords().toString(),
+				is("[feast, earth, armer, steno, throw]"));
+		assertThat(solutionState.getWordSquares().get(1).getWords().toString(),
+				is("[feast, earth, armor, stone, threw]"));
 	}
 
 	/**
@@ -72,22 +66,19 @@ public class WordSquareGeneratorTest {
 	 * 5-letter word square.
 	 */
 	@Test
-	public void shouldGetFirstValidSolutionFor5LetterStartingWord() throws IOException {
+	public void shouldGetFirstValidSolutionFor5LetterStartingWord() throws InvalidWordSquareException, IOException {
 		// given
-		final int length = 5;
-		final AvailableLetters letters = AvailableLettersFactory.getInstance("aaaeeeefhhmoonssrrrrttttw");
+		final SolutionState solutionState = new SolutionState(5, "aaaeeeefhhmoonssrrrrttttw", true);
 		final String startingWord = "feast";
-		final List<String> wordShortlist = WordShortlist.getWordShortlist(length, letters);
-		final List<WordSquare> solutions = new ArrayList<>();
-		final boolean firstMatchOnly = true;
 
 		// when
-		WordSquareGenerator.getValidWordSquaresForStartingWord(startingWord, length, letters, wordShortlist,
-				new ArrayList<String>(), solutions, firstMatchOnly);
-
-		// then
-		assertThat(solutions, hasSize(1));
-		assertThat(solutions.get(0).getWords().toString(), is("[feast, earth, armer, steno, throw]"));
+		try {
+			WordSquareGenerator.getValidWordSquaresForStartingWord(solutionState, startingWord);
+			fail("Expected FirstWordSquareSolvedException was not thrown");
+		} catch (FirstWordSquareSolvedException ex) {
+			// then
+			assertThat(ex.getWordSquare().getWords().toString(), is("[feast, earth, armer, steno, throw]"));
+		}
 	}
 
 	/**
@@ -95,7 +86,7 @@ public class WordSquareGeneratorTest {
 	 * in this case).
 	 */
 	@Test
-	public void shouldGetAllValidSolutionsFor3LetterWordSquare() throws IOException {
+	public void shouldGetAllValidSolutionsFor3LetterWordSquare() throws InvalidWordSquareException, IOException {
 		// given
 		final int length = 3;
 		final String letters = "ddggoooox";
@@ -114,7 +105,7 @@ public class WordSquareGeneratorTest {
 	 * Test we can get only the first matching solution for a 3-letter word square.
 	 */
 	@Test
-	public void shouldGetFirstMatchingSolutionFor3LetterWordSquare() throws IOException {
+	public void shouldGetFirstMatchingSolutionFor3LetterWordSquare() throws InvalidWordSquareException, IOException {
 		// given
 		final int length = 3;
 		final String letters = "ddggoooox";

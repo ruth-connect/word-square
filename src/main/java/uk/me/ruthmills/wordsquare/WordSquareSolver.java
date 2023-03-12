@@ -3,6 +3,7 @@ package uk.me.ruthmills.wordsquare;
 import java.io.IOException;
 import java.util.List;
 
+import uk.me.ruthmills.wordsquare.exception.InvalidWordSquareException;
 import uk.me.ruthmills.wordsquare.solution.WordSquare;
 import uk.me.ruthmills.wordsquare.solution.WordSquareGenerator;
 
@@ -17,9 +18,12 @@ public class WordSquareSolver {
 	 * Main function. Executes the word square solver for the supplied arguments.
 	 * 
 	 * @param args Arguments: <length> <letters>
-	 * @throws IOException Thrown if we cannot read from the dictionary file.
+	 * @throws InvalidWordSquareException Thrown if a word square we are trying to
+	 *                                    add is invalid.
+	 * @throws IOException                Thrown if we cannot read from the
+	 *                                    dictionary file.
 	 */
-	public static void main(final String[] args) throws IOException {
+	public static void main(final String[] args) throws InvalidWordSquareException, IOException {
 		if (args.length != 2) {
 			// Output the required parameters.
 			System.out.println("Required parameters: <length> <letters>");
@@ -47,9 +51,13 @@ public class WordSquareSolver {
 	 * @param letters Available letters to create the words from.
 	 * @return List of possible solutions to the word square (there may be more than
 	 *         one for some cases, e.g. dog, oxo, god AND god, oxo, dog).
-	 * @throws IOException Thrown if we cannot read from the dictionary file.
+	 * @throws InvalidWordSquareException Thrown if a word square we are trying to
+	 *                                    add is invalid.
+	 * @throws IOException                Thrown if we cannot read from the
+	 *                                    dictionary file.
 	 */
-	public static List<WordSquare> solveWordSquare(final int length, final String letters) throws IOException {
+	public static List<WordSquare> solveWordSquare(final int length, final String letters)
+			throws InvalidWordSquareException, IOException {
 		return solveWordSquare(length, letters, false); // return all possible solutions by default, even if more than
 														// one.
 	}
@@ -61,10 +69,13 @@ public class WordSquareSolver {
 	 * @param letters Available letters to create the words from.
 	 * @return List of possible solutions to the word square (there may be more than
 	 *         one for some cases, e.g. dog, oxo, god AND god, oxo, dog).
-	 * @throws IOException Thrown if we cannot read from the dictionary file.
+	 * @throws InvalidWordSquareException Thrown if a word square we are trying to
+	 *                                    add is invalid.
+	 * @throws IOException                Thrown if we cannot read from the
+	 *                                    dictionary file.
 	 */
 	public static List<WordSquare> solveWordSquare(final int length, final String letters, final boolean firstMatchOnly)
-			throws IOException {
+			throws InvalidWordSquareException, IOException {
 		// Get the valid word squares, optionally returning only the first if
 		// firstMatchOnly is true.
 		return WordSquareGenerator.getValidWordSquares(length, letters, firstMatchOnly);
