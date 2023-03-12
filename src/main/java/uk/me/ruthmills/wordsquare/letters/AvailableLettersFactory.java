@@ -17,6 +17,6 @@ public class AvailableLettersFactory {
 	 * @return Instance of the preferred implementation of Available Letters.
 	 */
 	public static AvailableLetters getInstance(String letters) {
-		return new HashBagAvailableLetters(letters);
+		return new HashMapAvailableLetters(letters);
 	}
 }
