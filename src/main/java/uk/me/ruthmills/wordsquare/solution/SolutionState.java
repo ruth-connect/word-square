@@ -68,8 +68,16 @@ public class SolutionState {
 		this.wordSquares = new ArrayList<>();
 	}
 
-	private SolutionState(SolutionState solutionState, AvailableLetters letters, List<String> wordShortlist,
-			List<String> words) {
+	/**
+	 * Private constructor - for internal use only.
+	 * 
+	 * @param solutionState Existing solution state.
+	 * @param letters       Available letters.
+	 * @param wordShortlist Word shortlist.
+	 * @param words         Current list of words.
+	 */
+	private SolutionState(final SolutionState solutionState, final AvailableLetters letters,
+			final List<String> wordShortlist, final List<String> words) {
 		this.length = solutionState.length;
 		this.letters = letters;
 		this.firstMatchOnly = solutionState.firstMatchOnly;
@@ -143,7 +151,8 @@ public class SolutionState {
 	 * @throws InvalidWordSquareException     Thrown if the word square we are
 	 *                                        trying to add is invalid.
 	 */
-	public void addWordSquare(WordSquare wordSquare) throws FirstWordSquareSolvedException, InvalidWordSquareException {
+	public void addWordSquare(final WordSquare wordSquare)
+			throws FirstWordSquareSolvedException, InvalidWordSquareException {
 		// Make sure that the word square is valid.
 		if (!wordSquare.isValid()) {
 			throw new InvalidWordSquareException(wordSquare);
@@ -168,8 +177,8 @@ public class SolutionState {
 	 * @param words         Updated words.
 	 * @return updated solution state.
 	 */
-	public SolutionState getUpdatedSolutionState(AvailableLetters letters, List<String> wordShortlist,
-			List<String> words) {
+	public SolutionState getUpdatedSolutionState(final AvailableLetters letters, final List<String> wordShortlist,
+			final List<String> words) {
 		return new SolutionState(this, letters, wordShortlist, words);
 	}
 }

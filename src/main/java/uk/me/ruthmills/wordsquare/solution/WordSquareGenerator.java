@@ -58,13 +58,8 @@ public class WordSquareGenerator {
 	 * Get valid word squares for a given starting word, available letters, and word
 	 * shortlist.
 	 * 
-	 * @param word           The current word.
-	 * @param length         Required length of each word in the word square.
-	 * @param letters        The available letters.
-	 * @param wordShortlist  The word shortlist.
-	 * @param words          The list of words so far.
-	 * @param firstMatchOnly true to stop at the first matching word square, false
-	 *                       to carry on until all possible words are exhausted.
+	 * @param solutionState The solution state.
+	 * @param word          The current word.
 	 * @throws FirstWordSquareSolvedException Thrown if the firstMatchOnly flag is
 	 *                                        true (we have found the first match,
 	 *                                        so there is no need to find any more).
