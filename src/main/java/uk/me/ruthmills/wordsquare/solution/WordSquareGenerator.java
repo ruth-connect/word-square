@@ -125,7 +125,7 @@ public class WordSquareGenerator {
 	 */
 	static boolean isWordAbleToBeFormed(final String word, final String letters, final List<String> words) {
 		final ListPredicate<String> listPredicate = new ListPredicate<String>(Arrays
-				.asList(new WordContainsAvailableLettersPredicate(letters), new WordMeetsRequirementsPredicate(words)));
+				.asList(new WordMeetsRequirementsPredicate(words), new WordContainsAvailableLettersPredicate(letters)));
 		return listPredicate.test(word);
 	}
 
