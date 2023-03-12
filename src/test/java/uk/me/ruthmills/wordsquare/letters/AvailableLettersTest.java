@@ -14,6 +14,9 @@ import org.junit.Test;
  */
 public abstract class AvailableLettersTest {
 
+	// Available letters to test.
+	private static final String AVAILABLE_LETTERS = "ddeeeennnoorsssv";
+
 	/**
 	 * Get the available letters instance.
 	 * 
@@ -27,14 +30,125 @@ public abstract class AvailableLettersTest {
 	 */
 	@Test
 	public void shouldConstructOK_andConvertToString() {
-		// given
-		final String AVAILABLE_LETTERS = "aaccdeeeemmnnnoo";
-
 		// when
 		final AvailableLetters availableLetters = getAvailableLetters(AVAILABLE_LETTERS);
 		final String result = availableLetters.toString();
 
 		// then
 		assertThat(result, is(AVAILABLE_LETTERS));
+	}
+
+	/**
+	 * Test that the word "rose" is formable from the available letters.
+	 */
+	@Test
+	public void shouldReturnTrue_whenWordIsRose() {
+		// given
+		final String word = "rose";
+
+		// when
+		final AvailableLetters availableLetters = getAvailableLetters(AVAILABLE_LETTERS);
+		final boolean wordContainsAvailableLetters = availableLetters.isWordFormable(word);
+
+		// then
+		assertThat(wordContainsAvailableLetters, is(true));
+	}
+
+	/**
+	 * Test that the word "oven" is formable from the available letters.
+	 */
+	@Test
+	public void shouldReturnTrue_whenWordIsOven() {
+		// given
+		final String word = "oven";
+
+		// when
+		final AvailableLetters availableLetters = getAvailableLetters(AVAILABLE_LETTERS);
+		final boolean wordContainsAvailableLetters = availableLetters.isWordFormable(word);
+
+		// then
+		assertThat(wordContainsAvailableLetters, is(true));
+	}
+
+	/**
+	 * Test that the word "send" is formable from the available letters.
+	 */
+	@Test
+	public void shouldReturnTrue_whenWordIsSend() {
+		// given
+		final String word = "send";
+
+		// when
+		final AvailableLetters availableLetters = getAvailableLetters(AVAILABLE_LETTERS);
+		final boolean wordContainsAvailableLetters = availableLetters.isWordFormable(word);
+
+		// then
+		assertThat(wordContainsAvailableLetters, is(true));
+	}
+
+	/**
+	 * Test that the word "ends" is formable from the available letters.
+	 */
+	@Test
+	public void shouldReturnTrue_whenWordIsEnds() {
+		// given
+		final String word = "ends";
+
+		// when
+		final AvailableLetters availableLetters = getAvailableLetters(AVAILABLE_LETTERS);
+		final boolean wordContainsAvailableLetters = availableLetters.isWordFormable(word);
+
+		// then
+		assertThat(wordContainsAvailableLetters, is(true));
+	}
+
+	/**
+	 * Test that a word is not formable if it contains a letter not in the available
+	 * letter).
+	 */
+	@Test
+	public void shouldReturnFalse_whenWordContainsLetterNotInAvailableLetters() {
+		// given
+		final String word = "rave";
+
+		// when
+		final AvailableLetters availableLetters = getAvailableLetters(AVAILABLE_LETTERS);
+		final boolean wordContainsAvailableLetters = availableLetters.isWordFormable(word);
+
+		// then
+		assertThat(wordContainsAvailableLetters, is(false));
+	}
+
+	/**
+	 * Test that a word is not formable when it contains more instances of a letter
+	 * than are available.
+	 */
+	@Test
+	public void shouldReturnFalse_whenWordContainsMoreInstancesOfALetterThanAreAvailable() {
+		// given
+		final String word = "rere"; // nonsense word, but we don't care for the purposes of this test.
+
+		// when
+		final AvailableLetters availableLetters = getAvailableLetters(AVAILABLE_LETTERS);
+		final boolean wordContainsAvailableLetters = availableLetters.isWordFormable(word);
+
+		// then
+		assertThat(wordContainsAvailableLetters, is(false));
+	}
+
+	/**
+	 * Test that the word "nosed" is formable from the available letters.
+	 */
+	@Test
+	public void shouldReturnTrue_whenWordIsNosed() {
+		// given
+		final String word = "nosed"; // test a 5-letter word.
+
+		// when
+		final AvailableLetters availableLetters = getAvailableLetters(AVAILABLE_LETTERS);
+		final boolean wordContainsAvailableLetters = availableLetters.isWordFormable(word);
+
+		// then
+		assertThat(wordContainsAvailableLetters, is(true));
 	}
 }
