@@ -88,7 +88,7 @@ public class WordSquareGenerator {
 			if (updatedWords.size() == length && (!firstMatchOnly || wordSquares.size() == 0)) {
 				// Add a new word square to end of the list of word squares.
 				wordSquares.add(new WordSquare(length, updatedWords));
-			} else if (remainingLetters.length() > 0) {
+			} else if (remainingLetters.length() >= length) {
 				// Create a predicate based on the remaining letters.
 				final WordContainsAvailableLettersPredicate wordContainsAvailableLettersPredicate = new WordContainsAvailableLettersPredicate(
 						remainingLetters);
